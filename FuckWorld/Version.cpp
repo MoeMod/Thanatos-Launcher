@@ -6,13 +6,9 @@
 char g_szVersion[] = __DATE__;
 
 cvar_t *g_pcvarVersion;
-bool g_bShouldBlockDisconnect = false;
 
 void Version_Response()
 {
-	//gEngfuncs.pfnClientCmd("tz_version");
-	//gEngfuncs.pfnServerCmd("tz_version");
-	g_bShouldBlockDisconnect = true;
 }
 
 void Version_Init()
