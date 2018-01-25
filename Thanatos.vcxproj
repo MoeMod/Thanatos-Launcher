@@ -204,6 +204,7 @@
     <ClCompile Include="Client\ViewPort_Interface.cpp" />
     <ClCompile Include="Client\weapons.cpp" />
     <ClCompile Include="Client\weapon_csbase.cpp" />
+    <ClCompile Include="Client\z4e_damagestar.cpp" />
     <ClCompile Include="FuckWorld\BaseUI.cpp" />
     <ClCompile Include="FuckWorld\cmd.cpp" />
     <ClCompile Include="FuckWorld\CVARs.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="GameUI\CvarToggleCheckButton.cpp" />
     <ClCompile Include="GameUI\GameConsole.cpp" />
     <ClCompile Include="GameUI\GameConsoleDialog.cpp" />
+    <ClCompile Include="GameUI\GameLoading.cpp" />
     <ClCompile Include="GameUI\GameUI_Interface.cpp" />
     <ClCompile Include="GameUI\KeyToggleCheckButton.cpp" />
     <ClCompile Include="GameUI\LabeledCommandComboBox.cpp" />
@@ -515,6 +517,7 @@
     <ClInclude Include="Client\ViewPortPanel.h" />
     <ClInclude Include="Client\weapons.h" />
     <ClInclude Include="Client\weapon_csbase.h" />
+    <ClInclude Include="Client\z4e_damagestar.h" />
     <ClInclude Include="FuckWorld\BaseUI.h" />
     <ClInclude Include="FuckWorld\cmd.h" />
     <ClInclude Include="FuckWorld\CVARs.h" />
@@ -547,6 +550,7 @@
     <ClInclude Include="GameUI\EngineInterface.h" />
     <ClInclude Include="GameUI\GameConsole.h" />
     <ClInclude Include="GameUI\GameConsoleDialog.h" />
+    <ClInclude Include="GameUI\GameLoading.h" />
     <ClInclude Include="GameUI\GameUI_Interface.h" />
     <ClInclude Include="GameUI\KeyToggleCheckButton.h" />
     <ClInclude Include="GameUI\LabeledCommandComboBox.h" />

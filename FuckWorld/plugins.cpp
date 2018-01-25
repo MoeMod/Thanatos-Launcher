@@ -70,6 +70,12 @@ void IPlugins::LoadEngine(void)
 
 	MemPatch_Start(MEMPATCH_STEP_LOADENGINE);
 
+	g_pfnVideoMode_Create = (CVideoMode_Common *(*)(void))g_pMetaHookAPI->SearchPattern((void *)g_dwEngineBase, g_dwEngineSize, VIDEOMODE_CREATE_SIG, sizeof(VIDEOMODE_CREATE_SIG) - 1);
+	g_pVID_EnumDisplayModesProc = (HRESULT(CALLBACK *)(void *, DWORD *))g_pMetaHookAPI->SearchPattern((void *)g_dwEngineBase, g_dwEngineSize, VID_ENUMDISPLAYMODESPROC_SIG, sizeof(VID_ENUMDISPLAYMODESPROC_SIG) - 1);
+
+	g_phVideoMode_Create = g_pMetaHookAPI->InlineHook(g_pfnVideoMode_Create, VideoMode_Create, (void *&)g_pfnVideoMode_Create);
+	g_phVID_EnumDisplayModesProc = g_pMetaHookAPI->InlineHook(g_pVID_EnumDisplayModesProc, VID_EnumDisplayModesProc, (void *&)g_pVID_EnumDisplayModesProc);
+
 	SteamAPI_InstallHook();
 	BaseUI_InstallHook();
 	Info_InstallHook();

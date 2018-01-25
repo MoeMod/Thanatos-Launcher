@@ -892,6 +892,12 @@
     <ClCompile Include="FuckWorld\Info.cpp">
       <Filter>FuckWorld</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI\GameLoading.cpp">
+      <Filter>GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\z4e_damagestar.cpp">
+      <Filter>Client\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Detours\detours.h">
@@ -2043,6 +2049,12 @@
     </ClInclude>
     <ClInclude Include="FuckWorld\Info.h">
       <Filter>FuckWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\GameLoading.h">
+      <Filter>GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\z4e_damagestar.h">
+      <Filter>Client\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

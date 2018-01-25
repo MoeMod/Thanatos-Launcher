@@ -155,7 +155,12 @@ int HUD_GetStudioModelInterface(int iVersion, struct r_studio_interface_s **ppSt
 
 void HUD_PlayerMoveInit(struct playermove_s *ppmove)
 {
-	PM_Init(ppmove);
+	static bool bInitalized = false;
+	if (!bInitalized)
+	{
+		PM_Init(ppmove);
+		bInitalized = true;
+	}
 
 	gExportfuncs.HUD_PlayerMoveInit(ppmove);
 }
