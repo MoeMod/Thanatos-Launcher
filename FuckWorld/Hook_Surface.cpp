@@ -1,4 +1,5 @@
 #include <metahook.h>
+#include <plugins.h>
 #include <vgui/ISurface.h>
 #include <IEngineSurface.h>
 #include "Color.h"
@@ -194,6 +195,8 @@ public:
 	void SetAllowHTMLJavaScript(bool state);
 };
 
+CSurface g_Surface;
+
 void CSurface::Shutdown(void)
 {
 	return g_pfnCSurface_Shutdown(this, 0);
@@ -350,7 +353,9 @@ int CSurface::CreateNewTextureID(bool procedural)
 
 void CSurface::GetScreenSize(int &wide, int &tall)
 {
-	return g_pfnCSurface_GetScreenSize(this, 0, wide, tall);
+	wide = g_iVideoWidth;
+	tall = g_iVideoHeight;
+	//return g_pfnCSurface_GetScreenSize(this, 0, wide, tall);
 }
 
 void CSurface::SetAsTopMost(VPANEL panel, bool state)
@@ -645,6 +650,8 @@ void CSurface::SetAllowHTMLJavaScript(bool state)
 
 void Surface_InstallHook(vgui::ISurface *pSurface)
 {
+	DWORD *pVFTable = *(DWORD **)&g_Surface;
+
 	CreateInterfaceFn engineFactory = g_pMetaHookAPI->GetEngineFactory();
 	g_pSurface = pSurface;
 
@@ -679,7 +686,7 @@ void Surface_InstallHook(vgui::ISurface *pSurface)
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 29, (void *)pVFTable[29], (void *&)g_pfnCSurface_DrawTexturedRect);
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 30, (void *)pVFTable[30], (void *&)g_pfnCSurface_IsTextureIDValid);
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 31, (void *)pVFTable[31], (void *&)g_pfnCSurface_CreateNewTextureID);
-	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 32, (void *)pVFTable[32], (void *&)g_pfnCSurface_GetScreenSize);
+	g_pMetaHookAPI->VFTHook(g_pSurface, 0, 32, (void *)pVFTable[32], (void *&)g_pfnCSurface_GetScreenSize);
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 33, (void *)pVFTable[33], (void *&)g_pfnCSurface_SetAsTopMost);
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 34, (void *)pVFTable[34], (void *&)g_pfnCSurface_BringToFront);
 	//g_pMetaHookAPI->VFTHook(g_pSurface, 0, 35, (void *)pVFTable[35], (void *&)g_pfnCSurface_SetForegroundWindow);

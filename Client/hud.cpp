@@ -13,6 +13,8 @@
 #include "CVARs.h"
 #include "tri.h"
 
+#include "z4e_damagestar.h"
+
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS + 1];
 int g_PlayerScoreAttrib[MAX_PLAYERS + 1];
 TEMPENTITY *g_DeadPlayerModels[MAX_PLAYERS + 1];
@@ -235,6 +237,8 @@ void CHud::Init(void)
 	m_scenarioStatus.Init();
 	GetClientVoice()->Init(&g_VoiceStatusHelper);
 
+	HudZ4EDamageStar().Init();
+
 	cl_lw = gEngfuncs.pfnGetCvarPointer("cl_lw");
 	cl_righthand = gEngfuncs.pfnGetCvarPointer("cl_righthand");
 	cl_minmodel = gEngfuncs.pfnGetCvarPointer("cl_minmodel");
@@ -401,6 +405,8 @@ void CHud::VidInit(void)
 	m_Message.VidInit();
 	m_scenarioStatus.VidInit();
 	GetClientVoiceHud()->VidInit();
+
+	HudZ4EDamageStar().VidInit();
 
 	m_iFontEngineHeight = vgui::surface()->GetFontTall(font);
 

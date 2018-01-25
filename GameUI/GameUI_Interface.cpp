@@ -34,6 +34,7 @@
 #include "ModInfo.h"
 #include "GameConsole.h"
 #include "LoadingDialog.h"
+#include "GameLoading.h"
 
 #include "GameUI_Interface.h"
 
@@ -44,6 +45,7 @@ static CGameUI g_GameUI;
 CGameUI *g_pGameUI = NULL;
 
 vgui::DHANDLE<CLoadingDialog> g_hLoadingDialog;
+vgui::DHANDLE<CGameLoading>g_hGameLoading;
 
 CGameUI &GameUI(void)
 {
@@ -248,6 +250,19 @@ bool CGameUI::IsGameUIActive(void)
 void CGameUI::LoadingStarted(const char *resourceType, const char *resourceName)
 {
 	m_bLoadlingLevel = true;
+
+	/*if (!g_hGameLoading.Get())
+	{
+		VPANEL GameUIPanel = enginevguifuncs->GetPanel(PANEL_GAMEUIDLL);
+		g_hGameLoading = new CGameLoading(NULL, "GameLoading");
+		g_hGameLoading->SetParent(GameUIPanel);
+	}
+	g_hGameLoading->Activate();*/
+
+	engine->pfnClientCmd("unpause");
+	engine->pfnClientCmd("hideconsole");
+	GameConsole().Hide();
+
 	staticPanel->OnLevelLoadingStarted(resourceName);
 }
 
@@ -255,12 +270,38 @@ void CGameUI::LoadingFinished(const char *resourceType, const char *resourceName
 {
 	m_bLoadlingLevel = false;
 
+	if (g_hGameLoading.Get())
+	{
+		g_hGameLoading->SetVisible(false);
+		g_hGameLoading->SetAutoDelete(true);
+	}
+
 	staticPanel->OnLevelLoadingFinished();
 	baseuifuncs->HideGameUI();
 }
 
 void CGameUI::StartProgressBar(const char *progressType, int progressSteps)
 {
+	if (g_hGameLoading.Get())
+	{
+		if (g_hGameLoading->IsVisible())
+		{
+			g_hGameLoading->SetProgressRange(0, progressSteps);
+			g_hGameLoading->SetProgressPoint(0.0f);
+
+			if (!stricmp(progressType, "Server"))
+			{
+				g_hGameLoading->SetProgressVisible(false);
+			}
+			else if (!stricmp(progressType, "Connecting"))
+			{
+				g_hGameLoading->SetProgressVisible(true);
+			}
+
+			return;
+		}
+	}
+
 	if (!g_hLoadingDialog.Get())
 		g_hLoadingDialog = new CLoadingDialog(staticPanel);
 
@@ -272,6 +313,14 @@ void CGameUI::StartProgressBar(const char *progressType, int progressSteps)
 
 int CGameUI::ContinueProgressBar(int progressPoint, float progressFraction)
 {
+	if (g_hGameLoading.Get())
+	{
+		if (g_hGameLoading->IsVisible())
+		{
+			return g_hGameLoading->SetProgressPoint(progressPoint);
+		}
+	}
+
 	if (!g_hLoadingDialog.Get())
 	{
 		g_hLoadingDialog = new CLoadingDialog(staticPanel);
@@ -286,6 +335,14 @@ int CGameUI::ContinueProgressBar(int progressPoint, float progressFraction)
 
 void CGameUI::StopProgressBar(bool bError, const char *failureReason, const char *extendedReason)
 {
+	if (g_hGameLoading.Get())
+	{
+		if (g_hGameLoading->IsVisible())
+		{
+			return;
+		}
+	}
+
 	if (!g_hLoadingDialog.Get() && bError)
 		g_hLoadingDialog = new CLoadingDialog(staticPanel);
 
@@ -305,6 +362,15 @@ void CGameUI::StopProgressBar(bool bError, const char *failureReason, const char
 
 int CGameUI::SetProgressBarStatusText(const char *statusText)
 {
+	if (g_hGameLoading.Get())
+	{
+		if (g_hGameLoading->IsVisible())
+		{
+			g_hGameLoading->SetStatusText(statusText);
+			return false;
+		}
+	}
+
 	if (!g_hLoadingDialog.Get())
 		return false;
 
@@ -321,6 +387,12 @@ int CGameUI::SetProgressBarStatusText(const char *statusText)
 
 void CGameUI::SetSecondaryProgressBar(float progress)
 {
+	if (g_hGameLoading.Get())
+	{
+		if (g_hGameLoading->IsVisible())
+			return;
+	}
+
 	if (!g_hLoadingDialog.Get())
 		return;
 
@@ -329,6 +401,12 @@ void CGameUI::SetSecondaryProgressBar(float progress)
 
 void CGameUI::SetSecondaryProgressBarText(const char *statusText)
 {
+	if (g_hLoadingDialog.Get())
+	{
+		if (g_hLoadingDialog->IsVisible())
+			return;
+	}
+
 	if (!g_hLoadingDialog.Get())
 		return;
 
