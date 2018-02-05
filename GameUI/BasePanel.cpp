@@ -1017,7 +1017,7 @@ void CBasePanel::RunMenuCommand(const char *command)
 	}
 	else if (!Q_stricmp(command, "OnConnectThanatosZone"))
 	{
-		engine->pfnClientCmd("connect miao.chinaeast.cloudapp.chinacloudapi.cn");
+		engine->pfnClientCmd("connect x.imomoe.cn:27015");
 	}
 
 	else
