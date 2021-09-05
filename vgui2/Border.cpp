@@ -11,20 +11,19 @@
 #include "vgui/IPanel.h"
 #include "vgui/IScheme.h"
 #include "vgui/ISurface.h"
-#include "VGUI/IEngineVGui.h"
 #include "vgui/IPanel.h"
+#include "IEngineVGui.h"
 
-#include "vgui_border.h"
-#include "vgui_internal.h"
-#include "KeyValues.h"
+#include "Border.h"
+#include "tier1/KeyValues.h"
 
 #include "vgui_controls/Controls.h"
-#include "vgui_controls/Panel.h"
+//#include "vgui_controls/Panel.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -95,7 +94,7 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	for (i = 0; i < _sides[SIDE_LEFT].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_LEFT].lines[i]);
-		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
+		surface()->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
 
 		if (breakSide == SIDE_LEFT)
 		{
@@ -103,18 +102,18 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 			if (breakStart > 0)
 			{
 				// draw before the break Start
-				g_pSurface->DrawFilledRect(x + i, y + line->startOffset, x + i + 1, y + breakStart);
+				surface()->DrawFilledRect(x + i, y + line->startOffset, x + i + 1, y + breakStart);
 			}
 
 			if (breakEnd < (tall - line->endOffset))
 			{
 				// draw after break end
-				g_pSurface->DrawFilledRect(x + i, y + breakEnd + 1, x + i + 1, tall - line->endOffset);
+				surface()->DrawFilledRect(x + i, y + breakEnd + 1, x + i + 1, tall - line->endOffset);
 			}
 		}
 		else
 		{
-			g_pSurface->DrawFilledRect(x + i, y + line->startOffset, x + i + 1, tall - line->endOffset);
+			surface()->DrawFilledRect(x + i, y + line->startOffset, x + i + 1, tall - line->endOffset);
 		}
 	}
 
@@ -122,7 +121,7 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	for (i = 0; i < _sides[SIDE_TOP].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_TOP].lines[i]);
-		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
+		surface()->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
 		
 		if (breakSide == SIDE_TOP)
 		{
@@ -130,18 +129,18 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 			if (breakStart > 0)
 			{
 				// draw before the break Start
-				g_pSurface->DrawFilledRect(x + line->startOffset, y + i, x + breakStart, y + i + 1);
+				surface()->DrawFilledRect(x + line->startOffset, y + i, x + breakStart, y + i + 1);
 			}
 
 			if (breakEnd < (wide - line->endOffset))
 			{
 				// draw after break end
-				g_pSurface->DrawFilledRect(x + breakEnd + 1, y + i, wide - line->endOffset, y + i + 1);
+				surface()->DrawFilledRect(x + breakEnd + 1, y + i, wide - line->endOffset, y + i + 1);
 			}
 		}
 		else
 		{
-			g_pSurface->DrawFilledRect(x + line->startOffset, y + i, wide - line->endOffset, y + i + 1);
+			surface()->DrawFilledRect(x + line->startOffset, y + i, wide - line->endOffset, y + i + 1);
 		}
 	}
 
@@ -149,16 +148,16 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	for (i = 0; i < _sides[SIDE_RIGHT].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_RIGHT].lines[i]);
-		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
-		g_pSurface->DrawFilledRect(wide - (i+1), y + line->startOffset, (wide - (i+1)) + 1, tall - line->endOffset);
+		surface()->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
+		surface()->DrawFilledRect(wide - (i+1), y + line->startOffset, (wide - (i+1)) + 1, tall - line->endOffset);
 	}
 
 	// draw bottom
 	for (i = 0; i < _sides[SIDE_BOTTOM].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_BOTTOM].lines[i]);
-		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
-		g_pSurface->DrawFilledRect(x + line->startOffset, tall - (i+1), wide - line->endOffset, (tall - (i+1)) + 1);
+		surface()->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
+		surface()->DrawFilledRect(x + line->startOffset, tall - (i+1), wide - line->endOffset, (tall - (i+1)) + 1);
 	}
 }
 
@@ -169,8 +168,7 @@ void Border::Paint(VPANEL panel)
 {
 	// get panel size
 	int wide, tall;
-	ipanel()->GetPanel(panel, ipanel()->GetModuleName(panel))->GetSize(wide, tall);
-	
+	ipanel()->GetSize(panel, wide, tall);
 	Paint(0, 0, wide, tall, -1, 0, 0);
 }
 
@@ -273,7 +271,7 @@ void Border::SetName(const char *name)
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-IBorder::backgroundtype_e Border::GetBackgroundType()
+IBorder::backgroundtype_e Border::GetBackgroundType(void)
 {
 	return m_eBackgroundType;
 }

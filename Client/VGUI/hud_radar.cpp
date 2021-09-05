@@ -16,7 +16,7 @@
 
 #include <IEngineSurface.h>
 
-#include <VGUI/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <VGUI/ISurface.h>
 #include <vgui_controls/controls.h>
 
@@ -32,7 +32,7 @@
 
 extern model_t *g_MapSprite;
 
-namespace vgui
+namespace vgui2
 {
 CHudRadar::CHudRadar(void) : Panel(NULL, "HudRadar")
 {
@@ -50,8 +50,8 @@ void CHudRadar::Init(void)
 	m_bCanRenderMapSprite = false;
 	m_iLastWide = 0;
 
-	vgui::HScheme hScheme = vgui::scheme()->GetDefaultScheme();
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(hScheme);
+	vgui2::HScheme hScheme = vgui2::scheme()->GetDefaultScheme();
+	vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(hScheme);
 
 	m_hHudFont = pScheme->GetFont("EngineFont", true);
 
@@ -104,8 +104,8 @@ void CHudRadar::Think(void)
 {
 	if (m_hHudFont == INVALID_FONT)
 	{
-		vgui::HScheme hScheme = vgui::scheme()->GetDefaultScheme();
-		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(hScheme);
+		vgui2::HScheme hScheme = vgui2::scheme()->GetDefaultScheme();
+		vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(hScheme);
 
 		m_hHudFont = pScheme->GetFont("EngineFont", true);
 	}
@@ -119,8 +119,8 @@ void CHudRadar::Think(void)
 	else
 	{
 		if (m_iLastWide != wide)
-			//SetBounds(wide / 8, wide / 8, wide, wide + vgui::surface()->GetFontTall(m_hHudFont) * 1.5);
-			SetBounds(0, 0, wide, wide + vgui::surface()->GetFontTall(m_hHudFont) * 1.5);
+			//SetBounds(wide / 8, wide / 8, wide, wide + vgui2::surface()->GetFontTall(m_hHudFont) * 1.5);
+			SetBounds(0, 0, wide, wide + vgui2::surface()->GetFontTall(m_hHudFont) * 1.5);
 
 		SetVisible(true);
 	}
@@ -380,7 +380,7 @@ void CHudRadar::Paint(void)
 		gEngfuncs.pTriAPI->CullFace(TRI_NONE);
 		gEngfuncs.pTriAPI->Color4f(cl_newradar_r->value, cl_newradar_g->value, cl_newradar_b->value, cl_newradar_a->value);
 #else
-		vgui::surface()->DrawSetColor(255, 255, 255, cl_radartype->value ? 255 : 190);
+		vgui2::surface()->DrawSetColor(255, 255, 255, cl_radartype->value ? 255 : 190);
 #endif
 		for (ix = 0; ix < yTiles; ix++)
 		{
@@ -397,7 +397,7 @@ void CHudRadar::Paint(void)
 
 #ifdef VGUI_DRAW
 				int p[4][2];
-				vgui::Vertex_t vert[4];
+				vgui2::Vertex_t vert[4];
 
 				vert[0].m_Position.x = x;
 				vert[0].m_Position.y = y;
@@ -419,8 +419,8 @@ void CHudRadar::Paint(void)
 				vert[3].m_TexCoord.x = 1;
 				vert[3].m_TexCoord.y = 0;
 
-				vgui::surface()->DrawSetTexture(m_iTextures[frame]);
-				vgui::surface()->DrawTexturedPolygon(4, vert);
+				vgui2::surface()->DrawSetTexture(m_iTextures[frame]);
+				vgui2::surface()->DrawTexturedPolygon(4, vert);
 #else
 				gEngfuncs.pTriAPI->SpriteTexture(g_MapSprite, frame);
 
@@ -449,8 +449,8 @@ void CHudRadar::Paint(void)
 #endif
 	}
 
-	vgui::surface()->DrawSetColor(0, 0, 0, 255);
-	vgui::surface()->DrawOutlinedRect(0, 0, wide, tall);
+	vgui2::surface()->DrawSetColor(0, 0, 0, 255);
+	vgui2::surface()->DrawOutlinedRect(0, 0, wide, tall);
 
 	if (ScreenWidth > 640)
 	{
@@ -459,12 +459,12 @@ void CHudRadar::Paint(void)
 		int string_width, string_height;
 		int x, y;
 
-		locString = vgui::localize()->Find(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location);
+		locString = vgui2::localize()->Find(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location);
 
 		if (!locString)
 		{
 			static wchar_t staticLoc[32];
-			vgui::localize()->ConvertANSIToUnicode(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location, staticLoc, sizeof(staticLoc));
+			vgui2::localize()->ConvertANSIToUnicode(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location, staticLoc, sizeof(staticLoc));
 			locString = staticLoc + 1;
 		}
 
@@ -473,16 +473,16 @@ void CHudRadar::Paint(void)
 			center_y = tall;
 			center_x = wide / 2;
 
-			vgui::surface()->GetTextSize(m_hHudFont, locString, string_width, string_height);
+			vgui2::surface()->GetTextSize(m_hHudFont, locString, string_width, string_height);
 
 			x = max(0, center_x - (string_width / 2));
 			y = center_y + (string_height / 2);
 
-			vgui::surface()->DrawSetTextFont(m_hHudFont);
-			vgui::surface()->DrawSetTextPos(x, y);
-			vgui::surface()->DrawSetTextColor(0, 204, 0, 255);
-			vgui::surface()->DrawPrintText(locString, wcslen(locString));
-			vgui::surface()->DrawFlushText();
+			vgui2::surface()->DrawSetTextFont(m_hHudFont);
+			vgui2::surface()->DrawSetTextPos(x, y);
+			vgui2::surface()->DrawSetTextColor(0, 204, 0, 255);
+			vgui2::surface()->DrawPrintText(locString, wcslen(locString));
+			vgui2::surface()->DrawFlushText();
 		}
 	}
 
@@ -869,7 +869,7 @@ void CHudRadar::DrawSprite(int x, int y, HSPRITE hspr, float yaw, int scale, int
 	gEngfuncs.pTriAPI->End();
 }
 
-void CHudRadar::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CHudRadar::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }

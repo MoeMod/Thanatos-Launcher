@@ -12,7 +12,7 @@
 
 #include <vgui/ISurface.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 
 //-----------------------------------------------------------------------------

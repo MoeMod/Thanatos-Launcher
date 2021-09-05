@@ -13,7 +13,7 @@
 
 #define PANEL_TEAM "team"
 
-namespace vgui
+namespace vgui2
 {
 	class RichText;
 	class HTML;
@@ -21,10 +21,10 @@ namespace vgui
 
 class TeamFortressViewport;
 
-class CTeamMenu : public vgui::Frame, public CViewPortPanel
+class CTeamMenu : public vgui2::Frame, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CTeamMenu, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CTeamMenu, vgui2::Frame);
 
 public:
 	CTeamMenu(void);
@@ -51,22 +51,22 @@ public:
 	void AutoAssign(void);
 
 protected:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
 	virtual void SetLabelText(const char *textEntryName, const char *text);
 	virtual void LoadMapPage(const char *mapName);
 
 protected:
-	virtual vgui::Panel *CreateControlByName(const char *controlName);
-	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui::EditablePanel *panel);
+	virtual vgui2::Panel *CreateControlByName(const char *controlName);
+	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui2::EditablePanel *panel);
 
 protected:
-	vgui::RichText *m_pMapInfo;
-	vgui::HTML *m_pMapInfoHTML;
-	vgui::KeyCode m_iJumpKey;
-	vgui::KeyCode m_iScoreBoardKey;
+	vgui2::RichText *m_pMapInfo;
+	vgui2::HTML *m_pMapInfoHTML;
+	vgui2::KeyCode m_iJumpKey;
+	vgui2::KeyCode m_iScoreBoardKey;
 	char m_szMapName[MAX_PATH];
-	vgui::EditablePanel *m_pPanel;
+	vgui2::EditablePanel *m_pPanel;
 	CUtlVector<MouseOverPanelButton *> m_mouseoverButtons;
 };
 

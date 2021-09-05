@@ -10,7 +10,7 @@ Color g_ColorDarkGreen(64, 255, 64, 255);
 Color g_ColorYellow(255, 178.5, 0.0, 255);
 Color g_ColorGrey(204, 204, 204, 255);
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSChatDialog::CCSChatDialog(void) : BaseClass()
 {
@@ -18,7 +18,7 @@ CCSChatDialog::CCSChatDialog(void) : BaseClass()
 	SetSizeable(false);
 }
 
-void CCSChatDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSChatDialog::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -60,26 +60,26 @@ void CCSChatDialog::Print(int msg_dest, const char *msg_name, const char *param1
 	wchar_t szBuf[5][256];
 
 	if (strlen(msg_name) > 0)
-		g_pVGuiLocalize->ConvertANSIToUnicode(msg_name, szBuf[0], sizeof(szBuf[0]));
+		localize()->ConvertANSIToUnicode(msg_name, szBuf[0], sizeof(szBuf[0]));
 
 	if (strlen(param1) > 0)
-		g_pVGuiLocalize->ConvertANSIToUnicode(param1, szBuf[1], sizeof(szBuf[1]));
+		localize()->ConvertANSIToUnicode(param1, szBuf[1], sizeof(szBuf[1]));
 
 	if (strlen(param2) > 0)
-		g_pVGuiLocalize->ConvertANSIToUnicode(param2, szBuf[2], sizeof(szBuf[2]));
+		localize()->ConvertANSIToUnicode(param2, szBuf[2], sizeof(szBuf[2]));
 
 	if (strlen(param3) > 0)
-		g_pVGuiLocalize->ConvertANSIToUnicode(param3, szBuf[3], sizeof(szBuf[30]));
+		localize()->ConvertANSIToUnicode(param3, szBuf[3], sizeof(szBuf[30]));
 
 	if (strlen(param4) > 0)
-		g_pVGuiLocalize->ConvertANSIToUnicode(param4, szBuf[4], sizeof(szBuf[4]));
+		localize()->ConvertANSIToUnicode(param4, szBuf[4], sizeof(szBuf[4]));
 
 	switch (msg_dest)
 	{
 		case HUD_PRINTCENTER:
 		{
-			g_pVGuiLocalize->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
-			g_pVGuiLocalize->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
+			localize()->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
+			localize()->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
 			CenterPrint(ConvertCRtoNL(szString));
 			break;
 		}
@@ -87,8 +87,8 @@ void CCSChatDialog::Print(int msg_dest, const char *msg_name, const char *param1
 		case HUD_PRINTNOTIFY:
 		{
 			szString[0] = 1;
-			g_pVGuiLocalize->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
-			g_pVGuiLocalize->ConvertUnicodeToANSI(outputBuf, szString + 1, sizeof(szString) - 1);
+			localize()->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
+			localize()->ConvertUnicodeToANSI(outputBuf, szString + 1, sizeof(szString) - 1);
 			ConsolePrint(ConvertCRtoNL(szString));
 			break;
 		}
@@ -96,7 +96,7 @@ void CCSChatDialog::Print(int msg_dest, const char *msg_name, const char *param1
 		case HUD_PRINTTALK:
 		{
 			swprintf(outputBuf, szBuf[0], szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
-			g_pVGuiLocalize->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
+			localize()->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
 
 			int len = strlen(szString);
 
@@ -110,8 +110,8 @@ void CCSChatDialog::Print(int msg_dest, const char *msg_name, const char *param1
 
 		case HUD_PRINTCONSOLE:
 		{
-			g_pVGuiLocalize->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
-			g_pVGuiLocalize->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
+			localize()->ConstructString(outputBuf, sizeof(outputBuf), szBuf[0], 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
+			localize()->ConvertUnicodeToANSI(outputBuf, szString, sizeof(szString));
 			ConsolePrint(ConvertCRtoNL(szString));
 			break;
 		}
@@ -151,13 +151,13 @@ void CCSChatDialog::MsgFunc_SayText(void)
 	ReadLocalizedString(szBuf[4], sizeof(szBuf[4]), true);
 
 	if (client > 0 && szBuf[1][0] == '\0')
-		g_pVGuiLocalize->ConvertANSIToUnicode(g_PlayerInfoList[client].name, szBuf[1], sizeof(szBuf[1]));
+		localize()->ConvertANSIToUnicode(g_PlayerInfoList[client].name, szBuf[1], sizeof(szBuf[1]));
 
-	g_pVGuiLocalize->ConstructString(szBuf[5], sizeof(szBuf[5]), msg_text, 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
+	localize()->ConstructString(szBuf[5], sizeof(szBuf[5]), msg_text, 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
 	ChatPrintf(client, ConvertCRtoNL(szBuf[5]));
 #ifdef _DEBUG
 	char ansiString[512];
-	g_pVGuiLocalize->ConvertUnicodeToANSI(ConvertCRtoNL(szBuf[5]), ansiString, sizeof(ansiString));
+	localize()->ConvertUnicodeToANSI(ConvertCRtoNL(szBuf[5]), ansiString, sizeof(ansiString));
 	Msg("%s\n", RemoveColorMarkup(ansiString));
 #endif
 }
@@ -179,7 +179,7 @@ void CCSChatDialog::MsgFunc_TextMsg(void)
 		ReadChatTextString(szBuf[1], sizeof(szBuf[1]));
 		sprintf_s(szString, sizeof(szString), "#%s", READ_STRING());
 
-		const wchar_t *pBuf = g_pVGuiLocalize->Find(szString);
+		const wchar_t *pBuf = localize()->Find(szString);
 
 		if (pBuf)
 		{
@@ -191,19 +191,19 @@ void CCSChatDialog::MsgFunc_TextMsg(void)
 			char *str = LookupString(&szString[1]);
 
 			if (!str[0])
-				g_pVGuiLocalize->ConvertANSIToUnicode(&szString[1], szBuf[2], sizeof(szBuf[3]));
+				localize()->ConvertANSIToUnicode(&szString[1], szBuf[2], sizeof(szBuf[3]));
 			else
-				g_pVGuiLocalize->ConvertANSIToUnicode(str, szBuf[2], sizeof(szBuf[3]));
+				localize()->ConvertANSIToUnicode(str, szBuf[2], sizeof(szBuf[3]));
 		}
 
 		ReadLocalizedString(szBuf[3], sizeof(szBuf[3]), true);
 		ReadLocalizedString(szBuf[4], sizeof(szBuf[4]), true);
 
-		g_pVGuiLocalize->ConstructString(szBuf[5], sizeof(szBuf[5]), msg_text, 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
+		localize()->ConstructString(szBuf[5], sizeof(szBuf[5]), msg_text, 4, szBuf[1], szBuf[2], szBuf[3], szBuf[4]);
 		ChatPrintf(client, ConvertCRtoNL(szBuf[5]));
 #ifdef _DEBUG
 		char ansiString[512];
-		g_pVGuiLocalize->ConvertUnicodeToANSI(ConvertCRtoNL(szBuf[5]), ansiString, sizeof(ansiString));
+		localize()->ConvertUnicodeToANSI(ConvertCRtoNL(szBuf[5]), ansiString, sizeof(ansiString));
 		Msg("%s\n", RemoveColorMarkup(ansiString));
 #endif
 	}
@@ -217,12 +217,12 @@ void CCSChatDialog::MsgFunc_TextMsg(void)
 			strcpy_s(szString, sizeof(szString), READ_STRING());
 
 			char *tmpStr = LookupString(szString, &msg_dest);
-			const wchar_t *pBuf = g_pVGuiLocalize->Find(tmpStr);
+			const wchar_t *pBuf = localize()->Find(tmpStr);
 
 			if (!pBuf && tmpStr[0] == '#')
 			{
 				StripEndNewlineFromString(tmpStr);
-				pBuf = g_pVGuiLocalize->Find(tmpStr);
+				pBuf = localize()->Find(tmpStr);
 			}
 
 			if (pBuf)

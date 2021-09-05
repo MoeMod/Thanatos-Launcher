@@ -5,11 +5,10 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
+#include "Color.h"
 
-class Color;
-
-namespace vgui
+namespace vgui2
 {
 
 class IImage

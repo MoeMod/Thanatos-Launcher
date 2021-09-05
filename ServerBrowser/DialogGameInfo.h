@@ -10,16 +10,16 @@
 #include "ServerList.h"
 #include "getchallenge.h"
 #include "playerinfo.h"
-#include "IServerRefreshResponse.h"
-#include "IServerGetChallengeResponse.h"
-#include "IServerPlayersResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
+#include <ServerBrowser/IServerGetChallengeResponse.h>
+#include <ServerBrowser/IServerPlayersResponse.h>
 
-class CDialogGameInfo : public vgui::Frame, public IServerRefreshResponse, public IServerGetChallengeResponse, public IServerPlayersResponse
+class CDialogGameInfo : public vgui2::Frame, public IServerRefreshResponse, public IServerGetChallengeResponse, public IServerPlayersResponse
 {
-	DECLARE_CLASS_SIMPLE(CDialogGameInfo, vgui::Frame); 
+	DECLARE_CLASS_SIMPLE(CDialogGameInfo, vgui2::Frame); 
 
 public:
-	CDialogGameInfo(vgui::Panel *parent, serveritem_t &server);
+	CDialogGameInfo(vgui2::Panel *parent, serveritem_t &server);
 	~CDialogGameInfo(void);
 
 public:
@@ -53,7 +53,7 @@ protected:
 	MESSAGE_FUNC_INT_INT(OnConnectToGame, "ConnectedToGame", ip, port);
 
 protected:
-	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code);
 	virtual void OnTick(void);
 	virtual void PerformLayout(void);
 
@@ -61,7 +61,7 @@ private:
 	long m_iRequestRetry;
 
 private:
-	static int PlayerTimeColumnSortFunc(vgui::ListPanel *pPanel, const vgui::ListPanelItem &p1, const vgui::ListPanelItem &p2);
+	static int PlayerTimeColumnSortFunc(vgui2::ListPanel *pPanel, const vgui2::ListPanelItem &p1, const vgui2::ListPanelItem &p2);
 
 private:
 	void RequestInfo(void);
@@ -70,14 +70,14 @@ private:
 	void ApplyConnectCommand(const serveritem_t &server);
 
 private:
-	vgui::Button *m_pConnectButton;
-	vgui::Button *m_pCloseButton;
-	vgui::Button *m_pRefreshButton;
-	vgui::Label *m_pInfoLabel;
-	vgui::ToggleButton *m_pAutoRetry;
-	vgui::RadioButton *m_pAutoRetryAlert;
-	vgui::RadioButton *m_pAutoRetryJoin;
-	vgui::ListPanel *m_pPlayerList;
+	vgui2::Button *m_pConnectButton;
+	vgui2::Button *m_pCloseButton;
+	vgui2::Button *m_pRefreshButton;
+	vgui2::Label *m_pInfoLabel;
+	vgui2::ToggleButton *m_pAutoRetry;
+	vgui2::RadioButton *m_pAutoRetryAlert;
+	vgui2::RadioButton *m_pAutoRetryJoin;
+	vgui2::ListPanel *m_pPlayerList;
 
 	enum { PING_TIMES_MAX = 4 };
 

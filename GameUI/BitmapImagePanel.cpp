@@ -1,8 +1,6 @@
 #include "BitmapImagePanel.h"
 #include <vgui/ISurface.h>
 
-using namespace vgui;
-
 CBitmapImagePanel::CBitmapImagePanel(Panel *parent, char const *panelName, char const *filename) : Panel(parent, panelName)
 {
 	m_szTexture[0] = 0;
@@ -21,8 +19,8 @@ void CBitmapImagePanel::PaintBackground(void)
 	{
 		int w, h;
 		GetSize(w, h);
-		surface()->DrawSetColor(GetBgColor());
-		surface()->DrawFilledRect(0, 0, w, h);
+		vgui2::surface()->DrawSetColor(GetBgColor());
+		vgui2::surface()->DrawFilledRect(0, 0, w, h);
 		return;
 	}
 
@@ -31,9 +29,9 @@ void CBitmapImagePanel::PaintBackground(void)
 
 	int w, h;
 	GetSize(w, h);
-	surface()->DrawSetColor(Color(255, 255, 255, 255));
-	surface()->DrawSetTexture(m_nTextureId);
-	surface()->DrawTexturedRect(0, 0, w, h);
+	vgui2::surface()->DrawSetColor(Color(255, 255, 255, 255));
+	vgui2::surface()->DrawSetTexture(m_nTextureId);
+	vgui2::surface()->DrawTexturedRect(0, 0, w, h);
 }
 
 void CBitmapImagePanel::setTexture(char const *filename, bool force)
@@ -55,11 +53,11 @@ void CBitmapImagePanel::forceUpload(void)
 		return;
 
 	m_bUploaded = true;
-	m_nTextureId = surface()->CreateNewTextureID();
+	m_nTextureId = vgui2::surface()->CreateNewTextureID();
 
-	surface()->DrawSetTextureFile(m_nTextureId, m_szTexture, true, true);
+	vgui2::surface()->DrawSetTextureFile(m_nTextureId, m_szTexture, true, true);
 
-	if (!surface()->IsTextureIDValid(m_nTextureId))
+	if (!vgui2::surface()->IsTextureIDValid(m_nTextureId))
 	{
 		m_szTexture[0] = 0;
 		m_bUploaded = false;
@@ -74,9 +72,9 @@ void CBitmapImagePanel::forceReload(void)
 	if (!m_szTexture[0])
 		return;
 
-	surface()->DrawSetTextureFile(m_nTextureId, m_szTexture, true, true);
+	vgui2::surface()->DrawSetTextureFile(m_nTextureId, m_szTexture, true, true);
 
-	if (!surface()->IsTextureIDValid(m_nTextureId))
+	if (!vgui2::surface()->IsTextureIDValid(m_nTextureId))
 	{
 		m_szTexture[0] = 0;
 		m_bUploaded = false;

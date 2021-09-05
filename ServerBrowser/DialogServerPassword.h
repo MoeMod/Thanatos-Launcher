@@ -7,13 +7,13 @@
 
 #include <vgui_controls/Frame.h>
 
-class CDialogServerPassword : public vgui::Frame
+class CDialogServerPassword : public vgui2::Frame
 {
 public:
-	typedef vgui::Frame BaseClass;
+	typedef vgui2::Frame BaseClass;
 
 public:
-	CDialogServerPassword(vgui::Panel *parent);
+	CDialogServerPassword(vgui2::Panel *parent);
 	~CDialogServerPassword(void);
 
 public:
@@ -23,10 +23,10 @@ private:
 	virtual void OnCommand(const char *command);
 
 private:
-	vgui::Label *m_pInfoLabel;
-	vgui::Label *m_pGameLabel;
-	vgui::TextEntry *m_pPasswordEntry;
-	vgui::Button *m_pConnectButton;
+	vgui2::Label *m_pInfoLabel;
+	vgui2::Label *m_pGameLabel;
+	vgui2::TextEntry *m_pPasswordEntry;
+	vgui2::Button *m_pConnectButton;
 
 	int m_iServerID;
 };

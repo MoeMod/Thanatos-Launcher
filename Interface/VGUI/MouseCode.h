@@ -1,9 +1,9 @@
 #ifndef MOUSECODE_H
 #define MOUSECODE_H
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
-namespace vgui
+namespace vgui2
 {
 
 enum MouseCode

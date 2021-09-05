@@ -3,7 +3,6 @@
 #include <malloc.h>
 
 wchar_t *UTF8ToUnicode(const char* str);
-extern IFileSystem *g_pFullFileSystem;
 
 char *GetFileType(const char fileName[], char type[])
 {

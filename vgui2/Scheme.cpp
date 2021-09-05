@@ -9,26 +9,27 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/IScheme.h>
-#include <KeyValues.h>
 #include <vgui/ISurface.h>
 #include <vgui/IPanel.h>
 #include <vgui/ISystem.h>
 #include <vstdlib/IKeyValuesSystem.h>
 
-#include <UtlVector.h>
-#include <UtlRBTree.h>
-#include <UtlSymbol.h>
-#include "vgui_border.h"
-#include "vgui_internal.h"
+#include <vgui_controls/Controls.h>
+
+#include <tier1/KeyValues.h>
+#include <tier1/UtlVector.h>
+#include <tier1/UtlRBTree.h>
+#include <tier1/UtlSymbol.h>
+#include "Border.h"
 #include "bitmap.h"
 #include "filesystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 #define FONT_ALIAS_NAME_LENGTH 64
 
 //-----------------------------------------------------------------------------
@@ -337,14 +338,14 @@ HScheme  CSchemeManager::LoadSchemeFromFileEx( VPANEL sizingPanel, const char *f
 	data->UsesEscapeSequences( true );	// VGUI uses this
 	
 	// look first in skins directory
-	bool result = data->LoadFromFile( g_pFullFileSystem, fileName, "SKIN" );
+	bool result = data->LoadFromFile( filesystem(), fileName, "SKIN" );
 	if (!result)
 	{
-		result = data->LoadFromFile( g_pFullFileSystem, fileName, "GAME" );
+		result = data->LoadFromFile( filesystem(), fileName, "GAME" );
 		if ( !result )
 		{
 			// look in any directory
-			result = data->LoadFromFile( g_pFullFileSystem, fileName, NULL );
+			result = data->LoadFromFile( filesystem(), fileName, NULL );
 		}
 	}
 
@@ -586,7 +587,7 @@ void CScheme::LoadFonts()
 		const char *fontFile = kv->GetString();
 		if (fontFile && *fontFile)
 		{
-			g_pSurface->AddCustomFontFile( fontFile );
+			surface()->AddCustomFontFile( fontFile );
 		}
 	}
 
@@ -607,7 +608,7 @@ void CScheme::LoadFonts()
 			// create the base font
 			bool proportionalFont = static_cast<bool>( i );
 			const char *fontName = GetMungedFontName( kv->GetName(), tag, proportionalFont ); // first time it adds a normal font, and then a proportional one
-			HFont font = g_pSurface->CreateFont();
+			HFont font = surface()->CreateFont();
 			int j = m_FontAliases.AddToTail();
 			m_FontAliases[j]._fontName = fontName;
 			m_FontAliases[j]._trueFontName = kv->GetName();
@@ -628,11 +629,11 @@ void CScheme::ReloadFontGlyphs()
 	// get our current resolution
 	if ( m_SizingPanel != 0 )
 	{
-		g_pIPanel->GetSize( m_SizingPanel, m_nScreenWide, m_nScreenTall );
+		ipanel()->GetSize( m_SizingPanel, m_nScreenWide, m_nScreenTall );
 	}
 	else
 	{
-		g_pSurface->GetScreenSize( m_nScreenWide, m_nScreenTall );
+		surface()->GetScreenSize( m_nScreenWide, m_nScreenTall );
 	}
 
 	// check our language; some have minimum sizes
@@ -678,15 +679,15 @@ void CScheme::ReloadFontGlyphs()
 			{
 				flags |= ISurface::FONTFLAG_SYMBOL;
 			}
-			if (fontdata->GetInt( "antialias" ) && g_pSurface->SupportsFeature(ISurface::ANTIALIASED_FONTS))
+			if (fontdata->GetInt( "antialias" ) && surface()->SupportsFeature(ISurface::ANTIALIASED_FONTS))
 			{
 				flags |= ISurface::FONTFLAG_ANTIALIAS;
 			}
-			if (fontdata->GetInt( "dropshadow" ) && g_pSurface->SupportsFeature(ISurface::DROPSHADOW_FONTS))
+			if (fontdata->GetInt( "dropshadow" ) && surface()->SupportsFeature(ISurface::DROPSHADOW_FONTS))
 			{
 				flags |= ISurface::FONTFLAG_DROPSHADOW;
 			}
-			if (fontdata->GetInt( "outline" ) && g_pSurface->SupportsFeature(ISurface::OUTLINE_FONTS))
+			if (fontdata->GetInt( "outline" ) && surface()->SupportsFeature(ISurface::OUTLINE_FONTS))
 			{
 				flags |= ISurface::FONTFLAG_OUTLINE;
 			}
@@ -736,7 +737,7 @@ void CScheme::ReloadFontGlyphs()
 			else
 			{
 				// add the new set
-				g_pSurface->AddGlyphSetToFont(m_FontAliases[i]._font, fontdata->GetString("name"), tall, fontdata->GetInt("weight"), blur, scanlines, flags, 0x0, 0xFFFF);
+				surface()->AddGlyphSetToFont(m_FontAliases[i]._font, fontdata->GetString("name"), tall, fontdata->GetInt("weight"), blur, scanlines, flags, 0x0, 0xFFFF);
 			}
 
 			// don't add any more
@@ -860,7 +861,7 @@ HScheme CSchemeManager::GetScheme(const char *tag)
 int CSchemeManager::GetProportionalScaledValue_( int rootWide, int rootTall, int normalizedValue )
 {
 	int proH, proW;
-	g_pSurface->GetProportionalBase( proW, proH );
+	surface()->GetProportionalBase( proW, proH );
 	double scale = (double)rootTall / (double)proH;
 
 	return (int)( normalizedValue * scale );
@@ -869,7 +870,7 @@ int CSchemeManager::GetProportionalScaledValue_( int rootWide, int rootTall, int
 int CSchemeManager::GetProportionalNormalizedValue_( int rootWide, int rootTall, int scaledValue )
 {
 	int proH, proW;
-	g_pSurface->GetProportionalBase( proW, proH );
+	surface()->GetProportionalBase( proW, proH );
 	float scale = (float)rootTall / (float)proH;
 
 	return (int)( scaledValue / scale );
@@ -881,7 +882,7 @@ int CSchemeManager::GetProportionalNormalizedValue_( int rootWide, int rootTall,
 int CSchemeManager::GetProportionalScaledValue(int normalizedValue)
 {
 	int wide, tall;
-	g_pSurface->GetScreenSize( wide, tall );
+	surface()->GetScreenSize( wide, tall );
 	return GetProportionalScaledValue_( wide, tall, normalizedValue );
 }
 
@@ -891,7 +892,7 @@ int CSchemeManager::GetProportionalScaledValue(int normalizedValue)
 int CSchemeManager::GetProportionalNormalizedValue(int scaledValue)
 {
 	int wide, tall;
-	g_pSurface->GetScreenSize( wide, tall );
+	surface()->GetScreenSize( wide, tall );
 	return GetProportionalNormalizedValue_( wide, tall, scaledValue );
 }
 
@@ -906,7 +907,7 @@ int CSchemeManager::GetProportionalScaledValueEx( CScheme *pScheme, int normaliz
 	}
 
 	int w, h;
-	g_pIPanel->GetSize( sizing, w, h );
+	ipanel()->GetSize( sizing, w, h );
 	return GetProportionalScaledValue_( w, h, normalizedValue );
 }
 
@@ -919,7 +920,7 @@ int CSchemeManager::GetProportionalNormalizedValueEx( CScheme *pScheme, int scal
 	}
 
 	int w, h;
-	g_pIPanel->GetSize( sizing, w, h );
+	ipanel()->GetSize( sizing, w, h );
 	return GetProportionalNormalizedValue_( w, h, scaledValue );
 }
 

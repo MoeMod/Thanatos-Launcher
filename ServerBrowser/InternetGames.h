@@ -12,7 +12,7 @@ class CInternetGames : public CBaseGamesPage
 	DECLARE_CLASS_SIMPLE(CInternetGames, CBaseGamesPage);
 
 public:
-	CInternetGames(vgui::Panel *parent, bool bAutoRefresh = true, const char *panelName = "InternetGames");
+	CInternetGames(vgui2::Panel *parent, bool bAutoRefresh = true, const char *panelName = "InternetGames");
 	~CInternetGames(void);
 
 public:

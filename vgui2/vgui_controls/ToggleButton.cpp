@@ -14,7 +14,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY_DEFAULT_TEXT( ToggleButton, ToggleButton );
 
@@ -89,7 +89,7 @@ void ToggleButton::DoClick()
 void ToggleButton::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	_selectedColor = GetSchemeColor("BrightControlText", pScheme);
+	_selectedColor = GetSchemeColor("ToggleButton.SelectedTextColor", GetSchemeColor("BrightControlText", pScheme), pScheme);
 }
 
 void ToggleButton::OnKeyCodePressed(KeyCode code)

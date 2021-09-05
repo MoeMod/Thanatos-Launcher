@@ -23,9 +23,7 @@
 
 #include "KeyValues.h"
 
-using namespace vgui;
-
-COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "OptionsDialog")
+COptionsDialog::COptionsDialog(vgui2::Panel *parent) : PropertyDialog(parent, "OptionsDialog")
 {
 	SetBounds(0, 0, 512, 406);
 	SetSizeable(false);

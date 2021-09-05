@@ -15,7 +15,7 @@
 #include "TextEntry.h"
 #include "Menu.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class ComboBoxButton;

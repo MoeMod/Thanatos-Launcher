@@ -10,7 +10,7 @@
 #include "CSBackGroundPanel.h"
 #include "CounterStrikeViewport.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 #include "hud_layer.h"
 #include "hud_menu.h"

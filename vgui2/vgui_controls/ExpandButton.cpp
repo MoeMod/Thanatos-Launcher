@@ -20,7 +20,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY( ExpandButton );
 

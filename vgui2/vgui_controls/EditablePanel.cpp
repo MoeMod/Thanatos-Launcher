@@ -39,7 +39,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY( EditablePanel );
 
@@ -831,7 +831,7 @@ void EditablePanel::SetControlString(const char *controlName, const char *string
 	{
 		if (string[0] == '#')
 		{
-			const wchar_t *wszText = g_pVGuiLocalize->Find(string);
+			const wchar_t *wszText = localize()->Find(string);
 			if (wszText)
 			{
 				PostMessage(control, new KeyValues("SetText", "text", wszText));

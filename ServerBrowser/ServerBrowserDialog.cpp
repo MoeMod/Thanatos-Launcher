@@ -39,7 +39,7 @@
 #include "LanGames.h"
 #include "HistoryGames.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 static CServerBrowserDialog *s_InternetDlg = NULL;
 
@@ -60,7 +60,7 @@ void GetMostCommonQueryPorts(CUtlVector<uint16> &ports)
 #endif
 }
 
-CServerBrowserDialog::CServerBrowserDialog(vgui::Panel *parent) : Frame(parent, "CServerBrowserDialog")
+CServerBrowserDialog::CServerBrowserDialog(vgui2::Panel *parent) : Frame(parent, "CServerBrowserDialog")
 {
 	s_InternetDlg = this;
 
@@ -157,7 +157,7 @@ void CServerBrowserDialog::LoadUserData(void)
 
 	m_pSavedData = new KeyValues("ServerBrowser");
 
-	if (!m_pSavedData->LoadFromFile(g_pFullFileSystem, "cfg/ServerBrowser.vdf"))
+	if (!m_pSavedData->LoadFromFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf"))
 	{
 	}
 
@@ -192,7 +192,7 @@ void CServerBrowserDialog::LoadUserData(void)
 void CServerBrowserDialog::SaveUserData(void)
 {
 	m_pSavedData->Clear();
-	m_pSavedData->LoadFromFile(g_pFullFileSystem, "cfg/ServerBrowser.vdf");
+	m_pSavedData->LoadFromFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf");
 
 	if (m_pGameList == m_pSpectateGames)
 		m_pSavedData->SetString("GameList", "spectate");
@@ -213,7 +213,7 @@ void CServerBrowserDialog::SaveUserData(void)
 
 	m_pSavedData->RemoveSubKey(m_pSavedData->FindKey("Filters"));
 	m_pSavedData->AddSubKey(m_pFilterData->MakeCopy());
-	m_pSavedData->SaveToFile(g_pFullFileSystem, "cfg/ServerBrowser.vdf");
+	m_pSavedData->SaveToFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf");
 }
 
 void CServerBrowserDialog::RefreshCurrentPage(void)
@@ -277,7 +277,7 @@ void CServerBrowserDialog::AddServerToFavorites(serveritem_t &server)
 	m_pFavorites->StartRefresh();
 }
 
-CServerContextMenu *CServerBrowserDialog::GetContextMenu(vgui::Panel *pPanel)
+CServerContextMenu *CServerBrowserDialog::GetContextMenu(vgui2::Panel *pPanel)
 {
 	if (m_pContextMenu)
 		delete m_pContextMenu;
@@ -349,10 +349,10 @@ void CServerBrowserDialog::CloseAllGameInfoDialogs(void)
 {
 	for (int i = 0; i < m_GameInfoDialogs.Count(); i++)
 	{
-		vgui::Panel *dlg = m_GameInfoDialogs[i];
+		vgui2::Panel *dlg = m_GameInfoDialogs[i];
 
 		if (dlg)
-			vgui::ivgui()->PostMessage(dlg->GetVPanel(), new KeyValues("Close"), NULL);
+			vgui2::ivgui()->PostMessage(dlg->GetVPanel(), new KeyValues("Close"), NULL);
 	}
 }
 
@@ -408,12 +408,12 @@ void CServerBrowserDialog::OnConnectToGame(KeyValues *pMessageValues)
 
 	for (int i = 0; i < m_GameInfoDialogs.Count(); i++)
 	{
-		vgui::Panel *dlg = m_GameInfoDialogs[i];
+		vgui2::Panel *dlg = m_GameInfoDialogs[i];
 
 		if (dlg)
 		{
 			KeyValues *kv = new KeyValues("ConnectedToGame", "ip", ip, "connectionport", connectionPort);
-			vgui::ivgui()->PostMessage(dlg->GetVPanel(), kv, NULL);
+			vgui2::ivgui()->PostMessage(dlg->GetVPanel(), kv, NULL);
 		}
 	}
 

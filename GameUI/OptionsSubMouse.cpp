@@ -10,9 +10,7 @@
 #include <stdio.h>
 #include <vgui_controls/TextEntry.h>
 
-using namespace vgui;
-
-COptionsSubMouse::COptionsSubMouse(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubMouse::COptionsSubMouse(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 	m_pReverseMouseCheckBox = new CCvarNegateCheckButton(this, "ReverseMouse", "#GameUI_ReverseMouse", "m_pitch");
 	m_pMouseLookCheckBox = new CKeyToggleCheckButton(this, "MouseLook", "#GameUI_MouseLook", "in_mlook", "mlook");
@@ -22,7 +20,7 @@ COptionsSubMouse::COptionsSubMouse(vgui::Panel *parent) : PropertyPage(parent, N
 	m_pJoystickLookCheckBox = new CKeyToggleCheckButton(this, "JoystickLook", "#GameUI_JoystickLook", "in_jlook", "jlook");
 	m_pMouseSensitivitySlider = new CCvarSlider(this, "Slider", "#GameUI_MouseSensitivity", 1.0f, 20.0f, "sensitivity", true);
 
-	m_pMouseSensitivityLabel = new TextEntry(this, "SensitivityLabel");
+	m_pMouseSensitivityLabel = new vgui2::TextEntry(this, "SensitivityLabel");
 	m_pMouseSensitivityLabel->AddActionSignalTarget(this);
 
 	m_pAutoAimCheckBox = new CCvarToggleCheckButton(this, "Auto-Aim", "#GameUI_AutoAim", "sv_aim");
@@ -66,7 +64,7 @@ void COptionsSubMouse::OnApplyChanges(void)
 	m_pAutoAimCheckBox->ApplyChanges();
 }
 
-void COptionsSubMouse::ApplySchemeSettings(IScheme *pScheme)
+void COptionsSubMouse::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 

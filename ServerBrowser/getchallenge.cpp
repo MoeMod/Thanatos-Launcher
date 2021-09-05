@@ -1,5 +1,5 @@
 #include "getchallenge.h"
-#include "IServerGetChallengeResponse.h"
+#include <ServerBrowser/IServerGetChallengeResponse.h>
 #include "GetChallengeMsgHandler.h"
 #include "Socket.h"
 #include "proto_oob.h"

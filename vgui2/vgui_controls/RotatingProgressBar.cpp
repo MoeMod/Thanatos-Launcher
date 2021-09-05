@@ -17,13 +17,33 @@
 #include <vgui/ISurface.h>
 
 #include <tier1/KeyValues.h>
-
 #include <mathlib/mathlib.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
+
+namespace vgui2
+{
+	struct Vertex_t
+	{
+		Vertex_t() {}
+		Vertex_t(const Vector2D &pos, const Vector2D &coord = Vector2D(0, 0))
+		{
+			m_Position = pos;
+			m_TexCoord = coord;
+		}
+		void Init(const Vector2D &pos, const Vector2D &coord = Vector2D(0, 0))
+		{
+			m_Position = pos;
+			m_TexCoord = coord;
+		}
+
+		Vector2D	m_Position;
+		Vector2D	m_TexCoord;
+	};
+}
 
 DECLARE_BUILD_FACTORY( RotatingProgressBar );
 
@@ -157,8 +177,8 @@ void RotatingProgressBar::Paint()
 	// desired rotation is GetProgress() ( 0.0 -> 1.0 ) mapped into
 	// ( m_flStartDegrees -> m_flEndDegrees )
 
-	vgui::surface()->DrawSetTexture( m_nTextureId );
-	vgui::surface()->DrawSetColor( Color(255,255,255,255) );
+	vgui2::surface()->DrawSetTexture( m_nTextureId );
+	vgui2::surface()->DrawSetColor( Color(255,255,255,255) );
 
 	int wide, tall;
 	GetSize( wide, tall );
@@ -191,5 +211,5 @@ void RotatingProgressBar::Paint()
 		vert[i].m_Position = result;
 	}
 
-	vgui::surface()->DrawTexturedPolygon( 4, vert );
+	vgui2::surface()->DrawTexturedPolygon( 4, vert );
 }

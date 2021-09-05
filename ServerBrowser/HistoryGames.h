@@ -8,7 +8,7 @@
 #include "BaseGamesPage.h"
 
 #include "IGameList.h"
-#include "IServerRefreshResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
 #include "server.h"
 
 class CHistoryGames : public CBaseGamesPage
@@ -16,7 +16,7 @@ class CHistoryGames : public CBaseGamesPage
 	DECLARE_CLASS_SIMPLE(CHistoryGames, CBaseGamesPage);
 
 public:
-	CHistoryGames(vgui::Panel *parent);
+	CHistoryGames(vgui2::Panel *parent);
 	~CHistoryGames(void);
 
 public:

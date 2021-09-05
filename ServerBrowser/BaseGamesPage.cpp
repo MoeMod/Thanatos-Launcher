@@ -6,6 +6,7 @@
 #include <vgui/IScheme.h>
 #include <vgui/IVGui.h>
 #include <vgui/KeyCode.h>
+#include <vgui/IPanel.h>
 #include <KeyValues.h>
 
 #include <vgui_controls/CheckButton.h>
@@ -16,14 +17,14 @@
 
 #include <stdio.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 CGameListPanel::CGameListPanel(CBaseGamesPage *pOuter, const char *pName) : BaseClass(pOuter, pName)
 {
 	m_pOuter = pOuter;
 }
 
-void CGameListPanel::OnKeyCodeTyped(vgui::KeyCode code)
+void CGameListPanel::OnKeyCodeTyped(vgui2::KeyCode code)
 {
 	if (code == KEY_ENTER && m_pOuter->OnGameListEnterPressed())
 		return;
@@ -31,7 +32,7 @@ void CGameListPanel::OnKeyCodeTyped(vgui::KeyCode code)
 	BaseClass::OnKeyCodeTyped(code);
 }
 
-CBaseGamesPage::CBaseGamesPage(vgui::Panel *parent, const char *name, const char *pCustomResFilename) : PropertyPage(parent, name), m_pCustomResFilename(pCustomResFilename), m_Servers(this)
+CBaseGamesPage::CBaseGamesPage(vgui2::Panel *parent, const char *name, const char *pCustomResFilename) : PropertyPage(parent, name), m_pCustomResFilename(pCustomResFilename), m_Servers(this)
 {
 	SetSize(624, 278);
 
@@ -44,7 +45,7 @@ CBaseGamesPage::CBaseGamesPage(vgui::Panel *parent, const char *name, const char
 	m_bFilterNoPasswordedServers = false;
 	m_hFont = NULL;
 
-	wchar_t *all = g_pVGuiLocalize->Find("ServerBrowser_All");
+	wchar_t *all = localize()->Find("ServerBrowser_All");
 	Q_UnicodeToUTF8(all, m_szComboAllText, sizeof(m_szComboAllText));
 
 	m_pConnect = new Button(this, "ConnectButton", "#ServerBrowser_Connect");
@@ -56,7 +57,7 @@ CBaseGamesPage::CBaseGamesPage(vgui::Panel *parent, const char *name, const char
 	m_pGameList = new CGameListPanel(this, "gamelist");
 	m_pGameList->SetAllowUserModificationOfColumns(true);
 
-	m_pAddToFavoritesButton = new vgui::Button(this, "AddToFavoritesButton", "");
+	m_pAddToFavoritesButton = new vgui2::Button(this, "AddToFavoritesButton", "");
 	m_pAddToFavoritesButton->SetEnabled(false);
 	m_pAddToFavoritesButton->SetVisible(false);
 
@@ -491,12 +492,12 @@ void CBaseGamesPage::UpdateStatus(void)
 		wchar_t count[128];
 
 		_itow(m_pGameList->GetItemCount(), count, 10);
-		g_pVGuiLocalize->ConstructString(header, sizeof(header), g_pVGuiLocalize->Find("#ServerBrowser_ServersCount"), 1, count);
+		localize()->ConstructString(header, sizeof(header), localize()->Find("#ServerBrowser_ServersCount"), 1, count);
 		m_pGameList->SetColumnHeaderText(2, header);
 	}
 	else
 	{
-		m_pGameList->SetColumnHeaderText(2, g_pVGuiLocalize->Find("#ServerBrowser_Servers"));
+		m_pGameList->SetColumnHeaderText(2, localize()->Find("#ServerBrowser_Servers"));
 	}
 }
 
@@ -610,7 +611,7 @@ void CBaseGamesPage::RecalculateFilterString(void)
 		char tmpBuf[16];
 		_itoa(m_iPingFilter, tmpBuf, 10);
 
-		wcscat(unicode, g_pVGuiLocalize->Find("#ServerBrowser_FilterDescLatency"));
+		wcscat(unicode, localize()->Find("#ServerBrowser_FilterDescLatency"));
 		Q_UTF8ToUnicode(" < ", tempUnicode, sizeof(tempUnicode));
 		wcscat(unicode, tempUnicode);
 		Q_UTF8ToUnicode(tmpBuf, tempUnicode, sizeof(tempUnicode));
@@ -620,19 +621,19 @@ void CBaseGamesPage::RecalculateFilterString(void)
 
 	if (m_bFilterNoFullServers)
 	{
-		wcscat(unicode, g_pVGuiLocalize->Find("#ServerBrowser_FilterDescNotFull"));
+		wcscat(unicode, localize()->Find("#ServerBrowser_FilterDescNotFull"));
 		wcscat(unicode, spacerUnicode);
 	}
 
 	if (m_bFilterNoEmptyServers)
 	{
-		wcscat(unicode, g_pVGuiLocalize->Find("#ServerBrowser_FilterDescNotEmpty"));
+		wcscat(unicode, localize()->Find("#ServerBrowser_FilterDescNotEmpty"));
 		wcscat(unicode, spacerUnicode);
 	}
 
 	if (m_bFilterNoPasswordedServers)
 	{
-		wcscat(unicode, g_pVGuiLocalize->Find("#ServerBrowser_FilterDescNoPassword"));
+		wcscat(unicode, localize()->Find("#ServerBrowser_FilterDescNoPassword"));
 		wcscat(unicode, spacerUnicode);
 	}
 
@@ -732,7 +733,7 @@ void CBaseGamesPage::OnItemSelected(void)
 		m_pConnect->SetEnabled(true);
 }
 
-void CBaseGamesPage::OnKeyCodePressed(vgui::KeyCode code)
+void CBaseGamesPage::OnKeyCodePressed(vgui2::KeyCode code)
 {
 	if (code == KEY_F5)
 		StartRefresh();

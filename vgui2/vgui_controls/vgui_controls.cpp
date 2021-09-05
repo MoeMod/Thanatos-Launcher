@@ -13,7 +13,7 @@
 #include "TreeViewListControl.h"
 #include "HTML.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 USING_BUILD_FACTORY( Button );
 USING_BUILD_FACTORY( EditablePanel );

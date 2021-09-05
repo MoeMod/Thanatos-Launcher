@@ -19,7 +19,7 @@ class BuyMouseOverPanelButton : public NewMouseOverPanelButton
 	typedef NewMouseOverPanelButton BaseClass;
 
 public:
-	BuyMouseOverPanelButton(vgui::Panel *parent, const char *panelName, vgui::EditablePanel *panel) : BaseClass(parent, panelName, panel)
+	BuyMouseOverPanelButton(vgui2::Panel *parent, const char *panelName, vgui2::EditablePanel *panel) : BaseClass(parent, panelName, panel)
 	{
 		m_iPrice = 0;
 		m_iASRestrict = 0;
@@ -66,25 +66,25 @@ public:
 #endif
 	}
 
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		BaseClass::ApplySchemeSettings(pScheme);
 
 		if (!m_pKeyboard)
-			m_pKeyboard = vgui::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.Keyboard"), true);
+			m_pKeyboard = vgui2::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.Keyboard"), true);
 
 		if (!m_pBlankSlot)
-			m_pBlankSlot = vgui::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.BlankSlot"), true);
+			m_pBlankSlot = vgui2::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.BlankSlot"), true);
 
 		if (!m_pSelect)
-			m_pSelect = vgui::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.Select"), true);
+			m_pSelect = vgui2::scheme()->GetImage(pScheme->GetResourceString("BuyMouseOverPanelButton.Select"), true);
 
 		if (m_iKeyOffset == -1)
 		{
 			m_iKeyOffset = atoi(pScheme->GetResourceString("BuyMouseOverPanelButton.KeyboardOffset"));
 
 			if (IsProportional())
-				m_iKeyOffset = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
+				m_iKeyOffset = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
 		}
 
 		if (m_iKeySize == -1)
@@ -92,7 +92,7 @@ public:
 			m_iKeySize = atoi(pScheme->GetResourceString("BuyMouseOverPanelButton.KeyboardSize"));
 
 			if (IsProportional())
-				m_iKeySize = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
+				m_iKeySize = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
 		}
 	}
 

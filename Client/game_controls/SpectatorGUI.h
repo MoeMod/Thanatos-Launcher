@@ -18,7 +18,7 @@
 class KeyValues;
 class CommandMenu;
 
-namespace vgui
+namespace vgui2
 {
 	class TextEntry;
 	class Button;
@@ -31,9 +31,9 @@ namespace vgui
 
 class IBaseFileSystem;
 
-class CSpectatorGUI : public vgui::EditablePanel, public CViewPortPanel
+class CSpectatorGUI : public vgui2::EditablePanel, public CViewPortPanel
 {
-	DECLARE_CLASS_SIMPLE(CSpectatorGUI, vgui::EditablePanel);
+	DECLARE_CLASS_SIMPLE(CSpectatorGUI, vgui2::EditablePanel);
 
 public:
 	CSpectatorGUI(void);
@@ -71,14 +71,14 @@ protected:
 
 protected:
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 protected:
-	vgui::Panel *m_pTopBar;
-	vgui::Panel *m_pBottomBarBlank;
+	vgui2::Panel *m_pTopBar;
+	vgui2::Panel *m_pBottomBarBlank;
 
-	vgui::ImagePanel *m_pBannerImage;
-	vgui::Label *m_pPlayerLabel;
+	vgui2::ImagePanel *m_pBannerImage;
+	vgui2::Label *m_pPlayerLabel;
 
 	bool m_bSpecScoreboard;
 	bool m_bLastSpecPic;
@@ -86,9 +86,9 @@ protected:
 	bool m_bHelpShown;
 };
 
-class CSpectatorMenu : public vgui::Frame, public CViewPortPanel
+class CSpectatorMenu : public vgui2::Frame, public CViewPortPanel
 {
-	DECLARE_CLASS_SIMPLE(CSpectatorMenu, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CSpectatorMenu, vgui2::Frame);
 
 public:
 	CSpectatorMenu(void);
@@ -110,9 +110,9 @@ private:
 
 private:
 	virtual void OnCommand(const char *command);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
-	virtual void OnKeyCodeReleased(vgui::KeyCode code);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
+	virtual void OnKeyCodeReleased(vgui2::KeyCode code);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PerformLayout(void);
 
 private:
@@ -120,14 +120,14 @@ private:
 	void SetPlayerFgColor(Color c1) { m_pPlayerList->SetFgColor(c1); }
 
 private:
-	vgui::ComboBox *m_pPlayerList;
-	vgui::ComboBox *m_pViewOptions;
-	vgui::ComboBox *m_pConfigSettings;
+	vgui2::ComboBox *m_pPlayerList;
+	vgui2::ComboBox *m_pViewOptions;
+	vgui2::ComboBox *m_pConfigSettings;
 
-	vgui::Button *m_pLeftButton;
-	vgui::Button *m_pRightButton;
+	vgui2::Button *m_pLeftButton;
+	vgui2::Button *m_pRightButton;
 
-	vgui::KeyCode m_iDuckKey;
+	vgui2::KeyCode m_iDuckKey;
 	bool m_bDuckPressed;
 
 	CommandMenu *m_pSpectatorMenu;

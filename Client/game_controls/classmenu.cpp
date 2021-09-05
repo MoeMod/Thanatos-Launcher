@@ -16,7 +16,7 @@
 
 #include "game_controls/mouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CClassMenu::CClassMenu(void) : Frame(NULL, NULL)
 {

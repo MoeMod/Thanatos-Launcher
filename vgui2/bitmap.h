@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -15,7 +15,7 @@
 #include <vgui/IImage.h>
 #include <Color.h>
 
-namespace vgui
+namespace vgui2
 {
 
 typedef unsigned long HTexture;
@@ -58,6 +58,6 @@ private:
 	bool		_bProcedural;
 };
 
-} // namespace vgui
+} // namespace vgui2
 
 #endif // BITMAP_H

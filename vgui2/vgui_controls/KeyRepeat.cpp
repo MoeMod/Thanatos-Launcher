@@ -5,20 +5,23 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#include "pch_vgui_controls.h"
 #include "KeyRepeat.h"
+#include "Controls.h"
+#include <vgui/ISystem.h>
+
+#include <tier0/dbg.h>
 
 // memdbgon must be the last include file in a .cpp file
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES];
+vgui2::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES];
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::KeyDown( vgui::KeyCode code )
+void CKeyRepeatHandler::KeyDown( vgui2::KeyCode code )
 {
 	int iIndex = GetIndexForCode(code);
 	if ( iIndex == -1 )
@@ -36,7 +39,7 @@ void CKeyRepeatHandler::KeyDown( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
+void CKeyRepeatHandler::KeyUp( vgui2::KeyCode code )
 {
 	int iIndex = GetIndexForCode(code);
 	if ( iIndex == -1 )
@@ -58,7 +61,7 @@ void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
+vgui2::KeyCode CKeyRepeatHandler::KeyRepeated( void )
 {
 	if ( IsPC() )
 		return BUTTON_CODE_NONE;
@@ -84,7 +87,7 @@ vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::SetKeyRepeatTime( vgui::KeyCode code, float flRepeat )
+void CKeyRepeatHandler::SetKeyRepeatTime( vgui2::KeyCode code, float flRepeat )
 {
 	int iIndex = GetIndexForCode(code);
 	Assert( iIndex != -1 );

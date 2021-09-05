@@ -7,14 +7,14 @@
 
 #include <vgui/IScheme.h>
 
-#include <vgui_controls/Divider.h>
+#include "Divider.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
-#include "tier0/memdbgon.h"
+#include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-DECLARE_BUILD_FACTORY(Divider);
+DECLARE_BUILD_FACTORY( Divider );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor

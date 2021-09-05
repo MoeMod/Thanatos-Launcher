@@ -14,7 +14,7 @@
 class BuyPresetEditPanel;
 class BuyPresetButton;
 
-namespace vgui
+namespace vgui2
 {
 	class Panel;
 	class Button;
@@ -45,13 +45,13 @@ public:
 public:
 	virtual void PaintBackground(void);
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 };
 
 class CCSBuyMenu_CT : public CCSBaseBuyMenu
 {
 private:
-	typedef vgui::WizardPanel BaseClass;
+	typedef vgui2::WizardPanel BaseClass;
 
 public:
 	CCSBuyMenu_CT(void);
@@ -63,7 +63,7 @@ public:
 class CCSBuyMenu_TER : public CCSBaseBuyMenu
 {
 private:
-	typedef vgui::WizardPanel BaseClass;
+	typedef vgui2::WizardPanel BaseClass;
 
 public:
 	CCSBuyMenu_TER(void);

@@ -3,9 +3,7 @@
 #include <vgui/IVGui.h>
 #include "tier1/KeyValues.h"
 
-using namespace vgui;
-
-CCvarNegateCheckButton::CCvarNegateCheckButton(Panel *parent, const char *panelName, const char *text, const char *cvarname) : CheckButton(parent, panelName, text)
+CCvarNegateCheckButton::CCvarNegateCheckButton(vgui2::Panel *parent, const char *panelName, const char *text, const char *cvarname) : vgui2::CheckButton(parent, panelName, text)
 {
 	m_pszCvarName = cvarname ? strdup(cvarname) : NULL;
 

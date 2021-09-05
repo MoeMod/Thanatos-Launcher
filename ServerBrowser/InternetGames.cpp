@@ -12,6 +12,7 @@
 
 #include <vgui/ILocalize.h>
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/IScheme.h>
 #include <vgui/IVGui.h>
 #include <vgui/MouseCode.h>
@@ -22,14 +23,14 @@
 
 #define NOMASTER_TEST 0
 
-using namespace vgui;
+using namespace vgui2;
 
 const int NUMBER_OF_RETRIES = 3;
 const float MASTER_LIST_TIMEOUT = 3.0f;
 const float MINIMUM_SORT_TIME = 1.5f;
 const int MAXIMUM_SERVERS = 10000;
 
-CInternetGames::CInternetGames(vgui::Panel *parent, bool bAutoRefresh, const char *panelName) : CBaseGamesPage(parent, panelName)
+CInternetGames::CInternetGames(vgui2::Panel *parent, bool bAutoRefresh, const char *panelName) : CBaseGamesPage(parent, panelName)
 {
 	KeyValues *kv;
 
@@ -50,7 +51,7 @@ CInternetGames::CInternetGames(vgui::Panel *parent, bool bAutoRefresh, const cha
 
 	kv = new KeyValues("Regions");
 
-	if (kv->LoadFromFile(g_pFullFileSystem, "servers/Regions.vdf", NULL))
+	if (kv->LoadFromFile(filesystem(), "servers/Regions.vdf", NULL))
 	{
 		for (KeyValues *srv = kv->GetFirstSubKey(); srv != NULL; srv = srv->GetNextKey())
 		{
@@ -72,7 +73,7 @@ CInternetGames::CInternetGames(vgui::Panel *parent, bool bAutoRefresh, const cha
 #if NOMASTER_TEST == 0
 	kv = new KeyValues("MasterServers");
 
-	if (kv->LoadFromFile(g_pFullFileSystem, "servers/MasterServers.vdf"))
+	if (kv->LoadFromFile(filesystem(), "servers/MasterServers.vdf"))
 	{
 		for (KeyValues *srv = kv->GetFirstSubKey(); srv != NULL; srv = srv->GetNextKey())
 		{
@@ -166,8 +167,8 @@ void CInternetGames::ServerResponded(serveritem_t &server)
 			percentDone = 99;
 
 		itoa(percentDone, tempPercent, 10);
-		localize()->ConvertANSIToUnicode(tempPercent, unicodePercent, sizeof(unicodePercent));
-		localize()->ConstructString(unicode, sizeof(unicode), localize()->Find("#ServerBrowser_RefreshingPercentDone"), 1, unicodePercent);
+		vgui2::localize()->ConvertANSIToUnicode(tempPercent, unicodePercent, sizeof(unicodePercent));
+		vgui2::localize()->ConstructString(unicode, sizeof(unicode), vgui2::localize()->Find("#ServerBrowser_RefreshingPercentDone"), 1, unicodePercent);
 		ServerBrowserDialog().UpdateStatusText(unicode);
 	}
 }

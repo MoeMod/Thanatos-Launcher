@@ -10,29 +10,27 @@
 #include "CvarToggleCheckButton.h"
 #include "tier1/KeyValues.h"
 
-using namespace vgui;
-
-COptionsSubVoice::COptionsSubVoice(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubVoice::COptionsSubVoice(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 	
 	m_pVoiceTweak = engine->pVoiceTweak;
 
-	m_pMicMeter = new ImagePanel(this, "MicMeter");
-	m_pMicMeter2 = new ImagePanel(this, "MicMeter2");
+	m_pMicMeter = new vgui2::ImagePanel(this, "MicMeter");
+	m_pMicMeter2 = new vgui2::ImagePanel(this, "MicMeter2");
 
-	m_pReceiveSliderLabel = new Label(this, "ReceiveLabel", "#GameUI_VoiceReceiveVolume");
+	m_pReceiveSliderLabel = new vgui2::Label(this, "ReceiveLabel", "#GameUI_VoiceReceiveVolume");
 	m_pReceiveVolume = new CCvarSlider(this, "VoiceReceive", "#GameUI_ReceiveVolume", 0.0f, 1.0f, "voice_scale");
 
-	m_pMicrophoneSliderLabel = new Label(this, "MicrophoneLabel", "#GameUI_VoiceTransmitVolume");
-	m_pMicrophoneVolume = new Slider(this, "#GameUI_MicrophoneVolume");
+	m_pMicrophoneSliderLabel = new vgui2::Label(this, "MicrophoneLabel", "#GameUI_VoiceTransmitVolume");
+	m_pMicrophoneVolume = new vgui2::Slider(this, "#GameUI_MicrophoneVolume");
 	m_pMicrophoneVolume->SetRange(0, 100);
 	m_pMicrophoneVolume->AddActionSignalTarget(this);
 
 	m_pVoiceEnableCheckButton = new CCvarToggleCheckButton(this, "voice_modenable", "#GameUI_EnableVoice", "voice_modenable");
 
-	m_pMicBoost = new CheckButton(this, "MicBoost", "#GameUI_BoostMicrophone");
+	m_pMicBoost = new vgui2::CheckButton(this, "MicBoost", "#GameUI_BoostMicrophone");
 	m_pMicBoost->AddActionSignalTarget(this);
-	m_pTestMicrophoneButton = new Button(this, "TestMicrophone", "#GameUI_TestMicrophone");
+	m_pTestMicrophoneButton = new vgui2::Button(this, "TestMicrophone", "#GameUI_TestMicrophone");
 
 	LoadControlSettings("Resource\\OptionsSubVoice.res");
 

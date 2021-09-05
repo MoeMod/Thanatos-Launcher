@@ -34,7 +34,7 @@
 #include <setjmp.h>
 #include <io.h>
 
-using namespace vgui;
+#include "ImageLib/LoadBMP.h"
 
 struct ColorItem_t
 {
@@ -66,7 +66,7 @@ static ColorItem_t s_crosshairColors[] =
 
 static const int NumCrosshairColors = sizeof(s_crosshairColors) / sizeof(s_crosshairColors[0]);
 
-class CrosshairImagePanel : public ImagePanel
+class CrosshairImagePanel : public vgui2::ImagePanel
 {
 	typedef ImagePanel BaseClass;
 
@@ -102,7 +102,7 @@ void CrosshairImagePanel::UpdateCrosshair(int r, int g, int b, int size)
 	m_B = b;
 
 	int screenWide, screenTall;
-	surface()->GetScreenSize(screenWide, screenTall);
+	vgui2::surface()->GetScreenSize(screenWide, screenTall);
 
 	if (size == 0)
 	{
@@ -129,7 +129,7 @@ void CrosshairImagePanel::UpdateCrosshair(int r, int g, int b, int size)
 
 static void DrawCrosshairRect(int x, int y, int w, int h, bool additive)
 {
-	vgui::surface()->DrawFilledRect(x, y, x + w, y + h);
+	vgui2::surface()->DrawFilledRect(x, y, x + w, y + h);
 }
 
 void CrosshairImagePanel::Paint(void)
@@ -188,9 +188,9 @@ void CrosshairImagePanel::Paint(void)
 	bool additive = m_pAdditive->IsSelected();
 	/*
 	if (additive)
-		vgui::surface()->DrawSetColor(m_R, m_G, m_B, surface()->DrawGetAlphaMultiplier() * 200);
+		vgui2::surface()->DrawSetColor(m_R, m_G, m_B, surface()->DrawGetAlphaMultiplier() * 200);
 	else
-		vgui::surface()->DrawSetColor(m_R, m_G, m_B, surface()->DrawGetAlphaMultiplier() * 255);
+		vgui2::surface()->DrawSetColor(m_R, m_G, m_B, surface()->DrawGetAlphaMultiplier() * 255);
 
 	if (bDrawCircle)
 	{
@@ -262,18 +262,18 @@ void CrosshairImagePanel::Paint(void)
 	
 }
 
-COptionsSubMultiplayer::COptionsSubMultiplayer(vgui::Panel *parent) : vgui::PropertyPage(parent, "OptionsSubMultiplayer")
+COptionsSubMultiplayer::COptionsSubMultiplayer(vgui2::Panel *parent) : vgui2::PropertyPage(parent, "OptionsSubMultiplayer")
 {
-	Button *cancel = new Button(this, "Cancel", "#GameUI_Cancel");
+	vgui2::Button *cancel = new vgui2::Button(this, "Cancel", "#GameUI_Cancel");
 	cancel->SetCommand("Close");
 
-	Button *ok = new Button(this, "OK", "#GameUI_OK");
+	vgui2::Button *ok = new vgui2::Button(this, "OK", "#GameUI_OK");
 	ok->SetCommand("Ok");
 
-	Button *apply = new Button(this, "Apply", "#GameUI_Apply");
+	vgui2::Button *apply = new vgui2::Button(this, "Apply", "#GameUI_Apply");
 	apply->SetCommand("Apply");
 
-	Button *advanced = new Button(this, "Advanced", "#GameUI_AdvancedEllipsis");
+	vgui2::Button *advanced = new vgui2::Button(this, "Advanced", "#GameUI_AdvancedEllipsis");
 	advanced->SetCommand("Advanced");
 
 	m_pNameTextEntry = new CCvarTextEntry(this, "NameEntry", "name");
@@ -330,11 +330,11 @@ void COptionsSubMultiplayer::InitLogoList(CLabeledCommandComboBox *cb)
 	FileFindHandle_t fh;
 	char directory[512];
 
-	g_pFullFileSystem->RemoveFile("logos/remapped.bmp", NULL);
+	vgui2::filesystem()->RemoveFile("logos/remapped.bmp", NULL);
 
 	const char *logofile = engine->pfnGetCvarString("cl_logofile");
 	sprintf(directory, "logos/*.bmp");
-	const char *fn = g_pFullFileSystem->FindFirst(directory, &fh);
+	const char *fn = vgui2::filesystem()->FindFirst(directory, &fh);
 	int i = 0, initialItem = 0;
 
 	cb->DeleteAllItems();
@@ -363,10 +363,10 @@ void COptionsSubMultiplayer::InitLogoList(CLabeledCommandComboBox *cb)
 			i++;
 		}
 
-		fn = g_pFullFileSystem->FindNext(fh);
+		fn = vgui2::filesystem()->FindNext(fh);
 	}
 
-	g_pFullFileSystem->FindClose(fh);
+	vgui2::filesystem()->FindClose(fh);
 	cb->SetInitialItem(initialItem);
 }
 
@@ -442,7 +442,7 @@ void COptionsSubMultiplayer::InitCrosshairSizeList(CLabeledCommandComboBox *cb)
 	cb->AddItem("#GameUI_Medium", "cl_crosshair_size medium");
 	cb->AddItem("#GameUI_Large", "cl_crosshair_size large");
 
-	char *value = engine->pfnGetCvarString("cl_crosshair_size");
+	auto value = engine->pfnGetCvarString("cl_crosshair_size");
 
 	if (!value)
 		return;
@@ -472,7 +472,7 @@ void COptionsSubMultiplayer::InitCrosshairTypeList(CLabeledCommandComboBox *cb)
 	cb->AddItem("复合型", "cl_crosshair_type 3");
 	cb->AddItem("圆点型", "cl_crosshair_type 4");
 
-	char *value = engine->pfnGetCvarString("cl_crosshair_type");
+	auto value = engine->pfnGetCvarString("cl_crosshair_type");
 
 	if (!value)
 		return;
@@ -504,7 +504,7 @@ void COptionsSubMultiplayer::RemapLogo(void)
 	m_pLogoImage->setTexture("logos/remapped", true);
 }
 
-void COptionsSubMultiplayer::OnTextChanged(vgui::Panel *panel)
+void COptionsSubMultiplayer::OnTextChanged(vgui2::Panel *panel)
 {
 	if (panel == m_pNameTextEntry)
 		return;
@@ -553,7 +553,7 @@ void COptionsSubMultiplayer::RemapLogoPalette(char *filename, int r, int g, int 
 	sprintf(infile, "logos/%s.bmp", filename);
 	sprintf(outfile, "logos/remapped.bmp");
 
-	FileHandle_t file = g_pFullFileSystem->Open(infile, "rb");
+	FileHandle_t file = vgui2::filesystem()->Open(infile, "rb");
 
 	if (file == FILESYSTEM_INVALID_HANDLE)
 		return;
@@ -563,8 +563,8 @@ void COptionsSubMultiplayer::RemapLogoPalette(char *filename, int r, int g, int 
 	LPBITMAPINFO lpbmi;
 	LPBITMAPCOREINFO lpbmc;
 
-	dwFileSize = g_pFullFileSystem->Size(file);
-	g_pFullFileSystem->Read(&bmfHeader, sizeof(bmfHeader), file);
+	dwFileSize = vgui2::filesystem()->Size(file);
+	vgui2::filesystem()->Read(&bmfHeader, sizeof(bmfHeader), file);
 	outbuffer.Put(&bmfHeader, sizeof(bmfHeader));
 
 	if (bmfHeader.bfType == DIB_HEADER_MARKER)
@@ -574,7 +574,7 @@ void COptionsSubMultiplayer::RemapLogoPalette(char *filename, int r, int g, int 
 		HGLOBAL hDIB = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, dwBitsSize);
 		char *pDIB = (LPSTR)GlobalLock((HGLOBAL)hDIB);
 		{
-			g_pFullFileSystem->Read(pDIB, dwBitsSize, file);
+			vgui2::filesystem()->Read(pDIB, dwBitsSize, file);
 			lpbmi = (LPBITMAPINFO)pDIB;
 			lpbmc = (LPBITMAPCOREINFO)pDIB;
 
@@ -608,16 +608,16 @@ void COptionsSubMultiplayer::RemapLogoPalette(char *filename, int r, int g, int 
 		GlobalFree((HGLOBAL) hDIB);
 	}
 
-	g_pFullFileSystem->Close(file);
-	g_pFullFileSystem->RemoveFile(outfile, NULL);
+	vgui2::filesystem()->Close(file);
+	vgui2::filesystem()->RemoveFile(outfile, NULL);
 
-	g_pFullFileSystem->CreateDirHierarchy("logos", NULL);
-	file = g_pFullFileSystem->Open(outfile, "wb");
+	vgui2::filesystem()->CreateDirHierarchy("logos", NULL);
+	file = vgui2::filesystem()->Open(outfile, "wb");
 
 	if (file != FILESYSTEM_INVALID_HANDLE)
 	{
-		g_pFullFileSystem->Write(outbuffer.Base(), outbuffer.TellPut(), file);
-		g_pFullFileSystem->Close(file);
+		vgui2::filesystem()->Write(outbuffer.Base(), outbuffer.TellPut(), file);
+		vgui2::filesystem()->Close(file);
 	}
 }
 
@@ -683,15 +683,15 @@ void COptionsSubMultiplayer::OnApplyChanges(void)
 
 		char infile[256];
 		sprintf(infile, "logos/remapped.bmp");
-		FileHandle_t file = g_pFullFileSystem->Open(infile, "rb");
+		FileHandle_t file = vgui2::filesystem()->Open(infile, "rb");
 
 		if (file != FILESYSTEM_INVALID_HANDLE)
 		{
 			BITMAPFILEHEADER bmfHeader;
 			DWORD dwBitsSize, dwFileSize;
 
-			dwFileSize = g_pFullFileSystem->Size(file);
-			g_pFullFileSystem->Read(&bmfHeader, sizeof(bmfHeader), file);
+			dwFileSize = vgui2::filesystem()->Size(file);
+			vgui2::filesystem()->Read(&bmfHeader, sizeof(bmfHeader), file);
 
 			if (bmfHeader.bfType == DIB_HEADER_MARKER)
 			{
@@ -699,13 +699,13 @@ void COptionsSubMultiplayer::OnApplyChanges(void)
 				HGLOBAL hDIB = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, dwBitsSize);
 
 				char *pDIB = (LPSTR)GlobalLock((HGLOBAL)hDIB);
-				g_pFullFileSystem->Read(pDIB, dwBitsSize, file);
+				vgui2::filesystem()->Read(pDIB, dwBitsSize, file);
 				GlobalUnlock((HGLOBAL)hDIB);
 				UpdateLogoWAD((void *)hDIB, r, g, b);
 				GlobalFree((HGLOBAL)hDIB);
 			}
 
-			g_pFullFileSystem->Close(file);
+			vgui2::filesystem()->Close(file);
 		}
 	}
 }
@@ -723,7 +723,7 @@ void COptionsSubMultiplayer::ApplyCrosshairColorChanges(void)
 	}
 }
 
-Panel *COptionsSubMultiplayer::CreateControlByName(const char *controlName)
+vgui2::Panel *COptionsSubMultiplayer::CreateControlByName(const char *controlName)
 {
 	if (!Q_stricmp("CCvarToggleCheckButton", controlName))
 	{

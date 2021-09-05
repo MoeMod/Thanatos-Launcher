@@ -4,7 +4,7 @@
 //#include "BaseUI.h"
 #include "links.h"
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <IClientVGUI.h>
 
 #include <vgui/IScheme.h>
@@ -21,6 +21,8 @@ HMODULE (WINAPI *g_pfnLoadLibraryA)(LPCSTR lpLibFileName) = NULL;
 hook_t *g_phLoadLibraryA;
 FARPROC(WINAPI *g_pfnGetProcAddress)(HMODULE hModule, LPCSTR lpProcName) = NULL;
 hook_t *g_phGetProcAddress;
+HMODULE(WINAPI* g_pfnGetModuleHandleA)(LPCSTR lpLibFileName) = NULL;
+hook_t* g_phGetModuleHandleA;
 BOOL(WINAPI *g_pfnFreeLibrary)(HMODULE hLibModule) = NULL;
 hook_t *g_phFreeLibrary;
 
@@ -44,13 +46,7 @@ void *Hook_VGUI2_CreateInterfaceFn(const char *pName, int *pReturnCode)
 {
 	void *p = CreateInterface(pName, pReturnCode);
 
-	if (p)
-	{
-		if (!strcmp(pName, VGUI_SCHEME_INTERFACE_VERSION)) // IScheme
-			return p;
-	}
-	
-	return g_pfnVGUI2_CreateInterfaceFn(pName, pReturnCode);
+	return p;
 }
 
 int Hook_EmptyFunction(...)
@@ -63,13 +59,13 @@ FARPROC WINAPI Hook_GetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 	if (g_hThisModule == hModule)
 	{
 		FARPROC result = g_pfnGetProcAddress(hModule, lpProcName);
-
+		/*
 		if (!result)
 		{
 			if (!strncmp(lpProcName, "Steam_", 6))
 				return (FARPROC)Hook_EmptyFunction;
 		}
-
+		*/
 		return result;
 	}
 
@@ -87,11 +83,13 @@ FARPROC WINAPI Hook_GetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 
 HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 {
+	/*
 	if (!g_bIsUseSteam)
 	{
 		if (strstr(lpLibFileName, "steamclient.dll"))
 			return g_hThisModule;
 	}
+	*/
 	if (strstr(lpLibFileName, "cl_dlls\\GameUI.dll"))
 	{
 		return g_hThisModule;
@@ -102,7 +100,7 @@ HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 	}
 	if (strstr(lpLibFileName, "vgui2.dll"))
 	{
-		return g_hVGUI2Module = g_pfnLoadLibraryA(lpLibFileName);
+		return g_hThisModule;
 	}
 	if (g_dwEngineBuildnum >= 5953)
 	{
@@ -138,6 +136,11 @@ HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 	return g_pfnLoadLibraryA(lpLibFileName);
 }
 
+HMODULE WINAPI Hook_GetModuleHandleA(LPCSTR lpLibFileName)
+{
+	return g_pfnGetModuleHandleA(lpLibFileName);
+}
+
 BOOL WINAPI Hook_FreeLibrary(HMODULE hLibModule)
 {
 	if (hLibModule == g_hThisModule)
@@ -152,6 +155,7 @@ void Module_InstallHook(void)
 	
 	g_phLoadLibraryA = g_pMetaHookAPI->InlineHook((void *)LoadLibraryA, Hook_LoadLibraryA, (void *&)g_pfnLoadLibraryA);
 	g_phGetProcAddress = g_pMetaHookAPI->InlineHook((void *)GetProcAddress, Hook_GetProcAddress, (void *&)g_pfnGetProcAddress);
+	g_phGetModuleHandleA = g_pMetaHookAPI->InlineHook((void*)GetModuleHandleA, Hook_GetModuleHandleA, (void*&)g_pfnGetModuleHandleA);
 	g_phFreeLibrary = g_pMetaHookAPI->InlineHook((void *)FreeLibrary, Hook_FreeLibrary, (void *&)g_pfnFreeLibrary);
 }
 

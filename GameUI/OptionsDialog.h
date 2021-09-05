@@ -3,14 +3,12 @@
 #include "vgui_controls/PropertyDialog.h"
 #include "vgui_controls/KeyRepeat.h"
 
-using namespace vgui;
-
-class COptionsDialog : public vgui::PropertyDialog
+class COptionsDialog : public vgui2::PropertyDialog
 {
-	DECLARE_CLASS_SIMPLE(COptionsDialog, vgui::PropertyDialog);
+	DECLARE_CLASS_SIMPLE(COptionsDialog, vgui2::PropertyDialog);
 
 public:
-	COptionsDialog(vgui::Panel *parent);
+	COptionsDialog(vgui2::Panel *parent);
 	~COptionsDialog(void);
 
 public:

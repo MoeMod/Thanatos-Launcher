@@ -20,12 +20,12 @@
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 #endif
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent) : MessageBox(title, queryText,parent)
+QueryBox::QueryBox(const char *title, const char *queryText, Panel *parent) : MessageBox(title, queryText,parent)
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");
@@ -41,7 +41,7 @@ QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-QueryBox::QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText,vgui::Panel *parent) : MessageBox(wszTitle, wszQueryText,parent)
+QueryBox::QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText, Panel *parent) : MessageBox(wszTitle, wszQueryText,parent)
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");

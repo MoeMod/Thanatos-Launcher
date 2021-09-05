@@ -12,11 +12,24 @@
 #pragma once
 #endif
 
+// undefine windows function macros that overlap 
+#ifdef PostMessage
+#undef PostMessage
+#endif
+
+#ifdef SetCursor
+#undef SetCursor
+#endif
+
+#ifdef GetClassName
+#undef GetClassName
+#endif
+
 #include <tier1/utlvector.h>
 #include <tier1/utlflags.h>
 #include <tier1/utlsymbol.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/Dar.h>
 #include <vgui/IClientPanel.h>
 #include <vgui/IScheme.h>
@@ -32,22 +45,13 @@
 #include "PanelAnimationVar.h"
 #include "BuildGroup.h"
 
-#include <Color.h>
+#include "Color.h"
 
 #include <vstdlib/IKeyValuesSystem.h>
 
-// undefine windows function macros that overlap 
-#ifdef PostMessage
-#undef PostMessage
-#endif
-
-#ifdef SetCursor
-#undef SetCursor
-#endif
-
 class CUtlBuffer;
 
-namespace vgui
+namespace vgui2
 {
 
 #if !defined( _X360 )
@@ -514,7 +518,7 @@ public:
 	virtual bool	CanStartDragging( int startx, int starty, int mx, int my );
 
 	// Draws a filled rect of specified bounds, but omits the bounds of the skip panel from those bounds
-	virtual void FillRectSkippingPanel( Color& clr, int x, int y, int w, int h, Panel *skipPanel );
+	virtual void FillRectSkippingPanel(const Color& clr, int x, int y, int w, int h, Panel *skipPanel );
 
 	virtual int	GetPaintBackgroundType();
 	virtual void GetCornerTextureSize( int& w, int& h );
@@ -687,7 +691,7 @@ private:
 
 	// 1 == Textured (TextureId1 only)
 	// 2 == Rounded Corner Box
-	CPanelAnimationVar(int, m_nPaintBackgroundType, "PaintBackgroundType", "0");
+	CPanelAnimationVar( int, m_nPaintBackgroundType, "PaintBackgroundType", "0" );
 	CPanelAnimationVarAliasType(int, m_nBgTextureId1, "Texture1", "gfx/vgui/hud/800corner1", "textureid");
 	CPanelAnimationVarAliasType(int, m_nBgTextureId2, "Texture2", "gfx/vgui/hud/800corner2", "textureid");
 	CPanelAnimationVarAliasType(int, m_nBgTextureId3, "Texture3", "gfx/vgui/hud/800corner3", "textureid");

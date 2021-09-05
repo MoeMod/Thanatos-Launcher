@@ -20,9 +20,9 @@
 #include <vgui_controls/ImagePanel.h>
 #include <vgui_controls/MessageBox.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-CFavoriteGames::CFavoriteGames(vgui::Panel *parent) : CBaseGamesPage(parent, "FavoriteGames")
+CFavoriteGames::CFavoriteGames(vgui2::Panel *parent) : CBaseGamesPage(parent, "FavoriteGames")
 {
 	m_bRefreshOnListReload = false;
 }

@@ -15,7 +15,7 @@
 #include <tier0/memdbgon.h>
 
 #include <stdio.h>
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -41,7 +41,7 @@ WizardSubPanel::~WizardSubPanel()
 void WizardSubPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	SetBgColor(GetSchemeColor("SubPanelBgColor",pScheme));
+	SetBgColor(GetSchemeColor("WizardSubPanel.BgColor", GetSchemeColor("SubPanelBgColor", pScheme), pScheme));
 }
 
 //-----------------------------------------------------------------------------

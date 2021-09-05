@@ -12,7 +12,7 @@
 
 #define PANEL_GRAPHICMENU "graphic_menu"
 
-using namespace vgui;
+using namespace vgui2;
 
 class CCSBTEGraphicMenu : public CClassMenu
 {
@@ -32,7 +32,7 @@ public:
 public:
 	virtual void PaintBackground(void);
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	Panel *CreateControlByName(const char *controlName);

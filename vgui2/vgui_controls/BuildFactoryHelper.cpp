@@ -10,7 +10,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 // Start with empty list
 CBuildFactoryHelper *CBuildFactoryHelper::m_sHelpers = NULL;
@@ -51,7 +51,7 @@ char const *CBuildFactoryHelper::GetClassName() const
 	return m_pClassName;
 }
 
-vgui::Panel *CBuildFactoryHelper::CreatePanel()
+vgui2::Panel *CBuildFactoryHelper::CreatePanel()
 {
 	if ( !m_CreateFunc )
 		return NULL;
@@ -74,7 +74,7 @@ bool CBuildFactoryHelper::HasFactory( char const *className )
 }
 
 // static method
-vgui::Panel *CBuildFactoryHelper::InstancePanel( char const *className )
+vgui2::Panel *CBuildFactoryHelper::InstancePanel( char const *className )
 {
 	CBuildFactoryHelper *p = m_sHelpers;
 	while ( p )

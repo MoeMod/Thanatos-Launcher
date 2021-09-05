@@ -7,9 +7,9 @@
 #include <vgui_controls/Label.h>
 #include <vgui_controls/TextEntry.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-CDialogServerPassword::CDialogServerPassword(vgui::Panel *parent) : Frame(parent, "DialogServerPassword")
+CDialogServerPassword::CDialogServerPassword(vgui2::Panel *parent) : Frame(parent, "DialogServerPassword")
 {
 	
 }

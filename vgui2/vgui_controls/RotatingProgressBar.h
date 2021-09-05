@@ -12,12 +12,12 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 #include "ProgressBar.h"
 
-namespace vgui
+namespace vgui2
 {
 
 	//-----------------------------------------------------------------------------

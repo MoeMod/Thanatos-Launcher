@@ -50,7 +50,7 @@ const wchar_t *WeaponIDToDisplayName(WeaponIdType weaponID)
 	for (int i = 0; weaponDisplayNameInfo[i].displayName; ++i)
 	{
 		if (weaponDisplayNameInfo[i].id == weaponID)
-			return g_pVGuiLocalize->Find(weaponDisplayNameInfo[i].displayName);
+			return vgui2::localize()->Find(weaponDisplayNameInfo[i].displayName);
 	}
 
 	return NULL;

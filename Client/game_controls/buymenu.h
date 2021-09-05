@@ -11,15 +11,15 @@
 
 class CBuySubMenu;
 
-namespace vgui
+namespace vgui2
 {
 	class Panel;
 }
 
-class CBuyMenu : public vgui::WizardPanel, public CViewPortPanel
+class CBuyMenu : public vgui2::WizardPanel, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CBuyMenu, vgui::WizardPanel);
+	DECLARE_CLASS_SIMPLE(CBuyMenu, vgui2::WizardPanel);
 
 public:
 	CBuyMenu(void);

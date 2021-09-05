@@ -8,38 +8,38 @@
 #include <vgui_controls/ListPanel.h>
 #include <vgui_controls/PropertyPage.h>
 #include "ServerList.h"
-#include "IServerRefreshResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
 #include "server.h"
 #include "IGameList.h"
 
 class CBaseGamesPage;
 
-class CGameListPanel : public vgui::ListPanel
+class CGameListPanel : public vgui2::ListPanel
 {
 public:
-	DECLARE_CLASS_SIMPLE(CGameListPanel, vgui::ListPanel);
+	DECLARE_CLASS_SIMPLE(CGameListPanel, vgui2::ListPanel);
 
 public:
 	CGameListPanel(CBaseGamesPage *pOuter, const char *pName);
 
 public:
-	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code);
 
 private:
 	CBaseGamesPage *m_pOuter;
 };
 
-class CBaseGamesPage : public vgui::PropertyPage, public IServerRefreshResponse, public IGameList
+class CBaseGamesPage : public vgui2::PropertyPage, public IServerRefreshResponse, public IGameList
 {
-	DECLARE_CLASS_SIMPLE(CBaseGamesPage, vgui::PropertyPage);
+	DECLARE_CLASS_SIMPLE(CBaseGamesPage, vgui2::PropertyPage);
 
 public:
-	CBaseGamesPage(vgui::Panel *parent, const char *name, const char *pCustomResFilename = NULL);
+	CBaseGamesPage(vgui2::Panel *parent, const char *name, const char *pCustomResFilename = NULL);
 	~CBaseGamesPage(void);
 
 public:
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	virtual serveritem_t &GetServer(unsigned int serverID);
@@ -58,7 +58,7 @@ public:
 
 protected:
 	virtual void OnCommand(const char *command);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
 	virtual void OnSaveFilter(KeyValues *filter);
 	virtual void OnLoadFilter(KeyValues *filter);
 	virtual void OnPageShow(void);
@@ -96,15 +96,15 @@ protected:
 protected:
 	CGameListPanel *m_pGameList;
 	CServerList m_Servers;
-	vgui::ComboBox *m_pLocationFilter;
+	vgui2::ComboBox *m_pLocationFilter;
 
-	vgui::Button *m_pConnect;
-	vgui::Button *m_pRefreshAll;
-	vgui::Button *m_pRefreshQuick;
-	vgui::Button *m_pAddServer;
-	vgui::Button *m_pAddCurrentServer;
-	vgui::Button *m_pAddToFavoritesButton;
-	vgui::ToggleButton *m_pFilter;
+	vgui2::Button *m_pConnect;
+	vgui2::Button *m_pRefreshAll;
+	vgui2::Button *m_pRefreshQuick;
+	vgui2::Button *m_pAddServer;
+	vgui2::Button *m_pAddCurrentServer;
+	vgui2::Button *m_pAddToFavoritesButton;
+	vgui2::ToggleButton *m_pFilter;
 
 	int m_iServerRefreshCount;
 
@@ -114,19 +114,19 @@ private:
 private:
 	const char *m_pCustomResFilename;
 
-	vgui::ComboBox *m_pGameFilter;
-	vgui::TextEntry *m_pMapFilter;
-	vgui::ComboBox *m_pPingFilter;
-	vgui::ComboBox *m_pSecureFilter;
-	vgui::CheckButton *m_pNoFullServersFilterCheck;
-	vgui::CheckButton *m_pNoEmptyServersFilterCheck;
-	vgui::CheckButton *m_pNoPasswordFilterCheck;
-	vgui::Label *m_pFilterString;
+	vgui2::ComboBox *m_pGameFilter;
+	vgui2::TextEntry *m_pMapFilter;
+	vgui2::ComboBox *m_pPingFilter;
+	vgui2::ComboBox *m_pSecureFilter;
+	vgui2::CheckButton *m_pNoFullServersFilterCheck;
+	vgui2::CheckButton *m_pNoEmptyServersFilterCheck;
+	vgui2::CheckButton *m_pNoPasswordFilterCheck;
+	vgui2::Label *m_pFilterString;
 	char m_szComboAllText[64];
 
 	KeyValues *m_pFilters;
 	bool m_bFiltersVisible;
-	vgui::HFont m_hFont;
+	vgui2::HFont m_hFont;
 
 	char m_szGameFilter[32];
 	char m_szMapFilter[32];

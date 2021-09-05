@@ -6,7 +6,7 @@
 #endif
 
 #include <interface.h>
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/KeyCode.h>
 
 #ifdef PlaySound
@@ -19,7 +19,7 @@
 
 class KeyValues;
 
-namespace vgui
+namespace vgui2
 {
 
 class ISystem : public IBaseInterface

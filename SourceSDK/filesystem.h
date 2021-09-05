@@ -130,6 +130,4 @@ public:
 
 #define FILESYSTEM_INTERFACE_VERSION "VFileSystem009"
 
-extern IFileSystem *g_pFullFileSystem;
-
 #endif

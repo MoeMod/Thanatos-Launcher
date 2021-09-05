@@ -4,7 +4,7 @@
 
 #include <set>
 
-using namespace vgui;
+using namespace vgui2;
 
 HScheme (__fastcall *g_pfnCSchemeManager_LoadSchemeFromFile)(void *pthis, int, const char *fileName, const char *tag);
 void (__fastcall *g_pfnCSchemeManager_ReloadSchemes)(void *pthis, int);
@@ -102,7 +102,7 @@ HTexture CNewSchemeManager::GetImageID(const char *imageName, bool hardwareFilte
 	return g_pfnCSchemeManager_GetImageID(this, 0, imageName, hardwareFiltered);
 }
 
-void SchemeManager_InstallHook(vgui::ISchemeManager *pSchemeManager)
+void SchemeManager_InstallHook(vgui2::ISchemeManager *pSchemeManager)
 {
 	g_pSchemeManager = pSchemeManager;
 

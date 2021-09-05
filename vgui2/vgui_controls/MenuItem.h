@@ -12,12 +12,12 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Button.h"
 #include "Menu.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class IBorder;
@@ -39,7 +39,6 @@ public:
 	~MenuItem();
 
 	virtual void Paint();
-	virtual void PaintBorder() { ; }
 	virtual void PaintBackground() { Label::PaintBackground(); }
 
 	// Activate the menu item as if it had been selected by the user

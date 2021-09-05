@@ -13,12 +13,13 @@
 #include "vgui_controls/MessageBox.h"
 
 #include "KeyValues.h"
+#include <IEngineVGui.h>
 #include <IGameUIFuncs.h>
 #include <IBaseUI.h>
-#include <IServerBrowser.h>
+#include <ServerBrowser/IServerBrowser.h>
 #include <IVGuiModule.h>
 
-#include <vgui/IEngineVGui.h>
+#include <IEngineVGui.h>
 #include <vgui/ILocalize.h>
 #include <vgui/IPanel.h>
 #include <vgui/IScheme.h>
@@ -26,33 +27,32 @@
 #include <vgui/ISystem.h>
 #include <vgui/ISurface.h>
 
-#include "vgui2.h"
-#include "vgui_internal.h"
-
 
 #include "BasePanel.h"
 #include "ModInfo.h"
 #include "GameConsole.h"
 #include "LoadingDialog.h"
-#include "GameLoading.h"
 
 #include "GameUI_Interface.h"
 
 IServerBrowser *serverbrowser = NULL;
 static CBasePanel *staticPanel = NULL;
+static IEngineVGui* enginevguifuncs = nullptr;
+IGameUIFuncs* gameuifuncs = nullptr;
+IBaseUI* baseuifuncs = nullptr;
+cl_enginefunc_t* engine = nullptr;
 
 static CGameUI g_GameUI;
 CGameUI *g_pGameUI = NULL;
 
-vgui::DHANDLE<CLoadingDialog> g_hLoadingDialog;
-vgui::DHANDLE<CGameLoading>g_hGameLoading;
+vgui2::DHANDLE<CLoadingDialog> g_hLoadingDialog;
 
 CGameUI &GameUI(void)
 {
 	return g_GameUI;
 }
 
-vgui::Panel *StaticPanel(void)
+vgui2::Panel *StaticPanel(void)
 {
 	return staticPanel;
 }
@@ -73,14 +73,12 @@ CGameUI::~CGameUI(void)
 
 void CGameUI::Initialize(CreateInterfaceFn *factories, int count)
 {
-	if (!vgui::VGui_InitInterfacesList("GameUI", factories, count))
+	if (!vgui2::VGuiControls_Init("GameUI", factories, count))
 		return;
 
-	vgui::localize()->AddFile(g_pFullFileSystem, "Resource/gameui_%language%.txt");
-	vgui::localize()->AddFile(g_pFullFileSystem, "Resource/valve_%language%.txt");
-	vgui::localize()->AddFile(g_pFullFileSystem, "Resource/vgui_%language%.txt");
-
-	ModInfo().LoadCurrentGameInfo();
+	vgui2::localize()->AddFile(vgui2::filesystem(), "Resource/gameui_%language%.txt");
+	vgui2::localize()->AddFile(vgui2::filesystem(), "Resource/valve_%language%.txt");
+	vgui2::localize()->AddFile(vgui2::filesystem(), "Resource/vgui_%language%.txt");
 
 	staticPanel = new CBasePanel();
 	staticPanel->SetBounds(0, 0, 400, 300);
@@ -90,7 +88,15 @@ void CGameUI::Initialize(CreateInterfaceFn *factories, int count)
 	staticPanel->SetVisible(true);
 	staticPanel->SetMouseInputEnabled(false);
 	staticPanel->SetKeyBoardInputEnabled(false);
-	staticPanel->SetParent(enginevguifuncs->GetPanel(vgui::PANEL_GAMEUIDLL));
+
+
+	auto pEngFactory = factories[0];
+	gameuifuncs = static_cast<IGameUIFuncs*>(pEngFactory(ENGINE_GAMEUIFUNCS_INTERFACE_VERSION, nullptr));
+	enginevguifuncs = static_cast<IEngineVGui*>(pEngFactory(VENGINE_VGUI_VERSION, nullptr));
+
+	staticPanel->SetParent(enginevguifuncs->GetPanel(PANEL_GAMEUIDLL));
+
+	baseuifuncs = static_cast<IBaseUI*>(pEngFactory(BASEUI_INTERFACE_VERSION, nullptr));
 
 	/*
 	HINTERFACEMODULE hServerBrowser = Sys_LoadModule("platform\\servers\\serverbrowser.dll");
@@ -115,13 +121,17 @@ void CGameUI::Initialize(CreateInterfaceFn *factories, int count)
 
 	if (serverbrowser)
 		serverbrowser->SetParent(staticPanel->GetVPanel());
-		
 	
-	vgui::surface()->SetAllowHTMLJavaScript(true);
+	vgui2::surface()->SetAllowHTMLJavaScript(true);
 }
 
 void CGameUI::Start(struct cl_enginefuncs_s *engineFuncs, int interfaceVersion, void *system)
 {
+	//memcpy(&gEngfuncs, engineFuncs, sizeof(gEngfuncs));
+	engine = &gEngfuncs;
+
+	ModInfo().LoadCurrentGameInfo();
+	
 	if (serverbrowser)
 	{
 		serverbrowser->ActiveGameName(ModInfo().GetGameDescription(), engine->pfnGetGameDirectory());
@@ -186,7 +196,7 @@ int CGameUI::HasExclusiveInput(void)
 void CGameUI::RunFrame(void)
 {
 	int wide, tall;
-	vgui::surface()->GetScreenSize(wide, tall);
+	vgui2::surface()->GetScreenSize(wide, tall);
 	staticPanel->SetSize(wide, tall);
 
 	if (staticPanel->IsVisible())
@@ -208,7 +218,7 @@ void CGameUI::ConnectToServer(const char *game, int IP, int port)
 	pKV->SetInt("port", port);
 	pKV->SetString("gamedir", game);
 
-	vgui::ivgui()->PostMessageA(serverbrowserModule->GetPanel(), pKV, staticPanel->GetVPanel());*/
+	vgui2::ivgui()->PostMessageA(serverbrowserModule->GetPanel(), pKV, staticPanel->GetVPanel());*/
 }
 
 void CGameUI::DisconnectFromServer(void)
@@ -251,14 +261,6 @@ void CGameUI::LoadingStarted(const char *resourceType, const char *resourceName)
 {
 	m_bLoadlingLevel = true;
 
-	/*if (!g_hGameLoading.Get())
-	{
-		VPANEL GameUIPanel = enginevguifuncs->GetPanel(PANEL_GAMEUIDLL);
-		g_hGameLoading = new CGameLoading(NULL, "GameLoading");
-		g_hGameLoading->SetParent(GameUIPanel);
-	}
-	g_hGameLoading->Activate();*/
-
 	engine->pfnClientCmd("unpause");
 	engine->pfnClientCmd("hideconsole");
 	GameConsole().Hide();
@@ -270,37 +272,12 @@ void CGameUI::LoadingFinished(const char *resourceType, const char *resourceName
 {
 	m_bLoadlingLevel = false;
 
-	if (g_hGameLoading.Get())
-	{
-		g_hGameLoading->SetVisible(false);
-		g_hGameLoading->SetAutoDelete(true);
-	}
-
 	staticPanel->OnLevelLoadingFinished();
 	baseuifuncs->HideGameUI();
 }
 
 void CGameUI::StartProgressBar(const char *progressType, int progressSteps)
 {
-	if (g_hGameLoading.Get())
-	{
-		if (g_hGameLoading->IsVisible())
-		{
-			g_hGameLoading->SetProgressRange(0, progressSteps);
-			g_hGameLoading->SetProgressPoint(0.0f);
-
-			if (!stricmp(progressType, "Server"))
-			{
-				g_hGameLoading->SetProgressVisible(false);
-			}
-			else if (!stricmp(progressType, "Connecting"))
-			{
-				g_hGameLoading->SetProgressVisible(true);
-			}
-
-			return;
-		}
-	}
 
 	if (!g_hLoadingDialog.Get())
 		g_hLoadingDialog = new CLoadingDialog(staticPanel);
@@ -313,13 +290,6 @@ void CGameUI::StartProgressBar(const char *progressType, int progressSteps)
 
 int CGameUI::ContinueProgressBar(int progressPoint, float progressFraction)
 {
-	if (g_hGameLoading.Get())
-	{
-		if (g_hGameLoading->IsVisible())
-		{
-			return g_hGameLoading->SetProgressPoint(progressPoint);
-		}
-	}
 
 	if (!g_hLoadingDialog.Get())
 	{
@@ -335,13 +305,6 @@ int CGameUI::ContinueProgressBar(int progressPoint, float progressFraction)
 
 void CGameUI::StopProgressBar(bool bError, const char *failureReason, const char *extendedReason)
 {
-	if (g_hGameLoading.Get())
-	{
-		if (g_hGameLoading->IsVisible())
-		{
-			return;
-		}
-	}
 
 	if (!g_hLoadingDialog.Get() && bError)
 		g_hLoadingDialog = new CLoadingDialog(staticPanel);
@@ -362,14 +325,6 @@ void CGameUI::StopProgressBar(bool bError, const char *failureReason, const char
 
 int CGameUI::SetProgressBarStatusText(const char *statusText)
 {
-	if (g_hGameLoading.Get())
-	{
-		if (g_hGameLoading->IsVisible())
-		{
-			g_hGameLoading->SetStatusText(statusText);
-			return false;
-		}
-	}
 
 	if (!g_hLoadingDialog.Get())
 		return false;
@@ -387,11 +342,6 @@ int CGameUI::SetProgressBarStatusText(const char *statusText)
 
 void CGameUI::SetSecondaryProgressBar(float progress)
 {
-	if (g_hGameLoading.Get())
-	{
-		if (g_hGameLoading->IsVisible())
-			return;
-	}
 
 	if (!g_hLoadingDialog.Get())
 		return;

@@ -15,7 +15,7 @@
 
 #include "newmouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSBTEGraphicMenu::CCSBTEGraphicMenu(void) : CClassMenu(PANEL_GRAPHICMENU)
 {
@@ -75,7 +75,7 @@ void CCSBTEGraphicMenu::PerformLayout(void)
 	BaseClass::PerformLayout();
 }
 
-void CCSBTEGraphicMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSBTEGraphicMenu::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }

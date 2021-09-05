@@ -18,7 +18,7 @@
 
 #include "CounterStrikeViewport.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSTextWindow::CCSTextWindow(void) : CTextWindow()
 {
@@ -97,7 +97,7 @@ void CCSTextWindow::PerformLayout()
 	BaseClass::PerformLayout();
 }
 
-void CCSTextWindow::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSTextWindow::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -112,9 +112,9 @@ void CCSTextWindow::ShowMapBriefing(void)
 	Q_FileBase(mapname, newname, sizeof(newname));
 	Q_snprintf(m_szMOTD, sizeof(m_szMOTD), "maps/%s.txt", newname);
 
-	if (!g_pFullFileSystem->FileExists(m_szMOTD))
+	if (!filesystem()->FileExists(m_szMOTD))
 	{
-		if (g_pFullFileSystem->FileExists("maps/default.txt"))
+		if (filesystem()->FileExists("maps/default.txt"))
 			Q_snprintf(m_szMOTD, sizeof(m_szMOTD), "maps/default.txt");
 	}
 

@@ -20,7 +20,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY( AnalogBar );
 
@@ -294,9 +294,9 @@ bool AnalogBar::ConstructTimeRemainingString(wchar_t *output, int outputBufferSi
 	if (minutesRemaining > 0)
 	{
 		wchar_t unicodeMinutes[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(minutesBuf, unicodeMinutes, sizeof( unicodeMinutes ));
+		localize()->ConvertANSIToUnicode(minutesBuf, unicodeMinutes, sizeof( unicodeMinutes ));
 		wchar_t unicodeSeconds[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
+		localize()->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
 
 		const char *unlocalizedString = "#vgui_TimeLeftMinutesSeconds";
 		if (minutesRemaining == 1 && secondsRemaining == 1)
@@ -318,13 +318,13 @@ bool AnalogBar::ConstructTimeRemainingString(wchar_t *output, int outputBufferSi
 		{
 			Q_strncat(unlocString, "Remaining", sizeof(unlocString ), COPY_ALL_CHARACTERS);
 		}
-		g_pVGuiLocalize->ConstructString(output, outputBufferSizeInBytes, g_pVGuiLocalize->Find(unlocString), 2, unicodeMinutes, unicodeSeconds);
+		localize()->ConstructString(output, outputBufferSizeInBytes, localize()->Find(unlocString), 2, unicodeMinutes, unicodeSeconds);
 
 	}
 	else if (secondsRemaining > 0)
 	{
 		wchar_t unicodeSeconds[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
+		localize()->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
 
 		const char *unlocalizedString = "#vgui_TimeLeftSeconds";
 		if (secondsRemaining == 1)
@@ -337,7 +337,7 @@ bool AnalogBar::ConstructTimeRemainingString(wchar_t *output, int outputBufferSi
 		{
 			Q_strncat(unlocString, "Remaining",sizeof(unlocString), COPY_ALL_CHARACTERS);
 		}
-		g_pVGuiLocalize->ConstructString(output, outputBufferSizeInBytes, g_pVGuiLocalize->Find(unlocString), 1, unicodeSeconds);
+		localize()->ConstructString(output, outputBufferSizeInBytes, localize()->Find(unlocString), 1, unicodeSeconds);
 	}
 	else
 	{

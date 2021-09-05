@@ -11,7 +11,7 @@
 #define MAX_HOSTAGES 24
 #endif
 
-namespace vgui
+namespace vgui2
 {
 class CHudRadar : public Panel, public CHudElement
 {
@@ -29,7 +29,7 @@ public:
 	void RenderMapSprite(void);
 	void CalcRefdef(struct ref_params_s *pparams);
 	void Paint(void);
-	void ApplySchemeSettings(vgui::IScheme *pScheme);
+	void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	void BuildHostageList(void);
 	bool IsValidEntity(cl_entity_s *pEntity);
 	bool CalcPoint(float *origin, int &screenX, int &screenY, int &scale);
@@ -39,7 +39,7 @@ public:
 	DECLARE_HUD_ELEMENT_SIMPLE();
 
 private:
-	vgui::HFont m_hHudFont;
+	vgui2::HFont m_hHudFont;
 	float m_flNextBuild;
 	struct cl_entity_s *m_pHostages[MAX_HOSTAGES + 1];
 	bool m_bCanRenderMapSprite;

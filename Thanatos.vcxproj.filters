@@ -469,21 +469,6 @@
     <ClCompile Include="SourceSDK\deadborder.cpp">
       <Filter>SourceSDK</Filter>
     </ClCompile>
-    <ClCompile Include="vgui2\Border.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
-    <ClCompile Include="vgui2\Bitmap.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
-    <ClCompile Include="vgui2\vgui2.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
-    <ClCompile Include="vgui2\Scheme.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
-    <ClCompile Include="vgui2\Input.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
     <ClCompile Include="FuckWorld\Hook_Scheme.cpp">
       <Filter>FuckWorld</Filter>
     </ClCompile>
@@ -697,9 +682,6 @@
     <ClCompile Include="Client\input.cpp">
       <Filter>Client</Filter>
     </ClCompile>
-    <ClCompile Include="vgui2\Clip2D.cpp">
-      <Filter>vgui2</Filter>
-    </ClCompile>
     <ClCompile Include="Client\ammo.cpp">
       <Filter>Client\HUD</Filter>
     </ClCompile>
@@ -892,11 +874,62 @@
     <ClCompile Include="FuckWorld\Info.cpp">
       <Filter>FuckWorld</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\GameLoading.cpp">
-      <Filter>GameUI</Filter>
-    </ClCompile>
     <ClCompile Include="Client\z4e_damagestar.cpp">
       <Filter>Client\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\vgui_surfacelib\FontManager.cpp">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\vgui_surfacelib\Win32Font.cpp">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\vgui_surfacelib\FontAmalgam.cpp">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\MemoryBitmap.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\Scheme.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\system_win32.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\UnicodeFileHelpers.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\vgui.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\vgui_key_translation.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\VGuiKeyValues.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\VPanel.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\VPanelWrapper.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\Bitmap.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\Border.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\HtmlWindow.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\input.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="vgui2\LocalizedStringTable.cpp">
+      <Filter>vgui2</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceSDK\deadinput.cpp">
+      <Filter>SourceSDK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -987,9 +1020,6 @@
     <ClInclude Include="Interface\VGUI\IClientPanel.h">
       <Filter>Interface\VGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Interface\VGUI\IEngineVGui.h">
-      <Filter>Interface\VGUI</Filter>
-    </ClInclude>
     <ClInclude Include="Interface\VGUI\IHTML.h">
       <Filter>Interface\VGUI</Filter>
     </ClInclude>
@@ -1024,9 +1054,6 @@
       <Filter>Interface\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="Interface\VGUI\MouseCode.h">
-      <Filter>Interface\VGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Interface\VGUI\VGUI.h">
       <Filter>Interface\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="Interface\VGUI\Cursor.h">
@@ -1659,18 +1686,6 @@
     <ClInclude Include="vgui2\vgui_controls\AnimatingImagePanel.h">
       <Filter>vgui2\vgui_controls</Filter>
     </ClInclude>
-    <ClInclude Include="vgui2\bitmap.h">
-      <Filter>vgui2</Filter>
-    </ClInclude>
-    <ClInclude Include="vgui2\VGUI_Border.h">
-      <Filter>vgui2</Filter>
-    </ClInclude>
-    <ClInclude Include="vgui2\vgui2.h">
-      <Filter>vgui2</Filter>
-    </ClInclude>
-    <ClInclude Include="vgui2\Input.h">
-      <Filter>vgui2</Filter>
-    </ClInclude>
     <ClInclude Include="FuckWorld\Hook_Scheme.h">
       <Filter>FuckWorld</Filter>
     </ClInclude>
@@ -1893,9 +1908,6 @@
     <ClInclude Include="Client\inputw32.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="vgui2\Clip2D.h">
-      <Filter>vgui2</Filter>
-    </ClInclude>
     <ClInclude Include="Client\entity.h">
       <Filter>Client</Filter>
     </ClInclude>
@@ -2050,11 +2062,80 @@
     <ClInclude Include="FuckWorld\Info.h">
       <Filter>FuckWorld</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI\GameLoading.h">
-      <Filter>GameUI</Filter>
-    </ClInclude>
     <ClInclude Include="Client\z4e_damagestar.h">
       <Filter>Client\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\vgui_surfacelib\FontManager.h">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\vgui_surfacelib\Win32Font.h">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\vgui_surfacelib\FontAmalgam.h">
+      <Filter>vgui2\vgui_surfacelib</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\LocalizedStringTable.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\Memorybitmap.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\system_win32.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\UnicodeFileHelpers.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\vgui.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\vgui_key_translation.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\VGuiKeyValues.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\VPanel.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\VPanelWrapper.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\Bitmap.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\Border.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\HtmlWindow.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="vgui2\input.h">
+      <Filter>vgui2</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceSDK\vstdlib\strtools.h">
+      <Filter>SourceSDK\vstdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IEngineVGui.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\VGUI\IClientVGUI.h">
+      <Filter>Interface\VGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\VGUI\IKeyValues.h">
+      <Filter>Interface\VGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\VGUI\ISchemeManager.h">
+      <Filter>Interface\VGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\VGUI\Vertex_t.h">
+      <Filter>Interface\VGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\VGUI\VGUI2.h">
+      <Filter>Interface\VGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceSDK\tier1\UtlPriorityQueue.h">
+      <Filter>SourceSDK\tier1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2177,6 +2258,9 @@
     </Filter>
     <Filter Include="ServerBrowser">
       <UniqueIdentifier>{5b2264d4-f2ba-4952-b84e-6631bb9faf1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vgui2\vgui_surfacelib">
+      <UniqueIdentifier>{78f1c3c0-b332-4a67-ad38-be8b5e576403}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

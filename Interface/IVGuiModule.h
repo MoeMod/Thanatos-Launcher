@@ -12,7 +12,7 @@
 #endif
 
 #include "interface.h"
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 //-----------------------------------------------------------------------------
 // Purpose: Standard interface to loading vgui modules
@@ -44,10 +44,10 @@ public:
 	virtual void Shutdown() = 0;
 
 	// returns a handle to the main module panel
-	virtual vgui::VPANEL GetPanel() = 0;
+	virtual vgui2::VPANEL GetPanel() = 0;
 
 	// sets the parent of the main module panel
-	virtual void SetParent(vgui::VPANEL parent) = 0;
+	virtual void SetParent(vgui2::VPANEL parent) = 0;
 
 	// messages sent through through the panel returned by GetPanel():
 	//

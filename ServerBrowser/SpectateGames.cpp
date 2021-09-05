@@ -1,6 +1,6 @@
 #include "SpectateGames.h"
 
-CSpectateGames::CSpectateGames(vgui::Panel *parent) : CInternetGames(parent, "SpectateGames")
+CSpectateGames::CSpectateGames(vgui2::Panel *parent) : CInternetGames(parent, "SpectateGames")
 {
 }
 

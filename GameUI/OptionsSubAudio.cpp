@@ -15,9 +15,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
-
-COptionsSubAudio::COptionsSubAudio(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubAudio::COptionsSubAudio(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 	m_pEAXCheckButton = new CCvarToggleCheckButton( 
 		this, 

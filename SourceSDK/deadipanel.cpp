@@ -1,6 +1,6 @@
 #include <vgui/IPanel.h>
 
-namespace vgui
+namespace vgui2
 {
 
 bool IPanel::IsFullyVisible(VPANEL vguiPanel)

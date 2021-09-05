@@ -5,9 +5,10 @@
 #include <VGUI\ISurface.h>
 #include <VGUI\IScheme.h>
 #include <VGUI\ILocalize.h>
+#include <vgui_controls/Controls.h>
 #include <IKeyValuesSystem.h>
 
-#include <vgui/IEngineVGui.h>
+#include <IEngineVGui.h>
 
 #include "vgui2.h"
 
@@ -16,8 +17,6 @@
 #include "Hook_KeyValuesSystem.h"
 #include "Hook_Surface.h"
 #include "Input.h"
-
-HINTERFACEMODULE g_hVGUI2;
 
 void (__fastcall *g_pfnCBaseUI_Initialize)(void *pthis, int, CreateInterfaceFn *factories, int count);
 void (__fastcall *g_pfnCBaseUI_Start)(void *pthis, int, struct cl_enginefuncs_s *engineFuncs, int interfaceVersion);
@@ -54,34 +53,31 @@ public:
 };
 
 IBaseUI *g_pBaseUI;
-vgui::IPanel *g_pPanel;
+vgui2::IPanel *g_pPanel;
 
 void CBaseUI::Initialize(CreateInterfaceFn *factories, int count)
 {
 	g_pfnCBaseUI_Initialize(this, 0, factories, count);
-	g_hVGUI2 = (HINTERFACEMODULE)GetModuleHandle("vgui2.dll");
 
-	if (g_hVGUI2)
-	{
-		CreateInterfaceFn fnVGUI2CreateInterface = Sys_GetFactory(g_hVGUI2);
-		CreateInterfaceFn fnEngineCreateInterface = g_pMetaHookAPI->GetEngineFactory();
+	CreateInterfaceFn fnVGUI2CreateInterface = Sys_GetFactoryThis(); // Sys_GetFactory((HINTERFACEMODULE)GetModuleHandle("vgui2.dll"));
+	CreateInterfaceFn fnEngineCreateInterface = g_pMetaHookAPI->GetEngineFactory();
 
-		vgui::ISurface *pSurface = (vgui::ISurface *)fnEngineCreateInterface(VGUI_SURFACE_INTERFACE_VERSION, NULL);
-		vgui::ISchemeManager *pSchemeManager = (vgui::ISchemeManager *)fnVGUI2CreateInterface(VGUI_SCHEME_INTERFACE_VERSION, NULL);
-		vgui::ILocalize *pLocalize = (vgui::ILocalize *)fnVGUI2CreateInterface(VGUI_LOCALIZE_INTERFACE_VERSION, NULL);
-		vgui::IInputInternal *pInput = (vgui::IInputInternal *)fnVGUI2CreateInterface(VGUI_INPUT_INTERFACE_VERSION, NULL);
+	vgui2::ISurface *pSurface = (vgui2::ISurface *)fnEngineCreateInterface(VGUI_SURFACE_INTERFACE_VERSION, NULL);
+	vgui2::ISchemeManager *pSchemeManager = (vgui2::ISchemeManager *)fnVGUI2CreateInterface(VGUI_SCHEME_INTERFACE_VERSION, NULL);
+	vgui2::ILocalize *pLocalize = (vgui2::ILocalize *)fnVGUI2CreateInterface(VGUI_LOCALIZE_INTERFACE_VERSION, NULL);
+	vgui2::IInputInternal *pInput = (vgui2::IInputInternal *)fnVGUI2CreateInterface(VGUI_INPUT_INTERFACE_VERSION, NULL);
 
-		IKeyValuesSystem *pKeyValuesSystem = (IKeyValuesSystem *)fnVGUI2CreateInterface(KEYVALUESSYSTEM_INTERFACE_VERSION, NULL);
+	IKeyValuesSystem *pKeyValuesSystem = (IKeyValuesSystem *)fnVGUI2CreateInterface(KEYVALUESSYSTEM_INTERFACE_VERSION, NULL);
 
-		SchemeManager_InstallHook(pSchemeManager);
-		Input_InstallHook(pInput);
-		KeyValuesSystem_InstallHook(pKeyValuesSystem);
-		Surface_InstallHook(pSurface);
+	SchemeManager_InstallHook(pSchemeManager);
+	//Input_InstallHook(pInput);
+	KeyValuesSystem_InstallHook(pKeyValuesSystem);
+	Surface_InstallHook(pSurface);
 
-		g_pPanel = (vgui::IPanel *)fnVGUI2CreateInterface(VGUI_PANEL_INTERFACE_VERSION, NULL);
+	g_pPanel = (vgui2::IPanel *)fnVGUI2CreateInterface(VGUI_PANEL_INTERFACE_VERSION, NULL);
 
-		vgui::VGui_LoadEngineInterfaces(fnVGUI2CreateInterface, fnEngineCreateInterface);
-	}
+	//vgui2::VGuiControls_Init("BaseUI", factories, count);
+	factories[1] = fnVGUI2CreateInterface;
 }
 
 void CBaseUI::Start(struct cl_enginefuncs_s *engineFuncs, int interfaceVersion)

@@ -4,7 +4,7 @@
 #include "CSBackGroundPanel.h"
 #include <r_studioint.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 #define DEBUG_WINDOW_RESIZING 0
 #define DEBUG_WINDOW_REPOSITIONING 0

@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------
 // CMessageDialog
 //-----------------------------------------------------------------------------
-CMessageDialog::CMessageDialog( vgui::Panel *pParent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui::Panel *pCreator, bool bShowActivity  ) 
+CMessageDialog::CMessageDialog( vgui2::Panel *pParent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui2::Panel *pCreator, bool bShowActivity  ) 
 	: BaseClass( pParent, "MessageDialog" )
 {
 	SetSize( 500, 200 );
@@ -27,9 +27,9 @@ CMessageDialog::CMessageDialog( vgui::Panel *pParent, const uint nType, const ch
 	m_pCreator = pCreator ? pCreator : pParent;
 
 	m_nType = nType;
-	m_pTitle = new vgui::Label( this, "TitleLabel", pTitle );
-	m_pMsg = new vgui::Label( this, "MessageLabel", pMsg );
-	m_pAnimatingPanel = new vgui::AnimatingImagePanel( this, "AnimatingPanel" );
+	m_pTitle = new vgui2::Label( this, "TitleLabel", pTitle );
+	m_pMsg = new vgui2::Label( this, "MessageLabel", pMsg );
+	m_pAnimatingPanel = new vgui2::AnimatingImagePanel( this, "AnimatingPanel" );
 
 	m_bShowActivity = bShowActivity;
 
@@ -40,7 +40,7 @@ CMessageDialog::CMessageDialog( vgui::Panel *pParent, const uint nType, const ch
 	}
 	else
 	{
-		m_pBackground = new vgui::ImagePanel( this, "Background" );
+		m_pBackground = new vgui2::ImagePanel( this, "Background" );
  		if ( nType & MD_WARNING )
  		{
  			m_pBackground->SetName( "WarningBackground" );
@@ -123,13 +123,13 @@ void CMessageDialog::CreateButtonLabel( ButtonLabel_s *pButton, const char *pIco
 	pButton->nWide = m_ButtonIconLabelSpace;
 	pButton->bCreated = true;
 
-	pButton->pIcon = new vgui::Label( this, "icon", pIcon );
+	pButton->pIcon = new vgui2::Label( this, "icon", pIcon );
 	SETUP_PANEL( pButton->pIcon );
 	pButton->pIcon->SetFont( m_hButtonFont );
 	pButton->pIcon->SizeToContents();
 	pButton->nWide += pButton->pIcon->GetWide();
 
-	pButton->pText = new vgui::Label( this, "text", pText );
+	pButton->pText = new vgui2::Label( this, "text", pText );
 	SETUP_PANEL( pButton->pText );
 	pButton->pText->SetFont( m_hTextFont );
 	pButton->pText->SizeToContents();
@@ -140,7 +140,7 @@ void CMessageDialog::CreateButtonLabel( ButtonLabel_s *pButton, const char *pIco
 //-----------------------------------------------------------------------------
 // Purpose: Create and arrange the panel button labels according to the dialog type
 //-----------------------------------------------------------------------------
-void CMessageDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CMessageDialog::ApplySchemeSettings( vgui2::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
@@ -181,8 +181,8 @@ void CMessageDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	}
 
 	// make sure text and icons are center-aligned vertically with each other
-	int nButtonTall = vgui::surface()->GetFontTall( m_hButtonFont );
-	int nTextTall = vgui::surface()->GetFontTall( m_hTextFont );
+	int nButtonTall = vgui2::surface()->GetFontTall( m_hButtonFont );
+	int nTextTall = vgui2::surface()->GetFontTall( m_hTextFont );
 	int nVerticalAdjust = ( nButtonTall - nTextTall ) / 2;
 
 	// position the buttons with even horizontal spacing
@@ -298,7 +298,7 @@ void CMessageDialog::DoCommand( int button )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CMessageDialog::OnKeyCodePressed( vgui::KeyCode code )
+void CMessageDialog::OnKeyCodePressed( vgui2::KeyCode code )
 {
 	if ( m_ButtonPressed != BTN_INVALID || GetAlpha() != 255 )
 	{
@@ -353,6 +353,6 @@ void CMessageDialog::PaintBackground( void )
 	// draw an inset
 	Color darkColor;
 	darkColor.SetColor( 0.70f * (float)col.r(), 0.70f * (float)col.g(), 0.70f * (float)col.b(), col.a() );
-	vgui::surface()->DrawSetColor( darkColor );
-	vgui::surface()->DrawFilledRect( 8, y, wide - 8, tall - 8 );
+	vgui2::surface()->DrawSetColor( darkColor );
+	vgui2::surface()->DrawFilledRect( 8, y, wide - 8, tall - 8 );
 }

@@ -13,7 +13,6 @@
 
 #include <KeyValues.h>
 #include <vgui/Cursor.h>
-#include <vgui/VGUI.h>
 #include <vgui_controls/Panel.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -55,11 +54,11 @@ CGameConsole::~CGameConsole()
 //-----------------------------------------------------------------------------
 void CGameConsole::Initialize()
 {
-	m_pConsole = vgui::SETUP_PANEL( new CGameConsoleDialog() ); // we add text before displaying this so set it up now!
+	m_pConsole = vgui2::SETUP_PANEL( new CGameConsoleDialog() ); // we add text before displaying this so set it up now!
 		int swide, stall;
 	//m_pConsole->SetParent(g_pTaskbar->GetVPanel());
 
-	vgui::surface()->GetScreenSize(swide, stall);
+	vgui2::surface()->GetScreenSize(swide, stall);
 	int offset = 40;
 	m_pConsole->SetBounds(
 		offset, offset, 
@@ -80,7 +79,7 @@ void CGameConsole::Activate()
 	if ( LoadingDialog() )
 		return;
 
-	vgui::surface()->RestrictPaintToSinglePanel(NULL);
+	vgui2::surface()->RestrictPaintToSinglePanel(NULL);
 	m_pConsole->Activate();
 }
 
@@ -171,7 +170,7 @@ void CGameConsole::SetParent( int parent )
 	if (!m_bInitialized)
 		return;
 
-	m_pConsole->SetParent( static_cast<vgui::VPANEL>( parent ));
+	m_pConsole->SetParent( static_cast<vgui2::VPANEL>( parent ));
 }
 
 //-----------------------------------------------------------------------------

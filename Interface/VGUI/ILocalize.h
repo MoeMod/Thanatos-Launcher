@@ -5,7 +5,8 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include "interface.h"
+#include <vgui/VGUI2.h>
 
 class IFileSystem;
 class KeyValues;
@@ -15,7 +16,7 @@ typedef unsigned short wchar_t;
 #define _WCHAR_T_DEFINED
 #endif
 
-namespace vgui
+namespace vgui2
 {
 
 typedef unsigned long StringIndex_t;

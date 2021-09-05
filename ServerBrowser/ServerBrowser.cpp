@@ -35,10 +35,10 @@ void CServerBrowser::CreateDialog(void)
 
 bool CServerBrowser::Initialize(CreateInterfaceFn *factorylist, int factoryCount)
 {
-	if (!vgui::VGui_InitInterfacesList("GameUI", factorylist, factoryCount))
+	if (!vgui2::VGuiControls_Init("GameUI", factorylist, factoryCount))
 		return false;
 
-	g_pVGuiLocalize->AddFile(g_pFullFileSystem, "Servers/serverbrowser_%language%.txt");
+	vgui2::localize()->AddFile(vgui2::filesystem(), "Servers/serverbrowser_%language%.txt");
 
 	CreateDialog();
 	return true;
@@ -46,20 +46,20 @@ bool CServerBrowser::Initialize(CreateInterfaceFn *factorylist, int factoryCount
 
 void CServerBrowser::ActiveGameName(const char *szGameName, const char *szGameDir)
 {
-	vgui::VPANEL panel = ServerBrowserDialog().GetVPanel();
-	vgui::ivgui()->PostMessage(panel, new KeyValues("ActiveGameName", "game", szGameName, "name", szGameDir), panel, 0.0);
+	vgui2::VPANEL panel = ServerBrowserDialog().GetVPanel();
+	vgui2::ivgui()->PostMessage(panel, new KeyValues("ActiveGameName", "game", szGameName, "name", szGameDir), panel, 0.0);
 }
 
 void CServerBrowser::ConnectToGame(int ip, int connectionport)
 {
-	vgui::VPANEL panel = ServerBrowserDialog().GetVPanel();
-	vgui::ivgui()->PostMessage(panel, new KeyValues("ConnectedToGame", "ip", ip, "connectionport", connectionport), panel, 0.0);
+	vgui2::VPANEL panel = ServerBrowserDialog().GetVPanel();
+	vgui2::ivgui()->PostMessage(panel, new KeyValues("ConnectedToGame", "ip", ip, "connectionport", connectionport), panel, 0.0);
 }
 
 void CServerBrowser::DisconnectFromGame(void)
 {
-	vgui::VPANEL panel = ServerBrowserDialog().GetVPanel();
-	vgui::ivgui()->PostMessage(panel, new KeyValues("DisconnectedFromGame"), panel, 0.0);
+	vgui2::VPANEL panel = ServerBrowserDialog().GetVPanel();
+	vgui2::ivgui()->PostMessage(panel, new KeyValues("DisconnectedFromGame"), panel, 0.0);
 }
 
 bool CServerBrowser::Activate(void)
@@ -85,12 +85,12 @@ void CServerBrowser::Reactivate(void)
 	}
 }
 
-vgui::VPANEL CServerBrowser::GetPanel(void)
+vgui2::VPANEL CServerBrowser::GetPanel(void)
 {
 	return m_hInternetDlg.Get() ? m_hInternetDlg->GetVPanel() : NULL;
 }
 
-void CServerBrowser::SetParent(vgui::VPANEL parent)
+void CServerBrowser::SetParent(vgui2::VPANEL parent)
 {
 	if (m_hInternetDlg.Get())
 		m_hInternetDlg->SetParent(parent);

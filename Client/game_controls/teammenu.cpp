@@ -21,7 +21,7 @@
 
 #include "game_controls/mouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 const char *GetStringTeamColor(int i)
 {
@@ -154,9 +154,9 @@ void CTeamMenu::LoadMapPage(const char *mapName)
 	
 	Q_snprintf(mapRES, sizeof(mapRES), "maps/%s.txt", mapName);
 
-	if (!g_pFullFileSystem->FileExists(mapRES))
+	if (!filesystem()->FileExists(mapRES))
 	{
-		if (g_pFullFileSystem->FileExists("maps/default.txt"))
+		if (filesystem()->FileExists("maps/default.txt"))
 		{
 			Q_snprintf(mapRES, sizeof(mapRES), "maps/default.txt");
 		}
@@ -167,16 +167,16 @@ void CTeamMenu::LoadMapPage(const char *mapName)
 		}
 	}
 
-	FileHandle_t f = g_pFullFileSystem->Open(mapRES, "r");
+	FileHandle_t f = filesystem()->Open(mapRES, "r");
 
-	int fileSize = g_pFullFileSystem->Size(f);
+	int fileSize = filesystem()->Size(f);
 	int dataSize = fileSize + sizeof(wchar_t);
 
 	if (dataSize % 2)
 		++dataSize;
 
 	wchar_t *memBlock = (wchar_t *)malloc(dataSize);
-	int bytesRead = g_pFullFileSystem->Read(memBlock, fileSize, f);
+	int bytesRead = filesystem()->Read(memBlock, fileSize, f);
 
 	if (bytesRead < fileSize)
 	{
@@ -198,7 +198,7 @@ void CTeamMenu::LoadMapPage(const char *mapName)
 
 	m_pMapInfo->GotoTextStart();
 
-	g_pFullFileSystem->Close(f);
+	filesystem()->Close(f);
 	free(memBlock);
 
 	InvalidateLayout();

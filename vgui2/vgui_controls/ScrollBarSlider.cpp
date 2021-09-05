@@ -8,7 +8,7 @@
 #define PROTECTED_THINGS_DISABLE
 
 #include <vgui/IBorder.h>
-#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/ISystem.h>
 #include <vgui/IScheme.h>
 #include <vgui/ISurface.h>
@@ -24,7 +24,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // The ScrollBarSlider is the scroll bar nob that moves up and down in through a range.
@@ -41,6 +41,7 @@ ScrollBarSlider::ScrollBarSlider(Panel *parent, const char *panelName, bool vert
 	_ScrollBarSliderBorder=NULL;
 	RecomputeNobPosFromValue();
 	SetBlockDragChaining( true );
+	_imageBackground = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -288,16 +289,45 @@ void ScrollBarSlider::SendScrollBarSliderMovedMessage()
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Return true if this slider is actually drawing itself
+//-----------------------------------------------------------------------------
+bool ScrollBarSlider::IsSliderVisible(void)
+{
+	int itemRange = _range[1] - _range[0];
+
+	// Don't draw nob, no items in list
+	if (itemRange <= 0)
+		return false;
+
+	// Not enough range
+	if (itemRange <= _rangeWindow)
+		return false;
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
 void ScrollBarSlider::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetFgColor(GetSchemeColor("ScrollBarSlider/ScrollBarSliderFgColor", pScheme));
-	SetBgColor(GetSchemeColor("ScrollBarSlider/ScrollBarSliderBgColor", pScheme));
+	SetFgColor(GetSchemeColor("ScrollBarSlider.FgColor", GetSchemeColor("ScrollBarSlider/ScrollBarSliderFgColor", pScheme), pScheme));
+	SetBgColor(GetSchemeColor("ScrollBarSlider.BgColor", GetSchemeColor("ScrollBarSlider/ScrollBarSliderBgColor", pScheme), pScheme));
 
 	_ScrollBarSliderBorder = pScheme->GetBorder("ButtonBorder");
+
+	const char *resourceString = pScheme->GetResourceString("ScrollBarSlider/VerticalTopImg");
+
+	if (resourceString[0])
+	{
+		_imageBackground = true;
+		_ScrollBarSliderBorder = nullptr;
+		_verticalImage[0] = scheme()->GetImage(resourceString, true);
+		_verticalImage[1] = scheme()->GetImage(pScheme->GetResourceString("ScrollBarSlider/VerticalMiddleImg"), true);
+		_verticalImage[2] = scheme()->GetImage(pScheme->GetResourceString("ScrollBarSlider/VerticalBottomImg"), true);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -305,42 +335,63 @@ void ScrollBarSlider::ApplySchemeSettings(IScheme *pScheme)
 //-----------------------------------------------------------------------------
 void ScrollBarSlider::Paint()
 {
-	int wide, tall;
-	GetPaintSize(wide, tall);
+	int wide,tall;
+	GetPaintSize(wide,tall);
 
 	int itemRange = _range[1] - _range[0];
 
 	// Don't draw nob, no items in list
-	if (itemRange <= 0)
+	if ( itemRange <= 0 )
 		return;
 
 	// Not enough range
-	if (itemRange <= _rangeWindow)
+	if ( itemRange <= _rangeWindow )
 		return;
 
 	Color col = GetFgColor();
 	surface()->DrawSetColor(col);
-
 	if (_vertical)
 	{
-		// Nob
-		surface()->DrawFilledRect(0, _nobPos[0], wide - 1, _nobPos[1]);
-
-		// border
-		if (_ScrollBarSliderBorder)
+		if (_imageBackground)
 		{
-			_ScrollBarSliderBorder->Paint(0, _nobPos[0], wide - 1, _nobPos[1]);
+			_verticalImage[0]->SetPos(0, _nobPos[0]);
+			_verticalImage[0]->SetSize(wide - 1, 12);
+			_verticalImage[0]->Paint();
+			_verticalImage[1]->SetPos(0, _nobPos[0] + 12);
+			_verticalImage[1]->SetSize(wide - 1, _nobPos[1] - _nobPos[0] - 24);
+			_verticalImage[1]->Paint();
+			_verticalImage[2]->SetPos(0, _nobPos[1] - 12);
+			_verticalImage[2]->SetSize(wide - 1, 12);
+			_verticalImage[2]->Paint();
+		}
+		else
+		{
+			// Nob
+			surface()->DrawFilledRect(0, _nobPos[0], wide - 1, _nobPos[1]);
+
+			// border
+			if (_ScrollBarSliderBorder)
+			{
+				_ScrollBarSliderBorder->Paint(0, _nobPos[0], wide - 1, _nobPos[1]);
+			}
 		}
 	}
 	else
 	{
-		// horizontal nob
-		surface()->DrawFilledRect(_nobPos[0], 0, _nobPos[1], tall);
-
-		// border
-		if (_ScrollBarSliderBorder)
+		if (_imageBackground)
 		{
-			_ScrollBarSliderBorder->Paint(_nobPos[0] - 1, 1, _nobPos[1], tall);
+			// Assert(0);
+		}
+		else
+		{
+			// horizontal nob
+			surface()->DrawFilledRect(_nobPos[0], 0, _nobPos[1], tall);
+
+			// border
+			if (_ScrollBarSliderBorder)
+			{
+				_ScrollBarSliderBorder->Paint(_nobPos[0] - 1, 1, _nobPos[1], tall);
+			}
 		}
 	}
 

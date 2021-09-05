@@ -9,7 +9,7 @@
 #include <math.h>
 #define PROTECTED_THINGS_DISABLE
 
-#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/ISystem.h>
 #include <vgui/ISurface.h>
 #include <vgui/IScheme.h>
@@ -23,9 +23,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-static vgui::DHANDLE< TextEntry > s_TooltipWindow;
+static vgui2::DHANDLE< TextEntry > s_TooltipWindow;
 static int s_iTooltipWindowCount = 0;
 
 //-----------------------------------------------------------------------------
@@ -197,8 +197,8 @@ void Tooltip::PerformLayout()
 
 	IScheme *pScheme = scheme()->GetIScheme( s_TooltipWindow->GetScheme() );
 
-	s_TooltipWindow->SetBgColor(s_TooltipWindow->GetSchemeColor("SelectionBG", s_TooltipWindow->GetBgColor(), pScheme));
-	s_TooltipWindow->SetFgColor(s_TooltipWindow->GetSchemeColor("BorderSelection", s_TooltipWindow->GetFgColor(), pScheme));
+	s_TooltipWindow->SetBgColor(s_TooltipWindow->GetSchemeColor("Tooltip.TextColor", s_TooltipWindow->GetSchemeColor("SelectionBG", s_TooltipWindow->GetBgColor(), pScheme), pScheme));
+	s_TooltipWindow->SetFgColor(s_TooltipWindow->GetSchemeColor("Tooltip.BgColor", s_TooltipWindow->GetSchemeColor("BorderSelection", s_TooltipWindow->GetFgColor(), pScheme), pScheme));
 	s_TooltipWindow->SetBorder(pScheme->GetBorder("ToolTipBorder"));
 
 	// get cursor position

@@ -153,19 +153,19 @@ void CModInfo::LoadCurrentGameInfo()
 	char const *filename = "liblist.gam";
 
 	// walk through and add the key/value pairs to the keyvalues object
-	FileHandle_t fh = g_pFullFileSystem->Open(filename, "rb");
+	FileHandle_t fh = vgui2::filesystem()->Open(filename, "rb");
 	if (fh != FILESYSTEM_INVALID_HANDLE)
 	{
-		int len = g_pFullFileSystem->Size(fh);
+		int len = vgui2::filesystem()->Size(fh);
 		if (len > 0)
 		{
 			char *buf = (char *)_alloca(len + 1);
-			g_pFullFileSystem->Read(buf, len, fh);
+			vgui2::filesystem()->Read(buf, len, fh);
 			buf[len] = 0;
 			LoadGameInfoFromBuffer(buf, len);
 		}
 
-		g_pFullFileSystem->Close(fh);
+		vgui2::filesystem()->Close(fh);
 	}
 }
 

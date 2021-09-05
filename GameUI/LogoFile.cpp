@@ -1,7 +1,8 @@
-#include <metahook.h>
+
+#include <Windows.h>
 #include <stdio.h>
 #include "UtlBuffer.h"
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui_controls/Controls.h>
 #include "FileSystem.h"
 
@@ -215,11 +216,11 @@ void UpdateLogoWAD(void *phdib, int r, int g, int b)
 	buffer.Put(&header, sizeof(wadinfo_t));
 	buffer.SeekPut(CUtlBuffer::SEEK_HEAD, savepos);
 
-	FileHandle_t file = g_pFullFileSystem->Open("tempdecal.wad", "wb");
+	FileHandle_t file = vgui2::filesystem()->Open("tempdecal.wad", "wb");
 
 	if (file != FILESYSTEM_INVALID_HANDLE)
 	{
-		g_pFullFileSystem->Write(buffer.Base(), buffer.TellPut(), file);
-		g_pFullFileSystem->Close(file);
+		vgui2::filesystem()->Write(buffer.Base(), buffer.TellPut(), file);
+		vgui2::filesystem()->Close(file);
 	}
 }

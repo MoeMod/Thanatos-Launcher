@@ -16,13 +16,34 @@
 #include <vgui/ISurface.h>
 
 #include <tier1/KeyValues.h>
+#include <mathlib/Vector2D.h>
 
-#include <mathlib/mathlib.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
+
+namespace vgui2
+{
+	struct Vertex_t
+	{
+		Vertex_t() {}
+		Vertex_t(const Vector2D &pos, const Vector2D &coord = Vector2D(0, 0))
+		{
+			m_Position = pos;
+			m_TexCoord = coord;
+		}
+		void Init(const Vector2D &pos, const Vector2D &coord = Vector2D(0, 0))
+		{
+			m_Position = pos;
+			m_TexCoord = coord;
+		}
+
+		Vector2D	m_Position;
+		Vector2D	m_TexCoord;
+	};
+}
 
 DECLARE_BUILD_FACTORY( CircularProgressBar );
 
@@ -138,13 +159,13 @@ void CircularProgressBar::PaintBackground()
 {
 	// If we don't have a Bg image, use the foreground
 	int iTextureID = m_nTextureId[PROGRESS_TEXTURE_BG] != -1 ? m_nTextureId[PROGRESS_TEXTURE_BG] : m_nTextureId[PROGRESS_TEXTURE_FG];
-	vgui::surface()->DrawSetTexture( iTextureID );
-	vgui::surface()->DrawSetColor( GetBgColor() );
+	surface()->DrawSetTexture( iTextureID );
+	surface()->DrawSetColor( GetBgColor() );
 
 	int wide, tall;
 	GetSize(wide, tall);
 
-	vgui::surface()->DrawTexturedRect( 0, 0, wide, tall );
+	surface()->DrawTexturedRect( 0, 0, wide, tall );
 }
 
 //-----------------------------------------------------------------------------
@@ -212,8 +233,8 @@ void CircularProgressBar::DrawCircleSegment( Color c, float flEndProgress, bool 
 	float flHalfWide = (float)wide / 2;
 	float flHalfTall = (float)tall / 2;
 
-	vgui::surface()->DrawSetTexture( m_nTextureId[PROGRESS_TEXTURE_FG] );
-	vgui::surface()->DrawSetColor( c );
+	surface()->DrawSetTexture( m_nTextureId[PROGRESS_TEXTURE_FG] );
+	surface()->DrawSetColor( c );
 
 	// TODO - if we want to progress CCW, reverse a few things
 
@@ -224,7 +245,7 @@ void CircularProgressBar::DrawCircleSegment( Color c, float flEndProgress, bool 
 	{
 		if ( flEndProgressRadians > Segments[i].minProgressRadians )
 		{
-			vgui::Vertex_t v[3];
+			Vertex_t v[3];
 
 			// vert 0 is ( 0.5, 0.5 )
 			v[0].m_Position.Init( flHalfWide, flHalfTall );
@@ -270,7 +291,7 @@ void CircularProgressBar::DrawCircleSegment( Color c, float flEndProgress, bool 
 			v[1].m_Position.Init( flHalfWide + flWide * ( Segments[i].vert1x - 0.5 ), flHalfTall + flTall * ( Segments[i].vert1y - 0.5 ) );
 			v[1].m_TexCoord.Init( Segments[i].vert1x, Segments[i].vert1y );
 
-			vgui::surface()->DrawTexturedPolygon( 3, v );
+			surface()->DrawTexturedPolygon( 3, v );
 		}
 	}
 }

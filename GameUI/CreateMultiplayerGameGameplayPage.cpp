@@ -10,8 +10,6 @@
 
 #include "CreateMultiplayerGameGameplayPage.h"
 
-using namespace vgui;
-
 #include <KeyValues.h>
 #include <vgui/ILocalize.h>
 #include <vgui_controls/ComboBox.h>
@@ -44,7 +42,7 @@ public:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCreateMultiplayerGameGameplayPage::CCreateMultiplayerGameGameplayPage(vgui::Panel *parent, const char *name) : PropertyPage(parent, name)
+CCreateMultiplayerGameGameplayPage::CCreateMultiplayerGameGameplayPage(vgui2::Panel *parent, const char *name) : PropertyPage(parent, name)
 {
 	m_pOptionsList = new CPanelListPanel(this, "GameOptions");
 
@@ -141,11 +139,11 @@ void CCreateMultiplayerGameGameplayPage::OnApplyChanges()
 		m_pDescription->WriteToConfig();
 
 		// save out in the settings file
-		fp = g_pFullFileSystem->Open( "settings.scr", "wb" );
+		fp = vgui2::filesystem()->Open( "settings.scr", "wb" );
 		if ( fp )
 		{
 			m_pDescription->WriteToScriptFile( fp );
-			g_pFullFileSystem->Close(fp);
+			vgui2::filesystem()->Close(fp);
 		}
 	}
 }
@@ -179,9 +177,9 @@ void CCreateMultiplayerGameGameplayPage::LoadGameOptionsList()
 
 	mpcontrol_t	*pCtrl;
 
-	CheckButton *pBox;
-	TextEntry *pEdit;
-	ComboBox *pCombo;
+	vgui2::CheckButton *pBox;
+	vgui2::TextEntry *pEdit;
+	vgui2::ComboBox *pCombo;
 	CScriptListItem *pListItem;
 
 	Panel *objParent = m_pOptionsList;
@@ -194,19 +192,19 @@ void CCreateMultiplayerGameGameplayPage::LoadGameOptionsList()
 		switch ( pCtrl->type )
 		{
 		case O_BOOL:
-			pBox = new CheckButton( pCtrl, "DescCheckButton", pObj->prompt );
+			pBox = new vgui2::CheckButton( pCtrl, "DescCheckButton", pObj->prompt );
 			pBox->SetSelected( pObj->fdefValue != 0.0f ? true : false );
 			
 			pCtrl->pControl = (Panel *)pBox;
 			break;
 		case O_STRING:
 		case O_NUMBER:
-			pEdit = new TextEntry( pCtrl, "DescEdit");
+			pEdit = new vgui2::TextEntry( pCtrl, "DescEdit");
 			pEdit->InsertString(pObj->defValue);
 			pCtrl->pControl = (Panel *)pEdit;
 			break;
 		case O_LIST:
-			pCombo = new ComboBox( pCtrl, "DescEdit", 5, false );
+			pCombo = new vgui2::ComboBox( pCtrl, "DescEdit", 5, false );
 
 			pListItem = pObj->pListItems;
 			while ( pListItem )
@@ -225,8 +223,8 @@ void CCreateMultiplayerGameGameplayPage::LoadGameOptionsList()
 
 		if ( pCtrl->type != O_BOOL )
 		{
-			pCtrl->pPrompt = new vgui::Label( pCtrl, "DescLabel", "" );
-			pCtrl->pPrompt->SetContentAlignment( vgui::Label::a_west );
+			pCtrl->pPrompt = new vgui2::Label( pCtrl, "DescLabel", "" );
+			pCtrl->pPrompt->SetContentAlignment( vgui2::Label::a_west );
 			pCtrl->pPrompt->SetTextInset( 5, 0 );
 			pCtrl->pPrompt->SetText( pObj->prompt );
 		}
@@ -271,9 +269,9 @@ void CCreateMultiplayerGameGameplayPage::GatherCurrentValues()
 		return;
 
 	// OK
-	CheckButton *pBox;
-	TextEntry *pEdit;
-	ComboBox *pCombo;
+	vgui2::CheckButton *pBox;
+	vgui2::TextEntry *pEdit;
+	vgui2::ComboBox *pCombo;
 
 	mpcontrol_t *pList;
 
@@ -299,21 +297,21 @@ void CCreateMultiplayerGameGameplayPage::GatherCurrentValues()
 		switch ( pObj->type )
 		{
 		case O_BOOL:
-			pBox = (CheckButton *)pList->pControl;
+			pBox = (vgui2::CheckButton *)pList->pControl;
 			strcpy( szValue, pBox->IsSelected() ? "1" : "0" );
 			break;
 		case O_NUMBER:
-			pEdit = ( TextEntry * )pList->pControl;
+			pEdit = (vgui2::TextEntry * )pList->pControl;
 			pEdit->GetText( strValue, sizeof( strValue ) );
 			strcpy( szValue, strValue );
 			break;
 		case O_STRING:
-			pEdit = ( TextEntry * )pList->pControl;
+			pEdit = (vgui2::TextEntry * )pList->pControl;
 			pEdit->GetText( strValue, sizeof( strValue ) );
 			strcpy( szValue, strValue );
 			break;
 		case O_LIST:
-			pCombo = ( ComboBox *)pList->pControl;
+			pCombo = (vgui2::ComboBox *)pList->pControl;
 			pCombo->GetText( strValue, sizeof( strValue ) );
 			
 			pItem = pObj->pListItems;
@@ -326,7 +324,7 @@ void CCreateMultiplayerGameGameplayPage::GatherCurrentValues()
 				// Localized string?
 				if ( pItem->szItemText[0] == '#' )
 				{
-					wLocalizedString = localize()->Find( pItem->szItemText );
+					wLocalizedString = vgui2::localize()->Find( pItem->szItemText );
 				}
 
 				if ( wLocalizedString )
@@ -337,7 +335,7 @@ void CCreateMultiplayerGameGameplayPage::GatherCurrentValues()
 				else
 				{
 					// Just convert what we have to Unicode
-					localize()->ConvertANSIToUnicode( pItem->szItemText, w_szStrTemp, sizeof( w_szStrTemp ) );
+					vgui2::localize()->ConvertANSIToUnicode( pItem->szItemText, w_szStrTemp, sizeof( w_szStrTemp ) );
 				}
 
 				if ( _wcsicmp( w_szStrTemp, w_szStrValue ) == 0 )
@@ -429,16 +427,16 @@ void CServerDescription::WriteScriptHeader( FileHandle_t fp )
 	if( newtime.tm_hour == 0 )        /*Set hour to 12 if midnight. */
 		newtime.tm_hour = 12;
 
-	g_pFullFileSystem->FPrintf(fp, (char *)getHint());
+	vgui2::filesystem()->FPrintf(fp, (char *)getHint());
 
 // Write out the comment and Cvar Info:
-	g_pFullFileSystem->FPrintf(fp, "// Half-Life Server Configuration Layout Script (stores last settings chosen, too)\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(&newtime), am_pm);
-	g_pFullFileSystem->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// Half-Life Server Configuration Layout Script (stores last settings chosen, too)\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(&newtime), am_pm);
+	vgui2::filesystem()->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
 
-	g_pFullFileSystem->FPrintf(fp, "VERSION %.1f\r\n\r\n", SCRIPT_VERSION);
+	vgui2::filesystem()->FPrintf(fp, "VERSION %.1f\r\n\r\n", SCRIPT_VERSION);
 
-	g_pFullFileSystem->FPrintf(fp, "DESCRIPTION SERVER_OPTIONS\r\n{\r\n");
+	vgui2::filesystem()->FPrintf(fp, "DESCRIPTION SERVER_OPTIONS\r\n{\r\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -460,8 +458,8 @@ void CServerDescription::WriteFileHeader( FileHandle_t fp )
 	if( newtime.tm_hour == 0 )        /*Set hour to 12 if midnight. */
 		newtime.tm_hour = 12;
 
-	g_pFullFileSystem->FPrintf(fp, "// Half-Life Server Configuration Settings\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// DO NOT EDIT, GENERATED BY HALF-LIFE\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(&newtime), am_pm);
-	g_pFullFileSystem->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// Half-Life Server Configuration Settings\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// DO NOT EDIT, GENERATED BY HALF-LIFE\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(&newtime), am_pm);
+	vgui2::filesystem()->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
 }

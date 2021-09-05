@@ -30,12 +30,12 @@ class CBaseGamesPage;
 
 void GetMostCommonQueryPorts(CUtlVector<uint16> &ports);
 
-class CServerBrowserDialog : public vgui::Frame
+class CServerBrowserDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE(CServerBrowserDialog, vgui::Frame); 
+	DECLARE_CLASS_SIMPLE(CServerBrowserDialog, vgui2::Frame); 
 
 public:
-	CServerBrowserDialog(vgui::Panel *parent);
+	CServerBrowserDialog(vgui2::Panel *parent);
 	~CServerBrowserDialog(void);
 
 public:
@@ -44,7 +44,7 @@ public:
 	serveritem_t &GetServer(unsigned int serverID);
 	void UpdateStatusText(const char *format, ...);
 	void UpdateStatusText(wchar_t *unicode);
-	CServerContextMenu *GetContextMenu(vgui::Panel *pParent);
+	CServerContextMenu *GetContextMenu(vgui2::Panel *pParent);
 	static CServerBrowserDialog *GetInstance(void);
 	void AddServerToFavorites(serveritem_t &server);
 	CDialogGameInfo *JoinGame(IGameList *gameList, unsigned int serverIndex);
@@ -74,12 +74,12 @@ private:
 	virtual void ActivateBuildMode(void);
 
 private:
-	CUtlVector<vgui::DHANDLE<CDialogGameInfo>> m_GameInfoDialogs;
+	CUtlVector<vgui2::DHANDLE<CDialogGameInfo>> m_GameInfoDialogs;
 
 	IGameList *m_pGameList;
-	vgui::Label *m_pStatusLabel;
+	vgui2::Label *m_pStatusLabel;
 
-	vgui::PropertySheet *m_pTabPanel;
+	vgui2::PropertySheet *m_pTabPanel;
 	CFavoriteGames *m_pFavorites;
 	CHistoryGames *m_pHistory;
 	CInternetGames *m_pInternetGames;

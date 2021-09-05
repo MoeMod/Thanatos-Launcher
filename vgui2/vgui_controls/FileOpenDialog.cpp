@@ -13,6 +13,7 @@
 #include <shellapi.h>
 #endif
 #undef GetCurrentDirectory
+#undef GetClassName
 #include <filesystem.h>
 
 #include <tier1/KeyValues.h>
@@ -24,7 +25,7 @@
 #include <vgui/ISystem.h>
 #include <vgui/IVGUI.h>
 #include <vgui/ILocalize.h>
-#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 
 #include "FileOpenDialog.h"
 
@@ -47,7 +48,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 #ifndef _WIN32
 #error "This class is WIN32 specific, please port me"
@@ -199,7 +200,7 @@ static int ListFileTypeSortFunc(ListPanel *pPanel, const ListPanelItem &item1, c
 
 
 
-namespace vgui
+namespace vgui2
 {
 
 class FileCompletionMenu : public Menu
@@ -274,7 +275,7 @@ int FileCompletionEdit::AddItem(const wchar_t *itemText, KeyValues *userData)
 
 	// get an ansi version for the menuitem name
 	char ansi[128];
-	g_pVGuiLocalize->ConvertUnicodeToANSI(itemText, ansi, sizeof(ansi));
+	localize()->ConvertUnicodeToANSI(itemText, ansi, sizeof(ansi));
 	return m_pDropDown->AddMenuItem(ansi, kv, this, userData);
 }
 
@@ -629,7 +630,7 @@ void FileOpenDialog::Init( const char *title, KeyValues *pContextKeyValues )
 
 	// Set our starting path to the current directory
 	char pLocalPath[255];
-	g_pFullFileSystem->GetCurrentDirectory( pLocalPath , 255 );
+	filesystem()->GetCurrentDirectory( pLocalPath , 255 );
 	SetStartDirectory( pLocalPath );
 
 	// Because these call through virtual functions, we can't issue them in the constructor, so we post a message to ourselves instead!!
@@ -752,7 +753,7 @@ void FileOpenDialog::OnClose()
 	m_pFileNameEdit->SetText("");
 	m_pFileNameEdit->HideMenu();
 
-	if ( vgui::input()->GetAppModalSurface() == GetVPanel() )
+	if ( vgui2::input()->GetAppModalSurface() == GetVPanel() )
 	{
 		input()->SetAppModalSurface(NULL);
 	}
@@ -865,7 +866,7 @@ void FileOpenDialog::SetStartDirectoryContext( const char *pStartDirContext, con
 	{
 		// Set our starting path to the current directory
 		char pLocalPath[255];
-		g_pFullFileSystem->GetCurrentDirectory( pLocalPath, 255 );
+		filesystem()->GetCurrentDirectory( pLocalPath, 255 );
 		SetStartDirectory( pLocalPath );
 	}
 }
@@ -953,10 +954,10 @@ void FileOpenDialog::NewFolder( char const *folderName )
 	do
 	{
 		Q_MakeAbsolutePath( pFullPath, sizeof(pFullPath), pNewFolderName, pCurrentDirectory );
-		if ( !g_pFullFileSystem->FileExists( pFullPath ) &&
-			 !g_pFullFileSystem->IsDirectory( pFullPath ) )
+		if ( !filesystem()->FileExists( pFullPath ) &&
+			 !filesystem()->IsDirectory( pFullPath ) )
 		{
-			g_pFullFileSystem->CreateDirHierarchy( pFullPath, NULL );
+			filesystem()->CreateDirHierarchy( pFullPath, NULL );
 			m_pFileNameEdit->SetText( pNewFolderName );
 			return;
 		}
@@ -1197,7 +1198,7 @@ void FileOpenDialog::PopulateFileList()
 					kv->SetString( "filesize", Q_pretifymem( findData.nFileSizeLow, 0, true ) );
 					Q_FixSlashes( fullpath );
 					wchar_t fileType[ 80 ];
-					g_pFullFileSystem->GetFileTypeForFullPath( fullpath, fileType, sizeof( fileType ) );
+					filesystem()->GetFileTypeForFullPath( fullpath, fileType, sizeof( fileType ) );
 					kv->SetWString( "type", fileType );
 					kv->SetString( "attributes", GetAttributesAsString( findData.dwFileAttributes ) );
 					kv->SetString( "modified", GetFileTimetamp( findData.ftLastWriteTime ) );
@@ -1434,7 +1435,7 @@ void FileOpenDialog::OnSelectFolder()
 		Q_strncpy( pFullPath, pFileName, sizeof(pFullPath) );
 	}
 
-	if ( g_pFullFileSystem->FileExists( pFullPath ) )
+	if ( filesystem()->FileExists( pFullPath ) )
 	{
 		// open the file!
 		SaveFileToStartDirContext( pFullPath );
@@ -1497,7 +1498,7 @@ void FileOpenDialog::OnOpen()
 	}
 
 	// If the name specified is a directory, then change directory
-	if ( g_pFullFileSystem->IsDirectory( pFullPath ) )
+	if ( filesystem()->IsDirectory( pFullPath ) )
 	{
 		// it's a directory; change to the specified directory
 		if ( !bSpecifiedDirectory )
@@ -1532,7 +1533,7 @@ void FileOpenDialog::OnOpen()
 		Q_SetExtension( pFullPath, extension, sizeof(pFullPath) );
 	}
 
-	if ( g_pFullFileSystem->FileExists( pFullPath ) )
+	if ( filesystem()->FileExists( pFullPath ) )
 	{
 		// open the file!
 		SaveFileToStartDirContext( pFullPath );

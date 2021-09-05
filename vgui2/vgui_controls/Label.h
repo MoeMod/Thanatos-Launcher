@@ -14,12 +14,12 @@
 
 #include <tier1/utlvector.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 #include "PHandle.h"
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------

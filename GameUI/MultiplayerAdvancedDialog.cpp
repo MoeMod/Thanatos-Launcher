@@ -14,25 +14,28 @@
 #include <vgui_controls/TextEntry.h>
 #include "PanelListPanel.h"
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 
 #include "FileSystem.h"
 #include "GameConsole.h"
 
-using namespace vgui;
-
 #define OPTIONS_FILE "user.scr"
 
-CMultiplayerAdvancedDialog::CMultiplayerAdvancedDialog(vgui::Panel *parent) : BaseClass(NULL, "MultiplayerAdvancedDialog")
+namespace vgui2 {
+	class ComboBox;
+}
+
+CMultiplayerAdvancedDialog::CMultiplayerAdvancedDialog(vgui2::Panel *parent) : BaseClass(NULL, "MultiplayerAdvancedDialog")
 {
 	SetBounds(0, 0, 372, 160);
 	SetSizeable(false);
 
 	SetTitle("#GameUI_MultiplayerAdvanced", true);
 
-	Button *cancel = new Button(this, "Cancel", "#GameUI_Cancel");
+	vgui2::Button *cancel = new vgui2::Button(this, "Cancel", "#GameUI_Cancel");
 	cancel->SetCommand("Close");
 
-	Button *ok = new Button(this, "OK", "#GameUI_OK");
+	vgui2::Button *ok = new vgui2::Button(this, "OK", "#GameUI_OK");
 	ok->SetCommand("Ok");
 
 	m_pListPanel = new CPanelListPanel(this, "PanelListPanel");
@@ -60,14 +63,14 @@ void CMultiplayerAdvancedDialog::Activate(void)
 {
 	BaseClass::Activate();
 
-	input()->SetAppModalSurface(GetVPanel());
+	vgui2::input()->SetAppModalSurface(GetVPanel());
 }
 
 void CMultiplayerAdvancedDialog::OnClose(void)
 {
 	BaseClass::OnClose();
 
-	vgui::input()->SetAppModalSurface(NULL);
+	vgui2::input()->SetAppModalSurface(NULL);
 }
 
 void CMultiplayerAdvancedDialog::OnCommand(const char *command)
@@ -82,9 +85,9 @@ void CMultiplayerAdvancedDialog::OnCommand(const char *command)
 	BaseClass::OnCommand(command);
 }
 
-void CMultiplayerAdvancedDialog::OnKeyCodeTyped(KeyCode code)
+void CMultiplayerAdvancedDialog::OnKeyCodeTyped(vgui2::KeyCode code)
 {
-	if (code == KEY_ESCAPE)
+	if (code == vgui2::KEY_ESCAPE)
 	{
 		SetAlpha(0);
 		Close();
@@ -98,9 +101,9 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues(void)
 	if (!m_pDescription)
 		return;
 
-	CheckButton *pBox;
-	TextEntry *pEdit;
-	ComboBox *pCombo;
+	vgui2::CheckButton *pBox;
+	vgui2::TextEntry *pEdit;
+	vgui2::ComboBox *pCombo;
 	CScriptObject *pObj;
 	CScriptListItem *pItem;
 
@@ -123,14 +126,14 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues(void)
 		{
 			case O_BOOL:
 			{
-				pBox = (CheckButton *)pList->pControl;
+				pBox = (vgui2::CheckButton *)pList->pControl;
 				sprintf(szValue, "%s", pBox->IsSelected() ? "1" : "0");
 				break;
 			}
 
 			case O_NUMBER:
 			{
-				pEdit = (TextEntry *)pList->pControl;
+				pEdit = (vgui2::TextEntry *)pList->pControl;
 				pEdit->GetText(strValue, sizeof(strValue));
 				sprintf(szValue, "%s", strValue);
 				break;
@@ -138,7 +141,7 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues(void)
 
 			case O_STRING:
 			{
-				pEdit = (TextEntry *)pList->pControl;
+				pEdit = (vgui2::TextEntry *)pList->pControl;
 				pEdit->GetText(strValue, sizeof(strValue));
 				sprintf(szValue, "%s", strValue);
 				break;
@@ -146,7 +149,7 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues(void)
 
 			case O_LIST:
 			{
-				pCombo = (ComboBox *)pList->pControl;
+				pCombo = (vgui2::ComboBox *)pList->pControl;
 				int activeItem = pCombo->GetActiveItem();
 				pItem = pObj->pListItems;
 				int n = (int)pObj->fdefValue;
@@ -186,9 +189,9 @@ void CMultiplayerAdvancedDialog::CreateControls(void)
 
 	CScriptObject *pObj = m_pDescription->pObjList;
 	mpcontrol_t *pCtrl;
-	CheckButton *pBox;
-	TextEntry *pEdit;
-	ComboBox *pCombo;
+	vgui2::CheckButton *pBox;
+	vgui2::TextEntry *pEdit;
+	vgui2::ComboBox *pCombo;
 	CScriptListItem *pListItem;
 
 	Panel *objParent = m_pListPanel;
@@ -202,7 +205,7 @@ void CMultiplayerAdvancedDialog::CreateControls(void)
 		{
 			case O_BOOL:
 			{
-				pBox = new CheckButton(pCtrl, "DescCheckButton", pObj->prompt);
+				pBox = new vgui2::CheckButton(pCtrl, "DescCheckButton", pObj->prompt);
 				pBox->SetSelected(pObj->fdefValue != 0.0f ? true : false);
 				pCtrl->pControl = (Panel *)pBox;
 				break;
@@ -211,7 +214,7 @@ void CMultiplayerAdvancedDialog::CreateControls(void)
 			case O_STRING:
 			case O_NUMBER:
 			{
-				pEdit = new TextEntry(pCtrl, "DescTextEntry");
+				pEdit = new vgui2::TextEntry(pCtrl, "DescTextEntry");
 				pEdit->InsertString(pObj->defValue);
 				pCtrl->pControl = (Panel *)pEdit;
 				break;
@@ -219,7 +222,7 @@ void CMultiplayerAdvancedDialog::CreateControls(void)
 
 			case O_LIST:
 			{
-				pCombo = new ComboBox(pCtrl, "DescComboBox", 5, false);
+				pCombo = new vgui2::ComboBox(pCtrl, "DescComboBox", 5, false);
 				pListItem = pObj->pListItems;
 
 				while (pListItem)
@@ -238,8 +241,8 @@ void CMultiplayerAdvancedDialog::CreateControls(void)
 
 		if (pCtrl->type != O_BOOL)
 		{
-			pCtrl->pPrompt = new Label(pCtrl, "DescLabel", "");
-			pCtrl->pPrompt->SetContentAlignment(Label::a_west);
+			pCtrl->pPrompt = new vgui2::Label(pCtrl, "DescLabel", "");
+			pCtrl->pPrompt->SetContentAlignment(vgui2::Label::a_west);
 			pCtrl->pPrompt->SetTextInset(5, 0);
 			pCtrl->pPrompt->SetText(pObj->prompt);
 		}
@@ -299,12 +302,12 @@ void CMultiplayerAdvancedDialog::SaveValues(void)
 	{
 		m_pDescription->WriteToConfig();
 
-		FileHandle_t fp = g_pFullFileSystem->Open("user.scr", "wb");
+		FileHandle_t fp = vgui2::filesystem()->Open("user.scr", "wb");
 
 		if (fp)
 		{
 			m_pDescription->WriteToScriptFile(fp);
-			g_pFullFileSystem->Close(fp);
+			vgui2::filesystem()->Close(fp);
 		}
 	}
 }
@@ -315,12 +318,12 @@ void CInfoDescription::WriteScriptHeader(void *fp)
 	time_t timer = time(NULL);
 	tm *tblock = localtime(&timer);
 
-	g_pFullFileSystem->FPrintf(fp, (char *)getHint());
-	g_pFullFileSystem->FPrintf(fp, "// Half-Life User Info Configuration Layout Script (stores last settings chosen, too)\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(tblock), am_pm);
-	g_pFullFileSystem->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
-	g_pFullFileSystem->FPrintf(fp, "VERSION %.1f\r\n\r\n", SCRIPT_VERSION);
-	g_pFullFileSystem->FPrintf(fp, "DESCRIPTION INFO_OPTIONS\r\n{\r\n");
+	vgui2::filesystem()->FPrintf(fp, (char *)getHint());
+	vgui2::filesystem()->FPrintf(fp, "// Half-Life User Info Configuration Layout Script (stores last settings chosen, too)\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(tblock), am_pm);
+	vgui2::filesystem()->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
+	vgui2::filesystem()->FPrintf(fp, "VERSION %.1f\r\n\r\n", SCRIPT_VERSION);
+	vgui2::filesystem()->FPrintf(fp, "DESCRIPTION INFO_OPTIONS\r\n{\r\n");
 }
 
 void CInfoDescription::WriteFileHeader(void *fp)
@@ -329,10 +332,10 @@ void CInfoDescription::WriteFileHeader(void *fp)
 	time_t timer = time(NULL);
 	tm *tblock = localtime(&timer);
 
-	g_pFullFileSystem->FPrintf(fp, "// Half-Life User Info Configuration Settings\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// DO NOT EDIT, GENERATED BY HALF-LIFE\r\n");
-	g_pFullFileSystem->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(tblock), am_pm);
-	g_pFullFileSystem->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// Half-Life User Info Configuration Settings\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// DO NOT EDIT, GENERATED BY HALF-LIFE\r\n");
+	vgui2::filesystem()->FPrintf(fp, "// File generated:  %.19s %s\r\n", asctime(tblock), am_pm);
+	vgui2::filesystem()->FPrintf(fp, "//\r\n//\r\n// Cvar\t-\tSetting\r\n\r\n");
 }
 
 CInfoDescription::CInfoDescription(CPanelListPanel *panel) : CDescription(panel)

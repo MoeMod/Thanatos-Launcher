@@ -22,7 +22,7 @@ struct DeathNoticeItem
 	float flDisplayTime;
 	float *KillerColor;
 	float *VictimColor;
-	vgui::IImage **DrawBg;
+	vgui2::IImage **DrawBg;
 };
 
 #define MAX_DEATHNOTICES 8
@@ -66,12 +66,12 @@ int CHudDeathNotice::VidInit(void)
 	m_headSprite = gHUD.GetSpriteIndex("d_headshot");
 	m_headWidth = gHUD.GetSpriteRect(m_headSprite).right - gHUD.GetSpriteRect(m_headSprite).left;
 
-	m_killBg[0] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_left", true);
-	m_killBg[1] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_center", true);
-	m_killBg[2] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_right", true);
-	m_deathBg[0] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_left", true);
-	m_deathBg[1] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_center", true);
-	m_deathBg[2] = vgui::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_right", true);
+	m_killBg[0] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_left", true);
+	m_killBg[1] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_center", true);
+	m_killBg[2] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/KillBg_right", true);
+	m_deathBg[0] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_left", true);
+	m_deathBg[1] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_center", true);
+	m_deathBg[2] = vgui2::scheme()->GetImage("resource/Hud/DeathNotice/DeathBg_right", true);
 
 	int w, t;
 	m_killBg[0]->GetContentSize(w, t);

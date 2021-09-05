@@ -10,7 +10,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-using namespace vgui;
 static char token[1024];
 
 void StripFloatTrailingZeros(char *str)
@@ -216,8 +215,8 @@ void CScriptObject::WriteToScriptFile(FileHandle_t fp)
 		return;
 
 	FixupString(cvarname, sizeof(cvarname));
-	g_pFullFileSystem->FPrintf(fp, "\t\"%s\"\r\n", cvarname);
-	g_pFullFileSystem->FPrintf(fp, "\t{\r\n");
+	vgui2::filesystem()->FPrintf(fp, "\t\"%s\"\r\n", cvarname);
+	vgui2::filesystem()->FPrintf(fp, "\t{\r\n");
 
 	CScriptListItem *pItem;
 
@@ -227,33 +226,33 @@ void CScriptObject::WriteToScriptFile(FileHandle_t fp)
 	{
 		case O_BOOL:
 		{
-			g_pFullFileSystem->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ BOOL }\r\n");
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ \"%i\" }\r\n", (int)fcurValue ? 1 : 0);
+			vgui2::filesystem()->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ BOOL }\r\n");
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ \"%i\" }\r\n", (int)fcurValue ? 1 : 0);
 			break;
 		}
 
 		case O_NUMBER:
 		{
-			g_pFullFileSystem->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ NUMBER %s %s }\r\n", CleanFloat(fMin), CleanFloat(fMax));
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ \"%s\" }\r\n", CleanFloat(fcurValue));
+			vgui2::filesystem()->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ NUMBER %s %s }\r\n", CleanFloat(fMin), CleanFloat(fMax));
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ \"%s\" }\r\n", CleanFloat(fcurValue));
 			break;
 		}
 
 		case O_STRING:
 		{
-			g_pFullFileSystem->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ STRING }\r\n");
+			vgui2::filesystem()->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ STRING }\r\n");
 			FixupString(curValue, sizeof(curValue));
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ \"%s\" }\r\n", curValue);
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ \"%s\" }\r\n", curValue);
 			break;
 		}
 
 		case O_LIST:
 		{
-			g_pFullFileSystem->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
-			g_pFullFileSystem->FPrintf(fp, "\t\t{\r\n\t\t\tLIST\r\n");
+			vgui2::filesystem()->FPrintf(fp, "\t\t\"%s\"\r\n", prompt);
+			vgui2::filesystem()->FPrintf(fp, "\t\t{\r\n\t\t\tLIST\r\n");
 
 			pItem = pListItems;
 
@@ -261,21 +260,21 @@ void CScriptObject::WriteToScriptFile(FileHandle_t fp)
 			{
 				UTIL_StripInvalidCharacters(pItem->szItemText, sizeof(pItem->szItemText));
 				UTIL_StripInvalidCharacters(pItem->szValue, sizeof(pItem->szValue));
-				g_pFullFileSystem->FPrintf(fp, "\t\t\t\"%s\" \"%s\"\r\n", pItem->szItemText, pItem->szValue);
+				vgui2::filesystem()->FPrintf(fp, "\t\t\t\"%s\" \"%s\"\r\n", pItem->szItemText, pItem->szValue);
 
 				pItem = pItem->pNext;
 			}
 
-			g_pFullFileSystem->FPrintf(fp, "\t\t}\r\n");
-			g_pFullFileSystem->FPrintf(fp, "\t\t{ \"%s\" }\r\n", CleanFloat(fcurValue));
+			vgui2::filesystem()->FPrintf(fp, "\t\t}\r\n");
+			vgui2::filesystem()->FPrintf(fp, "\t\t{ \"%s\" }\r\n", CleanFloat(fcurValue));
 			break;
 		}
 	}
 
 	if (bSetInfo)
-		g_pFullFileSystem->FPrintf(fp, "\t\tSetInfo\r\n");
+		vgui2::filesystem()->FPrintf(fp, "\t\tSetInfo\r\n");
 
-	g_pFullFileSystem->FPrintf(fp, "\t}\r\n\r\n");
+	vgui2::filesystem()->FPrintf(fp, "\t}\r\n\r\n");
 }
 
 void CScriptObject::WriteToFile(FileHandle_t fp)
@@ -284,7 +283,7 @@ void CScriptObject::WriteToFile(FileHandle_t fp)
 		return;
 
 	FixupString(cvarname, sizeof(cvarname));
-	g_pFullFileSystem->FPrintf(fp, "\"%s\"\t\t", cvarname);
+	vgui2::filesystem()->FPrintf(fp, "\"%s\"\t\t", cvarname);
 
 	CScriptListItem *pItem;
 	int n, i;
@@ -294,7 +293,7 @@ void CScriptObject::WriteToFile(FileHandle_t fp)
 	{
 		case O_BOOL:
 		{
-			g_pFullFileSystem->FPrintf(fp, "\"%s\"\r\n", fcurValue != 0.0 ? "1" : "0");
+			vgui2::filesystem()->FPrintf(fp, "\"%s\"\r\n", fcurValue != 0.0 ? "1" : "0");
 			break;
 		}
 
@@ -308,14 +307,14 @@ void CScriptObject::WriteToFile(FileHandle_t fp)
 			if (fMax != -1.0)
 				fVal = __min(fVal, fMax);
 
-			g_pFullFileSystem->FPrintf(fp, "\"%f\"\r\n", fVal);
+			vgui2::filesystem()->FPrintf(fp, "\"%f\"\r\n", fVal);
 			break;
 		}
 
 		case O_STRING:
 		{
 			FixupString(curValue, sizeof(curValue));
-			g_pFullFileSystem->FPrintf(fp, "\"%s\"\r\n", curValue);
+			vgui2::filesystem()->FPrintf(fp, "\"%s\"\r\n", curValue);
 			break;
 		}
 
@@ -334,10 +333,10 @@ void CScriptObject::WriteToFile(FileHandle_t fp)
 			if (pItem)
 			{
 				UTIL_StripInvalidCharacters(pItem->szValue, sizeof(pItem->szValue));
-				g_pFullFileSystem->FPrintf(fp, "\"%s\"\r\n", pItem->szValue);
+				vgui2::filesystem()->FPrintf(fp, "\"%s\"\r\n", pItem->szValue);
 			}
 			else
-				g_pFullFileSystem->FPrintf(fp, "\"0.0\"\r\n");
+				vgui2::filesystem()->FPrintf(fp, "\"0.0\"\r\n");
 
 			break;
 		}
@@ -840,17 +839,17 @@ bool CDescription::ReadFromBuffer(char **pBuffer)
 
 bool CDescription::InitFromFile(char *pszFileName)
 {
-	FileHandle_t file = g_pFullFileSystem->Open(pszFileName, "rb");
+	FileHandle_t file = vgui2::filesystem()->Open(pszFileName, "rb");
 
 	if (!file)
 		return false;
 
-	int len = g_pFullFileSystem->Size(file);
+	int len = vgui2::filesystem()->Size(file);
 
 	byte *buffer = new unsigned char[len];
 	Assert(buffer);
-	g_pFullFileSystem->Read(buffer, len, file);
-	g_pFullFileSystem->Close(file);
+	vgui2::filesystem()->Read(buffer, len, file);
+	vgui2::filesystem()->Close(file);
 
 	char *pBuffer = (char *)buffer;
 
@@ -903,7 +902,7 @@ void CDescription::WriteToScriptFile(FileHandle_t fp)
 		pObj = pObj->pNext;
 	}
 
-	g_pFullFileSystem->FPrintf(fp, "}\r\n");
+	vgui2::filesystem()->FPrintf(fp, "}\r\n");
 }
 
 void CDescription::TransferCurrentValues(const char *pszConfigFile)

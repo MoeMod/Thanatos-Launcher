@@ -12,13 +12,13 @@
 
 class CBuyMenu;
 
-class CBuySubMenu : public vgui::WizardSubPanel
+class CBuySubMenu : public vgui2::WizardSubPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CBuySubMenu, vgui::WizardSubPanel);
+	DECLARE_CLASS_SIMPLE(CBuySubMenu, vgui2::WizardSubPanel);
 
 public:
-	CBuySubMenu(vgui::Panel *parent, const char *name = "BuySubMenu");
+	CBuySubMenu(vgui2::Panel *parent, const char *name = "BuySubMenu");
 	~CBuySubMenu(void);
 
 public:
@@ -34,11 +34,11 @@ public:
 	virtual void SetupNextSubPanel(const char *fileName);
 
 protected:
-	virtual void SetNextSubPanel(vgui::WizardSubPanel *panel);
-	virtual vgui::WizardSubPanel *GetNextSubPanel(void);
-	virtual vgui::Panel *CreateControlByName(const char *controlName) override;
+	virtual void SetNextSubPanel(vgui2::WizardSubPanel *panel);
+	virtual vgui2::WizardSubPanel *GetNextSubPanel(void);
+	virtual vgui2::Panel *CreateControlByName(const char *controlName) override;
 	virtual CBuySubMenu *CreateNewSubMenu(void);
-	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui::EditablePanel *panel);
+	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui2::EditablePanel *panel);
 
 protected:
 	typedef struct
@@ -49,10 +49,10 @@ protected:
 	SubMenuEntry_t;
 
 protected:
-	vgui::EditablePanel *m_pPanel;
+	vgui2::EditablePanel *m_pPanel;
 	MouseOverPanelButton *m_pFirstButton;
 	CUtlVector<SubMenuEntry_t> m_SubMenus;
-	vgui::WizardSubPanel *m_NextPanel;
+	vgui2::WizardSubPanel *m_NextPanel;
 };
 
 #endif

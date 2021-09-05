@@ -207,7 +207,7 @@ void IN_ActivateMouse(void)
 
 		mouseactive = 1;
 
-		if (!vgui::surface()->IsCursorVisible() && strlen(gEngfuncs.pfnGetLevelName()) > 0)
+		if (!vgui2::surface()->IsCursorVisible() && strlen(gEngfuncs.pfnGetLevelName()) > 0)
 			IN_LockCursor();
 
 		IN_ResetMouse();
@@ -288,7 +288,7 @@ void IN_GetMousePos(int *mx, int *my)
 
 void IN_ResetMouse(void)
 {
-	bool bCursorVisible = vgui::surface()->IsCursorVisible();
+	bool bCursorVisible = vgui2::surface()->IsCursorVisible();
 
 	if (!m_bRawInput && mouseactive && !bCursorVisible)
 	{
@@ -333,7 +333,7 @@ void IN_MouseEvent(int mstate)
 	if (iMouseInUse || g_iVisibleMouse)
 		return;
 
-	if (vgui::surface()->IsCursorVisible())
+	if (vgui2::surface()->IsCursorVisible())
 		return;
 
 	if (mouseactive)
@@ -398,7 +398,7 @@ void IN_MouseMove(float frametime, usercmd_t *cmd)
 		V_StopPitchDrift();
 
 	static bool lastCursorVisible = false;
-	bool cursorVisible = vgui::surface()->IsCursorVisible();
+	bool cursorVisible = vgui2::surface()->IsCursorVisible();
 
 	if (lastCursorVisible != cursorVisible)
 	{
@@ -512,7 +512,7 @@ void IN_Accumulate(void)
 {
 	if (!iMouseInUse && !g_iVisibleMouse)
 	{
-		if (!vgui::surface()->IsCursorVisible() && mouseactive)
+		if (!vgui2::surface()->IsCursorVisible() && mouseactive)
 		{
 			if (!m_bRawInput)
 			{
@@ -908,7 +908,7 @@ void IN_JoyMove(float frametime, usercmd_t *cmd)
 void IN_Move(float frametime, usercmd_t *cmd)
 {
 #ifdef _DEBUG
-	bool cursorVisible = vgui::surface()->IsCursorVisible();
+	bool cursorVisible = vgui2::surface()->IsCursorVisible();
 
 	if (gEngfuncs.pfnGetCvarFloat("in_focusdebug") > 1 && strlen(gEngfuncs.pfnGetLevelName()) > 0)
 		gEngfuncs.Con_Printf("iMouseInUse:%d, g_iVisibleMouse:%d, gHUD.m_iIntermission:%d, cursorVisible:%d, g_fActiveApp:%d, mouseactive:%d\n", iMouseInUse, g_iVisibleMouse, gHUD.m_iIntermission, cursorVisible, g_fActiveApp, mouseactive);

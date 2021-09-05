@@ -8,7 +8,7 @@
 #include "BaseGamesPage.h"
 
 #include "IGameList.h"
-#include "IServerRefreshResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
 #include "server.h"
 
 class CFavoriteGames : public CBaseGamesPage
@@ -16,7 +16,7 @@ class CFavoriteGames : public CBaseGamesPage
 	DECLARE_CLASS_SIMPLE(CFavoriteGames, CBaseGamesPage);
 
 public:
-	CFavoriteGames(vgui::Panel *parent);
+	CFavoriteGames(vgui2::Panel *parent);
 	~CFavoriteGames(void);
 
 public:

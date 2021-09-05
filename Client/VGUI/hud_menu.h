@@ -5,7 +5,7 @@
 #include "UtlVector.h"
 #include "vgui_controls/Panel.h"
 
-namespace vgui
+namespace vgui2
 {
 class CHudMenu : public Panel, public CHudElement
 {
@@ -33,11 +33,11 @@ public:
 
 private:
 	virtual void Paint(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 private:
 	void ProcessText(void);
-	void PaintString(const wchar_t *text, int textlen, vgui::HFont &font, int x, int y);
+	void PaintString(const wchar_t *text, int textlen, vgui2::HFont &font, int x, int y);
 
 private:
 	struct ProcessedLine
@@ -67,9 +67,9 @@ private:
 	float m_flTextScan;
 	float m_flAlphaOverride;
 	float m_flSelectionAlphaOverride;
-	vgui::HFont m_hTextFont;
-	vgui::HFont m_hItemFont;
-	vgui::HFont m_hItemFontPulsing;
+	vgui2::HFont m_hTextFont;
+	vgui2::HFont m_hItemFont;
+	vgui2::HFont m_hItemFontPulsing;
 	Color m_MenuColor;
 	Color m_ItemColor;
 	Color m_BoxColor;

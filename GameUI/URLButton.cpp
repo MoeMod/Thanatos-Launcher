@@ -3,6 +3,7 @@
 
 #include <vgui/IBorder.h>
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/IScheme.h>
 #include <vgui/ISurface.h>
 #include <vgui/ISystem.h>
@@ -14,10 +15,11 @@
 #include "URLButton.h"
 #include <vgui_controls/FocusNavGroup.h>
 
-using namespace vgui;
+namespace vgui2
+{
 
 DECLARE_BUILD_FACTORY_DEFAULT_TEXT(URLButton, URLButton);
-
+	
 URLButton::URLButton(Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget, const char *pCmd) : Label(parent, panelName, text)
 {
 	Init();
@@ -419,4 +421,5 @@ void URLButton::SizeToContents(void)
 	int wide, tall;
 	GetContentSize(wide, tall);
 	SetSize(wide + Label::Content, tall + Label::Content);
+}
 }

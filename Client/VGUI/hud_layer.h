@@ -3,23 +3,23 @@
 
 #include "hud_element.h"
 
-namespace vgui
+namespace vgui2
 {
 	class CHudRadar;
 	class CHudMenu;
 };
 
-class CHudLayer : public vgui::Panel
+class CHudLayer : public vgui2::Panel
 {
-	DECLARE_CLASS_SIMPLE(CHudLayer, vgui::Panel);
+	DECLARE_CLASS_SIMPLE(CHudLayer, vgui2::Panel);
 
 public:
-	CHudLayer(vgui::Panel *parent);
+	CHudLayer(vgui2::Panel *parent);
 	~CHudLayer(void);
 
 public:
 	void Start(void);
-	void SetParent(vgui::VPANEL parent);
+	void SetParent(vgui2::VPANEL parent);
 	void SetVisible(bool state);
 
 public:
@@ -43,8 +43,8 @@ private:
 	CUtlVector<CHudElement *> m_Panels;
 
 private:
-	vgui::CHudMenu *m_pMenu;
-	vgui::CHudRadar *m_pRadar;
+	vgui2::CHudMenu *m_pMenu;
+	vgui2::CHudRadar *m_pRadar;
 };
 
 #endif

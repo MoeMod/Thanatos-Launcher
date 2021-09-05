@@ -15,12 +15,12 @@
 #include <tier1/utlvector.h>
 #include <tier1/utllinkedlist.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 #include "PHandle.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class CSectionHeader;
@@ -37,7 +37,7 @@ class SectionedListPanel : public Panel
 	DECLARE_CLASS_SIMPLE( SectionedListPanel, Panel );
 
 public:
-	SectionedListPanel(vgui::Panel *parent, const char *name);
+	SectionedListPanel(vgui2::Panel *parent, const char *name);
 	~SectionedListPanel();
 
 	// adds a new section; returns false if section already exists
@@ -141,7 +141,7 @@ public:
 	virtual bool GetCellBounds(int itemID, int column, int &x, int &y, int &wide, int &tall);
 
 	// set up a field for editing
-	virtual void EnterEditMode(int itemID, int column, vgui::Panel *editPanel);
+	virtual void EnterEditMode(int itemID, int column, vgui2::Panel *editPanel);
 
 	// leaves editing mode
 	virtual void LeaveEditMode();

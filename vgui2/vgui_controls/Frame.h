@@ -12,14 +12,14 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/Dar.h>
 
 #include "Panel.h"
 #include "EditablePanel.h"
 #include "FocusNavGroup.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class FrameButton;
@@ -167,7 +167,6 @@ protected:
 
 	// painting
 	virtual void PaintBackground();
-	void PaintBorder() { return; }
 
 	// per-frame thinking, used for transition effects
 	virtual void OnThink();
@@ -241,6 +240,14 @@ private:
 	bool	m_bChainKeysToParent;
 	bool	m_bPrimed;
 	VPANEL	m_hPreviousModal;
+
+protected:
+	bool m_bImageBackground;
+	IImage *m_pTopBackground[3];
+	IImage *m_pCenterBackground[3];
+	IImage *m_pBottomBackground[3];
+	bool m_bFrameTitleButtonLeft;
+	int m_iFrameTitleAlign;
 };
 
 } // namespace vgui

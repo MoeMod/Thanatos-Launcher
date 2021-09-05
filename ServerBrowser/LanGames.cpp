@@ -17,11 +17,11 @@
 #include <vgui_controls/ImagePanel.h>
 #include <vgui_controls/ListPanel.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 const float BROADCAST_LIST_TIMEOUT = 0.4f;
 
-CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename) : CBaseGamesPage(parent, "LanGames", pCustomResFilename)
+CLanGames::CLanGames(vgui2::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename) : CBaseGamesPage(parent, "LanGames", pCustomResFilename)
 {
 	m_iServerRefreshCount = 0;
 	m_bRequesting = false;

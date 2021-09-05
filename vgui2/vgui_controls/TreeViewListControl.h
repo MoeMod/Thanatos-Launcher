@@ -15,11 +15,11 @@
 #include <tier1/utlvector.h>
 #include <tier1/utlsymbol.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 
-namespace vgui
+namespace vgui2
 {
 
 // --------------------------------------------------------------------------------- //
@@ -28,19 +28,19 @@ namespace vgui
 // This control has N columns, with a tree view in the leftmost column.
 // --------------------------------------------------------------------------------- //
 
-class CTreeViewListControl : public vgui::Panel
+class CTreeViewListControl : public vgui2::Panel
 {
 	DECLARE_CLASS_SIMPLE( CTreeViewListControl, Panel );
 
 public:
 
-	CTreeViewListControl( vgui::Panel *pParent, const char *pName );
+	CTreeViewListControl( vgui2::Panel *pParent, const char *pName );
 
 	// Set the tree view to be displayed on the left. If this isn't set, then nothing displays in here.
-	virtual void SetTreeView( vgui::TreeView *pTree );
+	virtual void SetTreeView( vgui2::TreeView *pTree );
 
 	// Set the height of the title bar.
-	virtual void SetTitleBarInfo( vgui::HFont hFont, int titleBarHeight );
+	virtual void SetTitleBarInfo( vgui2::HFont hFont, int titleBarHeight );
 
 	// Set the color to draw the border lines in.
 	virtual void SetBorderColor( Color clr );
@@ -60,7 +60,7 @@ public:
 	// The rule is that the the top and left pixels in each grid element are reserved for lines.
 	virtual void GetGridElementBounds( int iColumn, int iRow, int &left, int &top, int &right, int &bottom );
 
-	virtual vgui::TreeView *GetTree();
+	virtual vgui2::TreeView *GetTree();
 
 	virtual int	GetTitleBarHeight();
 
@@ -98,7 +98,7 @@ protected:
 
 private:
 
-	vgui::TreeView *m_pTree;
+	vgui2::TreeView *m_pTree;
 
 	class CColumnInfo
 	{
@@ -116,7 +116,7 @@ private:
 	};
 	CUtlVector<CColumnInfo> m_Columns;
 	
-	vgui::HFont m_TitleBarFont;
+	vgui2::HFont m_TitleBarFont;
 	int m_TitleBarHeight;
 
 	// These are indices into the tree view.

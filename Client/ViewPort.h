@@ -4,7 +4,7 @@
 #undef GetCurrentTime
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/ISurface.h>
 #include <vgui/ILocalize.h>
 #include <vgui/IScheme.h>
@@ -49,9 +49,9 @@ class CCSChatDialog;
 #undef GetCurrentTime
 #endif
 
-class CViewport : public vgui::Panel
+class CViewport : public vgui2::Panel
 {
-	DECLARE_CLASS_SIMPLE(CViewport, vgui::Panel);
+	DECLARE_CLASS_SIMPLE(CViewport, vgui2::Panel);
 
 public:
 	CViewport(void);
@@ -59,12 +59,12 @@ public:
 
 public:
 	void Start(void);
-	void SetParent(vgui::VPANEL parent);
+	void SetParent(vgui2::VPANEL parent);
 	void SetVisible(bool state);
 
 public:
 	virtual int GetViewPortScheme(void);
-	virtual vgui::VPANEL GetViewPortPanel(void);
+	virtual vgui2::VPANEL GetViewPortPanel(void);
 	virtual void CreateBackGround(void);
 	virtual void ShowBackGround(bool bShow);
 

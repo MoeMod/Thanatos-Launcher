@@ -15,12 +15,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 struct keystring_t
 {
 	int code;
-	char *name;
+	const char *name;
 };
 
 static keystring_t s_ControllerButtons[] = {
@@ -77,7 +77,7 @@ int StringToButtonCode( const char *name )
 // Purpose: intercepts the keycode from its parent, and handles it according to
 //			the button map.  If the keycode isn't handled, it gets passed on to the parent.
 //-----------------------------------------------------------------------------
-void CControllerMap::OnKeyCodeTyped( vgui::KeyCode code )
+void CControllerMap::OnKeyCodeTyped( vgui2::KeyCode code )
 {
 	int idx = m_buttonMap.Find( code );
 	if ( idx != m_buttonMap.InvalidIndex() )
@@ -97,7 +97,7 @@ void CControllerMap::OnKeyCodeTyped( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CControllerMap::CControllerMap( vgui::Panel *parent, const char *name ) : BaseClass( parent, name )
+CControllerMap::CControllerMap( vgui2::Panel *parent, const char *name ) : BaseClass( parent, name )
 {
 	m_buttonMap.SetLessFunc( lessFunc );
 }

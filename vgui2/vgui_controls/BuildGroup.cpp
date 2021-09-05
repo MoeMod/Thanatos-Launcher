@@ -28,7 +28,7 @@
 #include <vgui/Cursor.h>
 #include <vgui/MouseCode.h>
 
-#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/ISystem.h>
 #include <vgui/IVGUI.h>
 #include <vgui/ISurface.h>
@@ -49,7 +49,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Handle table
@@ -81,9 +81,9 @@ BuildGroup::BuildGroup(Panel *parentPanel, Panel *contextPanel)
 	for (int i=0; i<4; ++i)
 		_rulerNumber[i] = NULL;
 	SetContextPanel(contextPanel);
-	_controlGroup = NULL;
-	_groupDeltaX = 0;
-	_groupDeltaX = 0;
+	//_controlGroup = NULL;
+	//_groupDeltaX = 0;
+	//_groupDeltaX = 0;
 	_showRulers = false;
 
 }
@@ -888,18 +888,18 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 		bool bSuccess = false;
 		if (!pathID)
 		{
-			bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, "SKIN");
+			bSuccess = rDat->LoadFromFile(filesystem(), controlResourceName, "SKIN");
 		}
 		if (!bSuccess)
 		{
-			bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, pathID);
+			bSuccess = rDat->LoadFromFile(filesystem(), controlResourceName, pathID);
 		}
 
 		if ( bSuccess )
 		{
-			if ( IsX360() )
+			if ( IsXbox() )
 			{
-				rDat->ProcessResolutionKeys( surface()->GetResolutionKey() );
+				//rDat->ProcessResolutionKeys( surface()->GetResolutionKey() );
 			}
 			if ( IsPC() )
 			{
@@ -1059,7 +1059,7 @@ bool BuildGroup::SaveControlSettings(void)
 		GetSettings(rDat);
 
 		// save the data out to a file
-		bSuccess = rDat->SaveToFile(g_pFullFileSystem, m_pResourceName, m_pResourcePathID);
+		bSuccess = rDat->SaveToFile(filesystem(), m_pResourceName, m_pResourcePathID);
 		if (!bSuccess)
 		{
 			MessageBox *dlg = new MessageBox("BuildMode - Error saving file", "Error: Could not save changes.  File is most likely read only.");

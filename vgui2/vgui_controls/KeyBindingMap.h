@@ -15,7 +15,7 @@
 // more flexible than default pointers to members code required for casting member function pointers
 #pragma pointers_to_members( full_generality, virtual_inheritance )
 
-namespace vgui
+namespace vgui2
 {
 
 class Panel;
@@ -65,17 +65,17 @@ struct KeyBindingMap_t
 	static void KB_AddToMap																\
 	(																					\
 		char const			*bindingname,												\
-		vgui::KeyCode		defaultcode,												\
+		vgui2::KeyCode		defaultcode,												\
 		int					default_modifiers,											\
-		vgui::MessageFunc_t function,													\
+		vgui2::MessageFunc_t function,													\
 		char const			*helpstring,												\
 		char const			*docstring,													\
 		bool				passive														\
 	) 																					\
 	{																					\
-		vgui::PanelKeyBindingMap *map = vgui::FindOrAddPanelKeyBindingMap( GetPanelClassName() ); \
+		vgui2::PanelKeyBindingMap *map = vgui2::FindOrAddPanelKeyBindingMap( GetPanelClassName() ); \
 																						\
-		vgui::KeyBindingMap_t entry;													\
+		vgui2::KeyBindingMap_t entry;													\
 		entry.bindingname = bindingname;												\
 																						\
 		entry.func = function;															\
@@ -87,7 +87,7 @@ struct KeyBindingMap_t
 																						\
 		map->entries.AddToTail( entry );												\
 																						\
-		vgui::BoundKey_t kb;															\
+		vgui2::BoundKey_t kb;															\
 		kb.isbuiltin = true;															\
 		kb.bindingname = bindingname;													\
 		kb.keycode = defaultcode;														\
@@ -102,11 +102,11 @@ struct KeyBindingMap_t
 		if ( chained )																	\
 			return;																		\
 		chained = true;																	\
-		vgui::PanelKeyBindingMap *map = vgui::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
+		vgui2::PanelKeyBindingMap *map = vgui2::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
 		map->pfnClassName = &GetPanelClassName;											\
 		if ( map && GetPanelBaseClassName() && GetPanelBaseClassName()[0] )				\
 		{																				\
-			map->baseMap = vgui::FindOrAddPanelKeyBindingMap( GetPanelBaseClassName() );	\
+			map->baseMap = vgui2::FindOrAddPanelKeyBindingMap( GetPanelBaseClassName() );	\
 		}																				\
 	}																					\
 																						\
@@ -117,8 +117,8 @@ struct KeyBindingMap_t
 		int					modifiers													\
 	)																					\
 	{																					\
-		vgui::PanelKeyBindingMap *map = vgui::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
-		vgui::BoundKey_t kb;															\
+		vgui2::PanelKeyBindingMap *map = vgui2::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
+		vgui2::BoundKey_t kb;															\
 		kb.isbuiltin = true;															\
 		kb.bindingname = bindingname;													\
 		kb.keycode = keycode;															\
@@ -139,9 +139,9 @@ struct KeyBindingMap_t
 	};																					\
 	className##_RegisterKBMap m_RegisterClassKB;										\
 																						\
-	virtual vgui::PanelKeyBindingMap *GetKBMap()										\
+	virtual vgui2::PanelKeyBindingMap *GetKBMap()										\
 	{																					\
-		static vgui::PanelKeyBindingMap *s_pMap = vgui::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
+		static vgui2::PanelKeyBindingMap *s_pMap = vgui2::FindOrAddPanelKeyBindingMap( GetPanelClassName() );	\
 		return s_pMap;																	\
 	}
 
@@ -157,7 +157,7 @@ struct KeyBindingMap_t
 			if ( !bAdded ) \
 			{ \
 				bAdded = true; \
-				KB_AddToMap( #name, keycode, modifiers, (vgui::MessageFunc_t)&ThisClass::##function, help, doc, passive ); \
+				KB_AddToMap( #name, keycode, modifiers, (vgui2::MessageFunc_t)&ThisClass::##function, help, doc, passive ); \
 			}											\
 		}												\
 		PanelKBMapFunc_##name()							\

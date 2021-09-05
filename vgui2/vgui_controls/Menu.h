@@ -14,10 +14,10 @@
 
 #include <vgui_controls/Panel.h>
 #include <vgui_controls/Label.h>
-#include <utllinkedlist.h>
-#include <utlvector.h>
+#include <tier1/utllinkedlist.h>
+#include <tier1/utlvector.h>
 
-namespace vgui
+namespace vgui2
 {
 
 	class MenuItem;
@@ -201,7 +201,7 @@ namespace vgui
 		virtual void ActivateItemByRow(int row);
 		virtual int GetActiveItem();		// returns the itemID (not the row) of the active item
 
-		// Return the number of items currently in the menu list
+											// Return the number of items currently in the menu list
 		virtual int GetItemCount();
 
 		// return the menuID of the n'th item in the menu list, valid from [0, GetItemCount)
@@ -261,6 +261,7 @@ namespace vgui
 		virtual void LayoutMenuBorder();
 		virtual void MakeItemsVisibleInScrollRange(int maxVisibleItems, int nNumPixelsAvailable);
 		virtual void OnMouseWheeled(int delta);
+		virtual void PaintBackground() override;
 
 		int	CountVisibleItems();
 		void ComputeWorkspaceSize(int& workWide, int& workTall);
@@ -295,7 +296,7 @@ namespace vgui
 #endif // DBGFLAG_VALIDATE
 
 	private:
-		MenuItem *GetParentMenuItem();
+		MenuItem * GetParentMenuItem();
 
 		int 			m_iMenuItemHeight;
 		int 			m_iFixedWidth;
@@ -324,6 +325,11 @@ namespace vgui
 		int 			m_iActivatedItem;
 		HFont			m_hItemFont;
 		HFont			m_hFallbackItemFont;
+
+		bool m_bImageBackground;
+		IImage *m_pTopBackground[3];
+		IImage *m_pCenterBackground[3];
+		IImage *m_pBottomBackground[3];
 	};
 
 } // namespace vgui

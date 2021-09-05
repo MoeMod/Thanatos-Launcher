@@ -3,7 +3,7 @@
 #include "VGUI\ILocalize.h"
 #include "VGUI\IScheme.h"
 
-CToolBar::CToolBar(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
+CToolBar::CToolBar(vgui2::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 {
 #if 0
 	SetSizeable(false);
@@ -16,7 +16,7 @@ CToolBar::~CToolBar(void)
 {
 }
 
-void CToolBar::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CToolBar::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 

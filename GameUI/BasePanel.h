@@ -19,16 +19,16 @@ class CBinkPanel;
 class CBackGroundPanel;
 class CToolBar;
 
-class CFooterPanel : public vgui::EditablePanel
+class CFooterPanel : public vgui2::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE(CFooterPanel, vgui::EditablePanel);
+	DECLARE_CLASS_SIMPLE(CFooterPanel, vgui2::EditablePanel);
 
 public:
 	CFooterPanel(Panel *parent, const char *panelName);
 	virtual ~CFooterPanel(void);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void ApplySettings(KeyValues *pResourceData);
 	virtual void Paint(void);
 	virtual void PaintBackground(void);
@@ -36,7 +36,7 @@ public:
 public:
 	void SetHelpNameAndReset(const char *pName);
 	const char *GetHelpName(void);
-	void AddButtonsFromMap(vgui::Frame *pMenu);
+	void AddButtonsFromMap(vgui2::Frame *pMenu);
 	void SetStandardDialogButtons(void);
 	void AddNewButtonLabel(const char *text, const char *icon);
 	void ShowButtonLabel(const char *name, bool show = true);
@@ -56,7 +56,7 @@ private:
 
 private:
 	CUtlVector<ButtonLabel_t *> m_ButtonLabels;
-	vgui::Label *m_pSizingLabel;
+	vgui2::Label *m_pSizingLabel;
 	bool m_bPaintBackground;
 	bool m_bCenterHorizontal;
 	int m_ButtonPinRight;
@@ -70,21 +70,21 @@ private:
 	char m_szButtonFont[64];
 	char m_szFGColor[64];
 	char m_szBGColor[64];
-	vgui::HFont m_hButtonFont;
-	vgui::HFont m_hTextFont;
+	vgui2::HFont m_hButtonFont;
+	vgui2::HFont m_hTextFont;
 	char *m_pHelpName;
 };
 
-class CMainMenuGameLogo : public vgui::EditablePanel
+class CMainMenuGameLogo : public vgui2::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE(CMainMenuGameLogo, vgui::EditablePanel);
+	DECLARE_CLASS_SIMPLE(CMainMenuGameLogo, vgui2::EditablePanel);
 
 public:
-	CMainMenuGameLogo(vgui::Panel *parent, const char *name);
+	CMainMenuGameLogo(vgui2::Panel *parent, const char *name);
 
 public:
 	virtual void ApplySettings(KeyValues *inResourceData);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	int GetOffsetX(void) { return m_nOffsetX; }
@@ -95,15 +95,15 @@ private:
 	int m_nOffsetY;
 };
 
-class CGameMenuItem : public vgui::MenuItem
+class CGameMenuItem : public vgui2::MenuItem
 {
-	DECLARE_CLASS_SIMPLE(CGameMenuItem, vgui::MenuItem);
+	DECLARE_CLASS_SIMPLE(CGameMenuItem, vgui2::MenuItem);
 
 public:
-	CGameMenuItem(vgui::Menu *parent, const char *name);
+	CGameMenuItem(vgui2::Menu *parent, const char *name);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual Color GetButtonBgColor();
 	virtual Color GetButtonFgColor();
 	virtual void PaintBackground(void);
@@ -117,9 +117,9 @@ private:
 	bool m_bRightAligned;
 };
 
-class CBasePanel : public vgui::Panel
+class CBasePanel : public vgui2::Panel
 {
-	DECLARE_CLASS_SIMPLE(CBasePanel, vgui::Panel);
+	DECLARE_CLASS_SIMPLE(CBasePanel, vgui2::Panel);
 
 public:
 	CBasePanel(void);
@@ -144,8 +144,8 @@ public:
 public:
 	KeyValues *GetConsoleControlSettings(void);
 	void RunCloseAnimation(const char *animName);
-	void RunAnimationWithCallback(vgui::Panel *parent, const char *animName, KeyValues *msgFunc);
-	void PositionDialog(vgui::PHandle dlg);
+	void RunAnimationWithCallback(vgui2::Panel *parent, const char *animName, KeyValues *msgFunc);
+	void PositionDialog(vgui2::PHandle dlg);
 	void PositionDialog(Panel *pdlg);
 	void CloseBaseDialogs(void);
 	bool IsMenuFading(void);
@@ -153,7 +153,7 @@ public:
 
 protected:
 	virtual void PaintBackground(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 private:
 	enum EBackgroundState
@@ -212,11 +212,11 @@ private:
 	CUtlVector<coord> m_iGameTitlePos;
 	coord m_iGameMenuPos;
 
-	vgui::DHANDLE<vgui::PropertyDialog> m_hOptionsDialog;
-	vgui::DHANDLE<vgui::Frame> m_hCreateMultiplayerGameDialog;
-	vgui::DHANDLE<vgui::QueryBox> m_hQuitQueryBox;
+	vgui2::DHANDLE<vgui2::PropertyDialog> m_hOptionsDialog;
+	vgui2::DHANDLE<vgui2::Frame> m_hCreateMultiplayerGameDialog;
+	vgui2::DHANDLE<vgui2::QueryBox> m_hQuitQueryBox;
 	
-	vgui::AnimationController *m_pConsoleAnimationController;
+	vgui2::AnimationController *m_pConsoleAnimationController;
 	KeyValues *m_pConsoleControlSettings;
 	int m_iLoadingImageID;
 	bool m_bLevelLoading;
@@ -233,8 +233,8 @@ private:
 	bool m_bForceTitleTextUpdate;
 	float m_flFrameFadeInTime;
 	Color m_BackdropColor;
-	vgui::VPANEL m_pFocusPanel;
-	vgui::VPANEL m_pFocusParent;
+	vgui2::VPANEL m_pFocusPanel;
+	vgui2::VPANEL m_pFocusParent;
 	int m_iToolBarSize;
 	CToolBar *m_pToolBar;
 

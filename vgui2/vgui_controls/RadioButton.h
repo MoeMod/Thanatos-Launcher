@@ -12,12 +12,12 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include "ToggleButton.h"
 
 class RadioImage;
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------

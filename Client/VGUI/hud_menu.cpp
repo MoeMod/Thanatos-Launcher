@@ -3,7 +3,7 @@
 #include "cl_util.h"
 #include "vgui_int.h"
 
-#include <vgui/vgui.h>
+#include <vgui/vgui2.h>
 #include <vgui/ISurface.h>
 #include <vgui/ilocalize.h>
 #include <KeyValues.h>
@@ -18,7 +18,7 @@
 wchar_t g_szMenuString2[MAX_MENU_STRING];
 wchar_t g_szPrelocalisedMenuString2[MAX_MENU_STRING];
 
-namespace vgui
+namespace vgui2
 {
 CHudMenu::CHudMenu(void) : BaseClass(NULL, "HudMenu")
 {
@@ -44,7 +44,7 @@ void CHudMenu::Init(void)
 	m_ItemColor = Color(255, 255, 255, 255);
 	m_BoxColor = Color(0, 0, 0, 128);
 
-	m_hTextFont = vgui::INVALID_FONT;
+	m_hTextFont = vgui2::INVALID_FONT;
 
 	SetMouseInputEnabled(false);
 	SetKeyBoardInputEnabled(false);
@@ -74,10 +74,10 @@ void CHudMenu::Think(void)
 		m_bMenuDisplayed = false;
 }
 
-void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, int x, int y)
+void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui2::HFont &font, int x, int y)
 {
-	vgui::surface()->DrawSetTextFont(font);
-	vgui::surface()->DrawSetTextPos(x, y);
+	vgui2::surface()->DrawSetTextFont(font);
+	vgui2::surface()->DrawSetTextPos(x, y);
 
 	bool hit = false;
 
@@ -93,19 +93,19 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 		{
 			if (text[ch] == 'r')
 			{
-				vgui::surface()->DrawSetTextColor(210, 24, 0, m_flSelectionAlphaOverride);
+				vgui2::surface()->DrawSetTextColor(210, 24, 0, m_flSelectionAlphaOverride);
 			}
 			else if (text[ch] == 'd')
 			{
-				vgui::surface()->DrawSetTextColor(100, 100, 100, m_flSelectionAlphaOverride);
+				vgui2::surface()->DrawSetTextColor(100, 100, 100, m_flSelectionAlphaOverride);
 			}
 			else if (text[ch] == 'y')
 			{
-				vgui::surface()->DrawSetTextColor(255, 210, 64, m_flSelectionAlphaOverride);
+				vgui2::surface()->DrawSetTextColor(255, 210, 64, m_flSelectionAlphaOverride);
 			}
 			else if (text[ch] == 'w')
 			{
-				vgui::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
+				vgui2::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
 			}
 			else if (text[ch] == 'R')
 			{
@@ -120,7 +120,7 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 					{
 						if (j > 0 && text[j - 1] == '\\')
 						{
-							vgui::surface()->DrawSetTextColor(210, 24, 0, m_flSelectionAlphaOverride);
+							vgui2::surface()->DrawSetTextColor(210, 24, 0, m_flSelectionAlphaOverride);
 							j--;
 							continue;
 						}
@@ -129,7 +129,7 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 					{
 						if (j > 0 && text[j - 1] == '\\')
 						{
-							vgui::surface()->DrawSetTextColor(100, 100, 100, m_flSelectionAlphaOverride);
+							vgui2::surface()->DrawSetTextColor(100, 100, 100, m_flSelectionAlphaOverride);
 							j--;
 							continue;
 						}
@@ -138,7 +138,7 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 					{
 						if (j > 0 && text[j - 1] == '\\')
 						{
-							vgui::surface()->DrawSetTextColor(255, 210, 64, m_flSelectionAlphaOverride);
+							vgui2::surface()->DrawSetTextColor(255, 210, 64, m_flSelectionAlphaOverride);
 							j--;
 							continue;
 						}
@@ -147,7 +147,7 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 					{
 						if (j > 0 && text[j - 1] == '\\')
 						{
-							vgui::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
+							vgui2::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
 							j--;
 							continue;
 						}
@@ -161,10 +161,10 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 					if (text[j] == 0x9 || text[j] == 0xA || text[j] == 0xD)
 						continue;
 
-					x -= vgui::surface()->GetCharacterWidth(font, text[j]);
+					x -= vgui2::surface()->GetCharacterWidth(font, text[j]);
 
-					vgui::surface()->DrawSetTextPos(x, y);
-					vgui::surface()->DrawUnicodeChar(text[j]);
+					vgui2::surface()->DrawSetTextPos(x, y);
+					vgui2::surface()->DrawUnicodeChar(text[j]);
 				}
 
 				break;
@@ -177,7 +177,7 @@ void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, 
 		if (text[ch] == 0x9 || text[ch] == 0xA || text[ch] == 0xD)
 			continue;
 
-		vgui::surface()->DrawUnicodeChar(text[ch]);
+		vgui2::surface()->DrawUnicodeChar(text[ch]);
 	}
 }
 
@@ -207,7 +207,7 @@ void CHudMenu::Paint(void)
 	if (cl_newmenu_drawbox->value)
 		DrawBox(x - border / 2, y - border / 2, wide, tall, m_BoxColor, m_flSelectionAlphaOverride / 255.0f);
 
-	vgui::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
+	vgui2::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
 
 	for (int i = 0; i < c; i++)
 	{
@@ -224,8 +224,8 @@ void CHudMenu::Paint(void)
 		if (line->menuitem != 0)
 			drawLen *= m_flTextScan;
 
-		vgui::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
-		vgui::surface()->DrawSetTextFont(line->menuitem != 0 ? m_hItemFont : m_hTextFont);
+		vgui2::surface()->DrawSetTextColor(255, 255, 255, m_flSelectionAlphaOverride);
+		vgui2::surface()->DrawSetTextFont(line->menuitem != 0 ? m_hItemFont : m_hTextFont);
 		PaintString(&g_szMenuString2[line->startchar], drawLen, line->menuitem != 0 ? m_hItemFont : m_hTextFont, x, y);
 
 		if (canblur)
@@ -267,7 +267,7 @@ bool CHudMenu::SelectMenuItem(int menu_item)
 
 void CHudMenu::ProcessText(void)
 {
-	if (m_hTextFont == vgui::INVALID_FONT)
+	if (m_hTextFont == vgui2::INVALID_FONT)
 		return;
 
 	m_Processed.RemoveAll();
@@ -333,13 +333,13 @@ void CHudMenu::ProcessText(void)
 		Assert(l);
 
 		int pixels = 0;
-		vgui::HFont font = l->menuitem != 0 ? m_hItemFont : m_hTextFont;
+		vgui2::HFont font = l->menuitem != 0 ? m_hItemFont : m_hTextFont;
 
 		for (int ch = 0; ch < l->length; ch++)
-			pixels += vgui::surface()->GetCharacterWidth(font, g_szMenuString2[ch + l->startchar]);
+			pixels += vgui2::surface()->GetCharacterWidth(font, g_szMenuString2[ch + l->startchar]);
 
 		l->pixels = pixels;
-		l->height = vgui::surface()->GetFontTall(font);
+		l->height = vgui2::surface()->GetFontTall(font);
 
 		if (pixels > m_nMaxPixels)
 			m_nMaxPixels = pixels;
@@ -388,7 +388,7 @@ void CHudMenu::ShowMenu_KeyValueItems(KeyValues *pKV)
 		m_bitsValidSlots |= (1 << i);
 
 		const char *pszItem = item->GetName();
-		const wchar_t *wLocalizedItem = g_pVGuiLocalize->Find(pszItem);
+		const wchar_t *wLocalizedItem = localize()->Find(pszItem);
 
 		_snwprintf(wItem, sizeof(wItem) / sizeof(wchar_t), L"%d. %s\n", i + 1, wLocalizedItem);
 		_snwprintf(g_szMenuString2, sizeof(g_szMenuString2) / sizeof(wchar_t), L"%s%s", g_szMenuString2, wItem);
@@ -397,7 +397,7 @@ void CHudMenu::ShowMenu_KeyValueItems(KeyValues *pKV)
 
 	m_bitsValidSlots |= (1 << 9);
 
-	_snwprintf(wItem, sizeof(wItem) / sizeof(wchar_t), L"0. %s", g_pVGuiLocalize->Find("#Cancel"));
+	_snwprintf(wItem, sizeof(wItem) / sizeof(wchar_t), L"0. %s", localize()->Find("#Cancel"));
 	_snwprintf(g_szMenuString2, sizeof(g_szMenuString2) / sizeof(wchar_t), L"%s\n%s", g_szMenuString2, wItem);
 
 	ProcessText();
@@ -445,7 +445,7 @@ void CHudMenu::MsgFunc_ShowMenu(void)
 	m_fWaitingForMore = NeedMore;
 }
 
-void CHudMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CHudMenu::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 

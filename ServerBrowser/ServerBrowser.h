@@ -5,8 +5,8 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
-#include "IServerBrowser.h"
+#include <vgui/VGUI2.h>
+#include <ServerBrowser/IServerBrowser.h>
 
 #include <vgui_controls/PHandle.h>
 
@@ -20,7 +20,7 @@ public:
 
 public:
 	virtual bool Initialize(CreateInterfaceFn *factorylist, int numFactories);
-	virtual vgui::VPANEL GetPanel(void);
+	virtual vgui2::VPANEL GetPanel(void);
 	virtual void ActiveGameName(const char *szGameName, const char *szGameDir);
 	virtual bool Activate(void);
 	virtual void ConnectToGame(int ip, int connectionport);
@@ -28,13 +28,13 @@ public:
 	virtual void Shutdown(void);
 	virtual void Deactivate(void);
 	virtual void Reactivate(void);
-	virtual void SetParent(vgui::VPANEL parent);
+	virtual void SetParent(vgui2::VPANEL parent);
 	virtual bool JoinGame(unsigned int gameIP, unsigned int gamePort, const char *userName);
 	virtual void CloseAllGameInfoDialogs(void);
 	virtual void CreateDialog(void);
 
 private:
-	vgui::DHANDLE<CServerBrowserDialog> m_hInternetDlg;
+	vgui2::DHANDLE<CServerBrowserDialog> m_hInternetDlg;
 };
 
 CServerBrowser &ServerBrowser(void);

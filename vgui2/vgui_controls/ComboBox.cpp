@@ -27,9 +27,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-namespace vgui
+namespace vgui2
 {
 //-----------------------------------------------------------------------------
 // Purpose: Scroll bar button
@@ -92,14 +92,9 @@ void ComboBoxButton::ApplySchemeSettings(IScheme *pScheme)
 	SetDefaultBorder(pScheme->GetBorder("ScrollBarButtonBorder"));
 	
 	// arrow changes color but the background doesnt.
-	//SetDefaultColor(GetSchemeColor("MenuButton/ButtonArrowColor", pScheme), GetSchemeColor("MenuButton/ButtonBgColor", pScheme));
-	//SetArmedColor(GetSchemeColor("MenuButton/ArmedArrowColor", pScheme), GetSchemeColor("MenuButton/ButtonBgColor", pScheme));
-	//SetDepressedColor(GetSchemeColor("MenuButton/ArmedArrowColor", pScheme), GetSchemeColor("MenuButton/ButtonBgColor", pScheme));
-	
-	SetDefaultColor(Color(107, 107, 107, 255), Color(0, 0, 0, 0));
-	SetArmedColor(Color(200, 200, 200, 200), Color(0, 0, 0, 0));
-	SetDepressedColor(Color(200, 200, 200, 200), Color(0, 0, 0, 0));
-	
+	SetDefaultColor(GetSchemeColor("MenuButton/ButtonArrowColor", Color(107, 107, 107, 255), pScheme), GetSchemeColor("MenuButton/ButtonBgColor", Color(0, 0, 0, 0), pScheme));
+	SetArmedColor(GetSchemeColor("MenuButton/ArmedArrowColor", Color(200, 200, 200, 200), pScheme), GetSchemeColor("MenuButton/ButtonBgColor", Color(0, 0, 0, 0), pScheme));
+	SetDepressedColor(GetSchemeColor("MenuButton/ArmedArrowColor", Color(200, 200, 200, 200), pScheme), GetSchemeColor("MenuButton/ButtonBgColor", Color(0, 0, 0, 0), pScheme));
 	m_DisabledBgColor = GetBgColor();
 }
 
@@ -119,9 +114,9 @@ void ComboBoxButton::OnCursorExited()
 	CallParentFunction(new KeyValues("CursorExited"));
 }
 
-} // namespace vgui
+} // namespace vgui2
 
-vgui::Panel *ComboBox_Factory()
+vgui2::Panel *ComboBox_Factory()
 {
 	return new ComboBox( NULL, NULL, 5, true );
 }
@@ -196,7 +191,7 @@ int ComboBox::AddItem(const wchar_t *itemText, const KeyValues *userData)
 	kv->SetWString("text", itemText);
 	// get an ansi version for the menuitem name
 	char ansi[128];
-	g_pVGuiLocalize->ConvertUnicodeToANSI(itemText, ansi, sizeof(ansi));
+	localize()->ConvertUnicodeToANSI(itemText, ansi, sizeof(ansi));
 	return m_pDropDown->AddMenuItem(ansi, kv, this, userData);
 }
 
@@ -520,15 +515,15 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 	if (*text == '#')
 	{
 		char cbuf[255];
-		g_pVGuiLocalize->ConvertUnicodeToANSI(text, cbuf, 255);
+		localize()->ConvertUnicodeToANSI(text, cbuf, 255);
 
 		// try lookup in localization tables
-		StringIndex_t unlocalizedTextSymbol = g_pVGuiLocalize->FindIndex(cbuf + 1);
+		StringIndex_t unlocalizedTextSymbol = localize()->FindIndex(cbuf + 1);
 		
 		if (unlocalizedTextSymbol != INVALID_STRING_INDEX)
 		{
 			// we have a new text value
-			text = g_pVGuiLocalize->GetValueByIndex(unlocalizedTextSymbol);
+			text = localize()->GetValueByIndex(unlocalizedTextSymbol);
 		}
 	}
 

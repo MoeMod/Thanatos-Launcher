@@ -12,10 +12,11 @@
 #pragma once
 #endif
 
+#include "vgui/KeyCode.h"
 #include "Button.h"
 #include "Menu.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class Menu;

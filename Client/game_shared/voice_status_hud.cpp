@@ -13,7 +13,7 @@
 #include "voice_status.h"
 #include "voice_status_hud.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 #include <vgui/IVGui.h>
 #include <vgui/IImage.h>
@@ -57,7 +57,7 @@ void CVoiceLabel::SetLocation( const char *location )
 		return;
 	}
 
-	const wchar_t *newLocation = vgui::localize()->Find( location );
+	const wchar_t *newLocation = vgui2::localize()->Find( location );
 	if ( newLocation )
 	{
 		// localized version
@@ -181,7 +181,7 @@ int CVoiceStatusHud::Init(IVoiceStatusHelper *pHelper, IVoiceStatus *pStatus)
 
 int CVoiceStatusHud::VidInit()
 {
-	m_pLocalPlayerTalkIcon = new vgui::ImagePanel(NULL, "LocalPlayerIcon");
+	m_pLocalPlayerTalkIcon = new vgui2::ImagePanel(NULL, "LocalPlayerIcon");
 	m_pLocalPlayerTalkIcon->SetParent(gViewPortInterface->GetViewPortPanel());
 	m_pLocalPlayerTalkIcon->SetVisible(false);
 	m_pLocalPlayerTalkIcon->SetImage(scheme()->GetImage("gfx/vgui/icntlk_pl", false));

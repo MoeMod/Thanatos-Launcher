@@ -10,7 +10,7 @@
 
 #include <vgui_controls/Label.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 CNavProgress::CNavProgress(void) : Frame(NULL, PANEL_NAV_PROGRESS)
 {

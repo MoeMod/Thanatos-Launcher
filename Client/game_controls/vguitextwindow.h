@@ -19,15 +19,15 @@ enum
 	TYPE_FILE,
 };
 
-namespace vgui
+namespace vgui2
 {
 	class TextEntry;
 }
 
-class CTextWindow : public vgui::Frame, public CViewPortPanel
+class CTextWindow : public vgui2::Frame, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CTextWindow, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CTextWindow, vgui2::Frame);
 
 public:
 	CTextWindow(void);
@@ -53,7 +53,7 @@ public:
 	virtual void ShowText(const char *text);
 	virtual void ShowURL(const char *URL);
 	virtual void ShowIndex(const char *entry);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual bool IsExited(void) { return m_bIsExited; }
 
 protected:	
@@ -61,13 +61,13 @@ protected:
 
 protected:
 
-	class CHTML : public vgui::HTML
+	class CHTML : public vgui2::HTML
 	{
 	private:
-		DECLARE_CLASS_SIMPLE(CHTML, vgui::HTML);
+		DECLARE_CLASS_SIMPLE(CHTML, vgui2::HTML);
 
 	public:
-		CHTML(Panel *parent, const char *pchName) : vgui::HTML(parent, pchName) {}
+		CHTML(Panel *parent, const char *pchName) : vgui2::HTML(parent, pchName) {}
 	};
 
 protected:	
@@ -77,9 +77,9 @@ protected:
 	int m_nContentType;
 	bool m_bIsExited;
 
-	vgui::TextEntry *m_pTextMessage;
-	vgui::Button *m_pOK;
-	vgui::Label *m_pTitleLabel;
+	vgui2::TextEntry *m_pTextMessage;
+	vgui2::Button *m_pOK;
+	vgui2::Label *m_pTitleLabel;
 
 	CHTML *m_pHTML;
 };

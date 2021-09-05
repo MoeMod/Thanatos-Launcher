@@ -14,7 +14,7 @@
 
 #include "EditablePanel.h"
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------

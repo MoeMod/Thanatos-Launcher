@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 #include "ProgressBar.h"
@@ -25,7 +25,7 @@ enum progress_textures_t
 	NUM_PROGRESS_TEXTURES,
 };
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -68,6 +68,6 @@ private:
 	int   m_lenImageName[NUM_PROGRESS_TEXTURES];
 };
 
-} // namespace vgui
+} // namespace vgui2
 
 #endif // CIRCULARPROGRESSBAR_H

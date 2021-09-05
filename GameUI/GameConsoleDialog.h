@@ -45,9 +45,9 @@ class CNoKeyboardInputRichText;
 //-----------------------------------------------------------------------------
 // Purpose: Game/dev console dialog
 //-----------------------------------------------------------------------------
-class CGameConsoleDialog : public vgui::Frame
+class CGameConsoleDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE(CGameConsoleDialog, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CGameConsoleDialog, vgui2::Frame);
 
 public:
 	CGameConsoleDialog();
@@ -85,14 +85,14 @@ private:
 
 	// vgui overrides
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void OnCommand(const char *command);
-	virtual void OnKeyCodeTyped(enum vgui::KeyCode code);
+	virtual void OnKeyCodeTyped(enum vgui2::KeyCode code);
 
 	CNoKeyboardInputRichText *m_pHistory;
 	TabCatchingTextEntry *m_pEntry;
-	vgui::Button *m_pSubmit;
-	vgui::Menu *m_pCompletionList;
+	vgui2::Button *m_pSubmit;
+	vgui2::Menu *m_pCompletionList;
 	Color m_PrintColor;
 	Color m_DPrintColor;
 

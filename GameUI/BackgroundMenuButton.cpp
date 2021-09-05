@@ -7,9 +7,7 @@
 #include <vgui_controls/Menu.h>
 #include <vgui_controls/MenuItem.h>
 
-using namespace vgui;
-
-CBackgroundMenuButton::CBackgroundMenuButton(vgui::Panel *parent, const char *name) : BaseClass(parent, name, "")
+CBackgroundMenuButton::CBackgroundMenuButton(vgui2::Panel *parent, const char *name) : BaseClass(parent, name, "")
 {
 	m_pImage = NULL;
 	m_pMouseOverImage = NULL;
@@ -24,7 +22,7 @@ void CBackgroundMenuButton::SetVisible(bool state)
 	BaseClass::SetVisible(true);
 }
 
-void CBackgroundMenuButton::ApplySchemeSettings(IScheme *pScheme)
+void CBackgroundMenuButton::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 

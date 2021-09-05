@@ -14,10 +14,10 @@
 
 #include <tier1/utlvector.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/IImage.h>
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ public:
 	~ImageList();
 
 	// adds a new image to the list, returning the index it was placed at
-	int AddImage(vgui::IImage *image);
+	int AddImage(vgui2::IImage *image);
 
 	// returns the number of images
 	int GetImageCount();
@@ -40,14 +40,14 @@ public:
 	bool IsValidIndex(int imageIndex);
 
 	// sets an image at a specified index, growing and adding NULL images if necessary
-	void SetImageAtIndex(int index, vgui::IImage *image);
+	void SetImageAtIndex(int index, vgui2::IImage *image);
 
 	// gets an image, imageIndex is of range [0, GetImageCount)
 	// image index 0 is always the blank image
-	vgui::IImage *GetImage(int imageIndex);
+	vgui2::IImage *GetImage(int imageIndex);
 
 private:
-	CUtlVector<vgui::IImage *> m_Images;
+	CUtlVector<vgui2::IImage *> m_Images;
 	bool m_bDeleteImagesWhenDone;
 };
 

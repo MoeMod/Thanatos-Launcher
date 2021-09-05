@@ -17,16 +17,16 @@ class CCvarSlider;
 class CrosshairImagePanel;
 class CMultiplayerAdvancedDialog;
 
-class COptionsSubMultiplayer : public vgui::PropertyPage
+class COptionsSubMultiplayer : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE(COptionsSubMultiplayer, vgui::PropertyPage);
+	DECLARE_CLASS_SIMPLE(COptionsSubMultiplayer, vgui2::PropertyPage);
 
 public:
-	COptionsSubMultiplayer(vgui::Panel *parent);
+	COptionsSubMultiplayer(vgui2::Panel *parent);
 	~COptionsSubMultiplayer(void);
 
 public:
-	virtual vgui::Panel *CreateControlByName(const char *controlName);
+	virtual vgui2::Panel *CreateControlByName(const char *controlName);
 
 protected:
 	virtual void OnPageShow(void);
@@ -65,7 +65,7 @@ private:
 
 	CCvarToggleCheckButton *m_pHighQualityModelCheckBox;
 
-	vgui::Dar<CCvarToggleCheckButton *> m_cvarToggleCheckButtons;
+	vgui2::Dar<CCvarToggleCheckButton *> m_cvarToggleCheckButtons;
 
 	CLabeledCommandComboBox *m_pCrosshairSize;
 	CLabeledCommandComboBox *m_pCrosshairType;
@@ -75,7 +75,7 @@ private:
 
 	int m_nLogoR, m_nLogoG, m_nLogoB;
 
-	vgui::DHANDLE<CMultiplayerAdvancedDialog> m_hMultiplayerAdvancedDialog;
+	vgui2::DHANDLE<CMultiplayerAdvancedDialog> m_hMultiplayerAdvancedDialog;
 };
 
 #endif

@@ -5,6 +5,8 @@
 #include "vgui_int.h"
 #include "vgui_controls/controls.h"
 
+#include <vgui/IInputInternal.h>
+
 inline wchar_t *CloneWString(const wchar_t *str)
 {
 	wchar_t *cloneStr = new wchar_t [wcslen(str) + 1];
@@ -106,7 +108,7 @@ wchar_t *ReadLocalizedString(wchar_t *pOut, int outSize, bool bStripNewline, cha
 	if (originalString)
 		Q_strncpy(originalString, szString, originalSize);
 
-	const wchar_t *pBuf = g_pVGuiLocalize->Find(szString);
+	const wchar_t *pBuf = vgui2::localize()->Find(szString);
 
 	if (pBuf)
 	{
@@ -118,9 +120,9 @@ wchar_t *ReadLocalizedString(wchar_t *pOut, int outSize, bool bStripNewline, cha
 		char *str = LookupString(szString);
 
 		if (!str[0])
-			g_pVGuiLocalize->ConvertANSIToUnicode(szString, pOut, outSize);
+			vgui2::localize()->ConvertANSIToUnicode(szString, pOut, outSize);
 		else
-			g_pVGuiLocalize->ConvertANSIToUnicode(str, pOut, outSize);
+			vgui2::localize()->ConvertANSIToUnicode(str, pOut, outSize);
 	}
 
 	if (bStripNewline)
@@ -135,7 +137,7 @@ wchar_t *ReadChatTextString(wchar_t *pOut, int outSize)
 	szString[0] = 0;
 	strcpy_s(szString, sizeof(szString), READ_STRING());
 
-	g_pVGuiLocalize->ConvertANSIToUnicode(szString, pOut, outSize);
+	vgui2::localize()->ConvertANSIToUnicode(szString, pOut, outSize);
 
 	StripEndNewlineFromString(pOut);
 
@@ -148,7 +150,7 @@ wchar_t *ReadChatTextString(wchar_t *pOut, int outSize)
 	return pOut;
 }
 
-CChatDialogLine::CChatDialogLine(vgui::Panel *parent, const char *panelName) : vgui::RichText(parent, panelName)
+CChatDialogLine::CChatDialogLine(vgui2::Panel *parent, const char *panelName) : vgui2::RichText(parent, panelName)
 {
 	m_hFont = m_hFontMarlett = 0;
 	m_flExpireTime = 0.0f;
@@ -166,7 +168,7 @@ CChatDialogLine::~CChatDialogLine(void)
 		delete [] m_text;
 }
 
-void CChatDialogLine::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CChatDialogLine::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -273,20 +275,20 @@ void CChatDialogLine::Expire(void)
 	SetVisible(false);
 }
 
-CChatDialogInputLine::CChatDialogInputLine(CChatDialog *parent, char const *panelName) : vgui::Panel(parent, panelName)
+CChatDialogInputLine::CChatDialogInputLine(CChatDialog *parent, char const *panelName) : vgui2::Panel(parent, panelName)
 {
 	SetMouseInputEnabled(false);
 
-	m_pPrompt = new vgui::TextEntry(this, "ChatInputPrompt");
+	m_pPrompt = new vgui2::TextEntry(this, "ChatInputPrompt");
 	m_pInput = new CChatDialogEntry(this, "ChatInput", parent);
 	m_pInput->SetMaximumCharCount(127);
 }
 
-void CChatDialogInputLine::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CChatDialogInputLine::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	vgui::HFont hFont = pScheme->GetFont("ChatFont");
+	vgui2::HFont hFont = pScheme->GetFont("ChatFont");
 
 	m_pPrompt->SetFont(hFont);
 	m_pInput->SetFont(hFont);
@@ -341,32 +343,32 @@ void CChatDialogInputLine::PerformLayout(void)
 
 	int width = 0;
 	
-	vgui::HFont font = vgui::scheme()->GetIScheme(GetScheme())->GetFont("Default", IsProportional());
+	vgui2::HFont font = vgui2::scheme()->GetIScheme(GetScheme())->GetFont("Default", IsProportional());
 	
 	for (size_t i = 0; i < wcslen(text); i++)
-		width += vgui::surface()->GetCharacterWidth(font, text[i]) * 1.35;
+		width += vgui2::surface()->GetCharacterWidth(font, text[i]) * 1.35;
 
 	m_pPrompt->SetBounds(0, 0, width, tall);
 	m_pInput->SetBounds(width + 2, 0, wide - width - 2, tall);
 }
 
-vgui::Panel *CChatDialogInputLine::GetInputPanel(void)
+vgui2::Panel *CChatDialogInputLine::GetInputPanel(void)
 {
 	return m_pInput;
 }
 
-CChatDialogHistory::CChatDialogHistory(vgui::Panel *pParent, const char *panelName) : BaseClass(pParent, "ChatHistory")
+CChatDialogHistory::CChatDialogHistory(vgui2::Panel *pParent, const char *panelName) : BaseClass(pParent, "ChatHistory")
 {
 	InsertFade(-1, -1);
 }
 
-void CChatDialogHistory::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CChatDialogHistory::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	vgui::HFont font = pScheme->GetFont("ChatHistoryFont");
+	vgui2::HFont font = pScheme->GetFont("ChatHistoryFont");
 
-	if (font == vgui::INVALID_FONT)
+	if (font == vgui2::INVALID_FONT)
 		font = pScheme->GetFont("ChatFont");
 
 	SetFont(font);
@@ -410,7 +412,7 @@ void CChatDialog::CreateChatLines(void)
 	m_ChatLine->SetVisible(false);
 }
 
-void CChatDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CChatDialog::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -501,8 +503,8 @@ void CChatDialog::OnThink(void)
 {
 	if (m_ChatLine)
 	{
-		vgui::HFont font = m_ChatLine->GetFont();
-		m_iFontHeight = vgui::surface()->GetFontTall(font) * 1.35;
+		vgui2::HFont font = m_ChatLine->GetFont();
+		m_iFontHeight = vgui2::surface()->GetFontTall(font) * 1.35;
 
 		int iChatX, iChatY, iChatW, iChatH;
 		int iInputX, iInputY, iInputW, iInputH;
@@ -532,7 +534,7 @@ void CChatDialog::OnThink(void)
 int CChatDialog::ComputeBreakChar(int width, const char *text, int textlen)
 {
 	CChatDialogLine *line = m_ChatLine;
-	vgui::HFont font = line->GetFont();
+	vgui2::HFont font = line->GetFont();
 
 	int currentlen = 0;
 	int lastbreak = textlen;
@@ -545,10 +547,10 @@ int CChatDialog::ComputeBreakChar(int width, const char *text, int textlen)
 			lastbreak = i;
 
 		wchar_t wch[2];
-		g_pVGuiLocalize->ConvertANSIToUnicode(&ch, wch, sizeof(wch));
+		vgui2::localize()->ConvertANSIToUnicode(&ch, wch, sizeof(wch));
 
 		int a, b, c;
-		vgui::surface()->GetCharABCwide(font, wch[0], a, b, c);
+		vgui2::surface()->GetCharABCwide(font, wch[0], a, b, c);
 		currentlen += a + b + c;
 
 		if (currentlen >= width)
@@ -606,16 +608,16 @@ void CChatDialog::StartMessageMode(int iMessageModeType)
 		GetChatHistory()->ResetAllFades(true);
 		GetChatHistory()->SetPaintBorderEnabled(true);
 		GetChatHistory()->SetVisible(true);
-		GetChatHistory()->SetCursor(vgui::dc_arrow);
+		GetChatHistory()->SetCursor(vgui2::dc_arrow);
 	}
 
-	vgui::SETUP_PANEL(this);
+	vgui2::SETUP_PANEL(this);
 
 	SetKeyBoardInputEnabled(true);
 	SetMouseInputEnabled(true);
 
-	vgui::input()->ClearCompositionString();
-	vgui::surface()->CalculateMouseVisible();
+	vgui2::input()->ClearCompositionString();
+	vgui2::surface()->CalculateMouseVisible();
 
 	m_pChatInput->RequestFocus();
 	m_pChatInput->SetPaintBorderEnabled(true);
@@ -649,7 +651,7 @@ void CChatDialog::StopMessageMode(void)
 		GetChatHistory()->SetVerticalScrollbar(false);
 		GetChatHistory()->ResetAllFades(false, true, CHAT_HISTORY_FADE_TIME);
 		GetChatHistory()->SelectNoText();
-		GetChatHistory()->SetCursor(vgui::dc_none);
+		GetChatHistory()->SetCursor(vgui2::dc_none);
 	}
 
 	m_pChatInput->ClearEntry();
@@ -888,7 +890,7 @@ void CChatDialog::Send(void)
 	m_pChatInput->GetMessageText(szTextbuf, sizeof(szTextbuf));
 
 	char ansi[128];
-	g_pVGuiLocalize->ConvertUnicodeToANSI(szTextbuf, ansi, sizeof(ansi));
+	vgui2::localize()->ConvertUnicodeToANSI(szTextbuf, ansi, sizeof(ansi));
 
 	int len = Q_strlen(ansi);
 
@@ -920,7 +922,7 @@ void CChatDialog::Send(void)
 	m_pChatInput->ClearEntry();
 }
 
-vgui::Panel *CChatDialog::GetInputPanel(void)
+vgui2::Panel *CChatDialog::GetInputPanel(void)
 {
 	return m_pChatInput->GetInputPanel();
 }
@@ -988,12 +990,12 @@ void CChatDialog::ChatPrintf(int iPlayerIndex, const char *fmt, ...)
 	if (wbuf)
 	{
 		line->SetExpireTime();
-		g_pVGuiLocalize->ConvertANSIToUnicode(pmsg, wbuf, bufSize);
+		vgui2::localize()->ConvertANSIToUnicode(pmsg, wbuf, bufSize);
 
 		if (sPlayerInfo.name)
 		{
 			wchar_t wideName[MAX_PLAYER_NAME_LENGTH];
-			g_pVGuiLocalize->ConvertANSIToUnicode(sPlayerInfo.name, wideName, sizeof(wideName));
+			vgui2::localize()->ConvertANSIToUnicode(sPlayerInfo.name, wideName, sizeof(wideName));
 
 			const wchar_t *nameInString = wcsstr(wbuf, wideName);
 
@@ -1069,7 +1071,7 @@ void CChatDialog::ChatPrintf(int iPlayerIndex, const wchar_t *string)
 	if (sPlayerInfo.name)
 	{
 		wchar_t wideName[MAX_PLAYER_NAME_LENGTH];
-		g_pVGuiLocalize->ConvertANSIToUnicode(sPlayerInfo.name, wideName, sizeof(wideName));
+		vgui2::localize()->ConvertANSIToUnicode(sPlayerInfo.name, wideName, sizeof(wideName));
 
 		const wchar_t *nameInString = wcsstr(msg, wideName);
 

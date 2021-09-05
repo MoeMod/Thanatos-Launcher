@@ -2,4 +2,4 @@
 #include "IEngineVGui.h"
 #include "IPanel.h"
 
-extern vgui::IEngineVGui *enginevgui;
+extern IEngineVGui *enginevgui;

@@ -16,7 +16,7 @@
 #include <UtlRBTree.h>
 #include <UtlSymbol.h>
 
-namespace vgui
+namespace vgui2
 {
 class ListPanel;
 }
@@ -24,12 +24,12 @@ class ListPanel;
 //-----------------------------------------------------------------------------
 // Purpose: server options page of the create game server dialog
 //-----------------------------------------------------------------------------
-class CCreateMultiplayerGameServerPage : public vgui::PropertyPage
+class CCreateMultiplayerGameServerPage : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameServerPage, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameServerPage, vgui2::PropertyPage );
 
 public:
-	CCreateMultiplayerGameServerPage(vgui::Panel *parent, const char *name);
+	CCreateMultiplayerGameServerPage(vgui2::Panel *parent, const char *name);
 	~CCreateMultiplayerGameServerPage();
 
 	// returns currently entered information about the server
@@ -51,9 +51,9 @@ private:
 	void LoadMapList();
 	void LoadMaps( const char *pszPathID );
 
-	vgui::ComboBox *m_pMapList;
-	vgui::TextEntry *m_pBotQuotaCombo;
-	vgui::CheckButton *m_pEnableBotsCheck;
+	vgui2::ComboBox *m_pMapList;
+	vgui2::TextEntry *m_pBotQuotaCombo;
+	vgui2::CheckButton *m_pEnableBotsCheck;
 	CCvarToggleCheckButton *m_pEnableTutorCheck;
 
 	enum { DATA_STR_LENGTH = 64 };

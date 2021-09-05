@@ -21,26 +21,26 @@ class VControlsListPanel;
 //-----------------------------------------------------------------------------
 // Purpose: Keyboard Details, Part of OptionsDialog
 //-----------------------------------------------------------------------------
-class COptionsSubKeyboard : public vgui::PropertyPage
+class COptionsSubKeyboard : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubKeyboard, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE( COptionsSubKeyboard, vgui2::PropertyPage );
 
 public:
-	COptionsSubKeyboard(vgui::Panel *parent);
+	COptionsSubKeyboard(vgui2::Panel *parent);
 	~COptionsSubKeyboard();
 
 	virtual void	OnResetData();
 	virtual void	OnApplyChanges();
 
 	// Trap ENTER key to initiate binding
-	virtual void	OnKeyCodePressed(vgui::KeyCode code);
+	virtual void	OnKeyCodePressed(vgui2::KeyCode code);
 
 	virtual void	Finish( int key, int button );
 
-	virtual void	OnKeyCodeTyped( vgui::KeyCode code );
+	virtual void	OnKeyCodeTyped( vgui2::KeyCode code );
 	virtual void	OnKeyTyped( wchar_t unichar );
-	virtual void	OnMousePressed( vgui::MouseCode code );
-	virtual void	OnMouseDoublePressed( vgui::MouseCode code );
+	virtual void	OnMousePressed( vgui2::MouseCode code );
+	virtual void	OnMouseDoublePressed( vgui2::MouseCode code );
 	virtual void	OnMouseWheeled( int delta );
 
 	// Trap row selection message
@@ -93,8 +93,8 @@ private:
 private:
 	VControlsListPanel	*m_pKeyBindList;
 
-	vgui::Button *m_pSetBindingButton;
-	vgui::Button *m_pClearBindingButton;
+	vgui2::Button *m_pSetBindingButton;
+	vgui2::Button *m_pClearBindingButton;
 
 	// List of saved bindings for the keys
 	KeyBinding m_Bindings[ 256 ];

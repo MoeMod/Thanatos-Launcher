@@ -21,10 +21,10 @@ class CCvarToggleCheckButton;
 //-----------------------------------------------------------------------------
 // Purpose: advanced bot properties page of the create game server dialog
 //-----------------------------------------------------------------------------
-class CCreateMultiplayerGameBotPage : public vgui::PropertyPage
+class CCreateMultiplayerGameBotPage : public vgui2::PropertyPage
 {
 public:
-	CCreateMultiplayerGameBotPage( vgui::Panel *parent, const char *name, KeyValues *botKeys );
+	CCreateMultiplayerGameBotPage( vgui2::Panel *parent, const char *name, KeyValues *botKeys );
 	~CCreateMultiplayerGameBotPage();
 
 	// put all cvars and their current values into 'botKeys'
@@ -50,14 +50,14 @@ private:
 
 	CCvarToggleCheckButton *m_deferToHuman;
 
-	vgui::ComboBox *m_joinTeamCombo;
+	vgui2::ComboBox *m_joinTeamCombo;
 	void SetJoinTeamCombo( const char *team );
 
-	vgui::ComboBox *m_chatterCombo;
+	vgui2::ComboBox *m_chatterCombo;
 	void SetChatterCombo( const char *team );
 
-	vgui::TextEntry *m_quotaEntry;
-	vgui::TextEntry *m_prefixEntry;
+	vgui2::TextEntry *m_quotaEntry;
+	vgui2::TextEntry *m_prefixEntry;
 };
 
 

@@ -61,13 +61,13 @@
 		return FindOrAddPanelAnimationMap( GetPanelClassName() );						\
 	}
 
-typedef void *( *PANELLOOKUPFUNC )( vgui::Panel *panel );
+typedef void *( *PANELLOOKUPFUNC )( vgui2::Panel *panel );
 
 // Use this macro to define a variable which hudanimations.txt and hudlayout.res scripts can access
 #define CPanelAnimationVarAliasType( type, name, scriptname, defaultvalue, typealias ) \
 	class PanelAnimationVar_##name; \
 	friend class PanelAnimationVar_##name; \
-	static void *GetVar_##name( vgui::Panel *panel ) \
+	static void *GetVar_##name( vgui2::Panel *panel ) \
 	{								\
 		return &(( ThisClass *)panel)->name;	\
 	}								\
@@ -98,7 +98,7 @@ typedef void *( *PANELLOOKUPFUNC )( vgui::Panel *panel );
 #define CPanelAnimationStringVarAliasType( count, name, scriptname, defaultvalue, typealias ) \
 	class PanelAnimationVar_##name; \
 	friend class PanelAnimationVar_##name; \
-	static void *GetVar_##name( vgui::Panel *panel ) \
+	static void *GetVar_##name( vgui2::Panel *panel ) \
 	{								\
 		return &(( ThisClass *)panel)->name;	\
 	}								\

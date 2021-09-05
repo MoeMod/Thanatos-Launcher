@@ -16,8 +16,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
-
 #pragma warning(disable: 4101)
 
 inline bool IsWideScreen ( int width, int height )
@@ -32,7 +30,7 @@ inline bool IsWideScreen ( int width, int height )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubVideo::COptionsSubVideo(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 	memset( &m_OrigSettings, 0, sizeof( m_OrigSettings ) );
 	memset( &m_CurrentSettings, 0, sizeof( m_CurrentSettings ) );
@@ -45,19 +43,19 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 
 	GetVidSettings();
 
-	m_pMode = new ComboBox(this, "Resolution", 6, false);
+	m_pMode = new vgui2::ComboBox(this, "Resolution", 6, false);
 
-	m_pAspectRatio = new ComboBox( this, "AspectRatio", 2, false );
+	m_pAspectRatio = new vgui2::ComboBox( this, "AspectRatio", 2, false );
 
 	m_pDetailTextures = new CCvarToggleCheckButton( this, "DetailTextures", "#GameUI_DetailTextures", "r_detailtextures" );
 	m_pVsync = new CCvarToggleCheckButton( this, "Vsync", "#GameUI_VSync", "gl_vsync" );
 	m_pDetailTextures->SetVisible(false);
 	m_pVsync->SetVisible(false);
 
-	wchar_t *unicodeText = localize()->Find("#GameUI_AspectNormal");
-    localize()->ConvertUnicodeToANSI(unicodeText, m_pszAspectName[0], 32);
-    unicodeText = localize()->Find("#GameUI_AspectWide");
-    localize()->ConvertUnicodeToANSI(unicodeText, m_pszAspectName[1], 32);
+	wchar_t *unicodeText = vgui2::localize()->Find("#GameUI_AspectNormal");
+	vgui2::localize()->ConvertUnicodeToANSI(unicodeText, m_pszAspectName[0], 32);
+    unicodeText = vgui2::localize()->Find("#GameUI_AspectWide");
+	vgui2::localize()->ConvertUnicodeToANSI(unicodeText, m_pszAspectName[1], 32);
 
 	int iNormalItemID = m_pAspectRatio->AddItem( m_pszAspectName[0], NULL );
 	int iWideItemID = m_pAspectRatio->AddItem( m_pszAspectName[1], NULL );
@@ -73,14 +71,14 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 	}
 
     // load up the renderer display names
-    unicodeText = localize()->Find("#GameUI_Software");
-    localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[0], 32);
-    unicodeText = localize()->Find("#GameUI_OpenGL");
-    localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[1], 32);
-    unicodeText = localize()->Find("#GameUI_D3D");
-    localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[2], 32);
+    unicodeText = vgui2::localize()->Find("#GameUI_Software");
+	vgui2::localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[0], 32);
+    unicodeText = vgui2::localize()->Find("#GameUI_OpenGL");
+	vgui2::localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[1], 32);
+    unicodeText = vgui2::localize()->Find("#GameUI_D3D");
+	vgui2::localize()->ConvertUnicodeToANSI(unicodeText, m_pszRenderNames[2], 32);
 
-	m_pRenderer = new ComboBox( this, "Renderer", 3, false ); // "#GameUI_Renderer"
+	m_pRenderer = new vgui2::ComboBox( this, "Renderer", 3, false ); // "#GameUI_Renderer"
 	int i;
 	for (i = 0; i < 3; i++)
     {
@@ -90,26 +88,26 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 	m_pRenderer->SetItemEnabled(1, true);
 	m_pRenderer->SetItemEnabled(2, false);
 
-	m_pColorDepth = new ComboBox( this, "ColorDepth", 2, false );
+	m_pColorDepth = new vgui2::ComboBox( this, "ColorDepth", 2, false );
 	m_pColorDepth->AddItem("#GameUI_MediumBitDepth", NULL);
 	m_pColorDepth->AddItem("#GameUI_HighBitDepth", NULL);
 	m_pColorDepth->SetVisible( false ); // default hide
 
     SetCurrentRendererComboItem();
 
-	m_pWindowed = new vgui::CheckButton( this, "Windowed", "#GameUI_Windowed" );
+	m_pWindowed = new vgui2::CheckButton( this, "Windowed", "#GameUI_Windowed" );
 	m_pWindowed->SetSelected( m_CurrentSettings.windowed ? true : false);
 	m_pWindowed->SetVisible(true);
 
-	m_pHDModels = new vgui::CheckButton( this, "HDModels", "#GameUI_HDModels" );
+	m_pHDModels = new vgui2::CheckButton( this, "HDModels", "#GameUI_HDModels" );
 	m_pHDModels->SetSelected( m_CurrentSettings.hdmodels ? true : false);
 	m_pHDModels->SetVisible(false);
 
-	m_pAddonsFolder = new vgui::CheckButton( this, "AddonsFolder", "#GameUI_AddonsFolder" );
+	m_pAddonsFolder = new vgui2::CheckButton( this, "AddonsFolder", "#GameUI_AddonsFolder" );
 	m_pAddonsFolder->SetSelected( m_CurrentSettings.addons_folder ? true : false);
 	m_pAddonsFolder->SetVisible(false);
 
-	m_pLowVideoDetail = new vgui::CheckButton( this, "LowVideoDetail", "#GameUI_LowVideoDetail" );
+	m_pLowVideoDetail = new vgui2::CheckButton( this, "LowVideoDetail", "#GameUI_LowVideoDetail" );
 	m_pLowVideoDetail->SetSelected( m_CurrentSettings.vid_level ? false : true);
 	m_pLowVideoDetail->SetVisible(false);
 
@@ -305,6 +303,7 @@ void COptionsSubVideo::GetVidSettings()
 	CVidSettings *p = &m_OrigSettings;
 
 	gameuifuncs->GetCurrentVideoMode( &p->w, &p->h, &p->bpp );
+	//gameuifuncs->GetCurrentRenderer(p->renderer, 128, &p->windowed, &p->hdmodels, &p->addons_folder, &p->vid_level);
 
 	if (g_bIsNewEngine)
 	{
@@ -314,7 +313,7 @@ void COptionsSubVideo::GetVidSettings()
 			virtual bool		IsKeyDown(char const *keyname, bool& isdown) = 0;
 			virtual const char	*Key_NameForKey(int keynum) = 0;
 			virtual const char	*Key_BindingForKey(int keynum) = 0;
-			virtual vgui::KeyCode GetVGUI2KeyCodeForBind(const char *bind) = 0;
+			virtual vgui2::KeyCode GetVGUI2KeyCodeForBind(const char *bind) = 0;
 
 			virtual void		GetVideoModes(struct vmode_s **liststart, int *count) = 0;
 			virtual void		GetCurrentVideoMode(int *wide, int *tall, int *bpp) = 0;

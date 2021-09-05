@@ -7,7 +7,7 @@
 
 #define CVARSLIDER_SCALE_FACTOR 100.0f
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY(CCvarSlider);
 
@@ -68,7 +68,7 @@ void CCvarSlider::ApplySettings(KeyValues *inResourceData)
 
 		if (GetParent())
 		{
-			if (dynamic_cast<vgui::PropertyPage*>(GetParent()) && GetParent()->GetParent())
+			if (dynamic_cast<vgui2::PropertyPage*>(GetParent()) && GetParent()->GetParent())
 				GetParent()->GetParent()->AddActionSignalTarget(this);
 			else
 				GetParent()->AddActionSignalTarget(this);

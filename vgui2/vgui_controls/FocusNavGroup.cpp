@@ -10,7 +10,7 @@
 #include <vgui/ISurface.h>
 #include <vgui/IVGUI.h>
 #include <vgui/IPanel.h>
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include <tier1/KeyValues.h>
 #include <tier0/dbg.h>
@@ -22,7 +22,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -291,18 +291,13 @@ void FocusNavGroup::SetFocusTopLevel(bool state)
 //-----------------------------------------------------------------------------
 void FocusNavGroup::SetDefaultButton(Panel *panel)
 {
-	VPANEL _defaultButtonVP = _defaultButton.Get();
-	if ((panel == NULL) && (_defaultButtonVP == NULL))
+	if ((panel == NULL && _defaultButton.Get() == NULL) || panel->GetVPanel() == _defaultButton.Get())
 		return;
 
-	VPANEL PanelVP = panel->GetVPanel();
-	if (PanelVP == _defaultButtonVP)
-		return;
-
-	Assert(CanButtonBeDefault(panel->GetVPanel()));
+    Assert(CanButtonBeDefault(panel->GetVPanel()));
 
 	_defaultButton = panel->GetVPanel();
-	SetCurrentDefaultButton(_defaultButton);
+    SetCurrentDefaultButton(_defaultButton);
 }
 
 //-----------------------------------------------------------------------------
@@ -390,7 +385,7 @@ Panel *FocusNavGroup::GetDefaultPanel()
 //-----------------------------------------------------------------------------
 Panel *FocusNavGroup::GetCurrentFocus()
 {
-	return _currentFocus ? ipanel()->GetPanel(_currentFocus, vgui::GetControlsModuleName()) : NULL;
+	return _currentFocus ? ipanel()->GetPanel(_currentFocus, vgui2::GetControlsModuleName()) : NULL;
 }
 
 //-----------------------------------------------------------------------------

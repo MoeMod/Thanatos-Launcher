@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include "Frame.h"
 
 // prevent windows macros from messing with the class
@@ -20,7 +20,7 @@
 #undef ProgressBox
 #endif
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------

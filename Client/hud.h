@@ -219,7 +219,7 @@ public:
 private:
 	int m_HUD_d_skull;
 	int m_headSprite, m_headWidth;
-	vgui::IImage *m_killBg[3], *m_deathBg[3];
+	vgui2::IImage *m_killBg[3], *m_deathBg[3];
 	bool m_showKill;
 	float m_killEffectTime, m_killIconTime;
 	int m_iDrawBgWidth, m_iDrawBgHeight;

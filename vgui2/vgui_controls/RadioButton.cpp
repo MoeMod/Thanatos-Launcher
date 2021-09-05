@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -12,20 +12,21 @@
 #include <vgui/IPanel.h>
 #include <vgui/IScheme.h>
 #include <vgui/ISystem.h>
-#include <vgui/IVGui.h>
+#include <vgui/IVGUI.h>
 #include <vgui/KeyCode.h>
-#include <KeyValues.h>
 
-#include <vgui_controls/FocusNavGroup.h>
-#include <vgui_controls/Image.h>
-#include <vgui_controls/RadioButton.h>
-#include <vgui_controls/TextImage.h>
-#include <vgui_controls/Controls.h>
+#include <tier1/KeyValues.h>
+
+#include "FocusNavGroup.h"
+#include "Image.h"
+#include "RadioButton.h"
+#include "TextImage.h"
+#include "Controls.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 enum direction
 {
@@ -49,10 +50,10 @@ public:
 
 	virtual void ApplySchemeSettings(IScheme *pScheme, bool proportional)
 	{
-		_bgColor = _radioButton->GetSchemeColor("CheckButton.BgColor", Color(150, 150, 150, 0), pScheme);
-		_borderColor1 = _radioButton->GetSchemeColor("CheckButton.Border1", Color(20, 20, 20, 0), pScheme);
-		_borderColor2 = _radioButton->GetSchemeColor("CheckButton.Border2", Color(90, 90, 90, 0), pScheme);
-		_checkColor = _radioButton->GetSchemeColor("CheckButton.Check", Color(20, 20, 20, 0), pScheme);
+		_bgColor = _radioButton->GetSchemeColor("CheckButton.BgColor", _radioButton->GetSchemeColor("CheckBgColor", Color(150, 150, 150, 0), pScheme), pScheme);
+		_borderColor1 = _radioButton->GetSchemeColor("CheckButton.Border1", _radioButton->GetSchemeColor("CheckButtonBorder1", Color(20, 20, 20, 0), pScheme), pScheme);
+		_borderColor2 = _radioButton->GetSchemeColor("CheckButton.Border2", _radioButton->GetSchemeColor("CheckButtonBorder2", Color(90, 90, 90, 0), pScheme), pScheme);
+		_checkColor = _radioButton->GetSchemeColor("CheckButton.Check", _radioButton->GetSchemeColor("CheckButtonCheck", Color(20, 20, 20, 0), pScheme), pScheme);
 		_font = pScheme->GetFont("Marlett", proportional);
 	}
 
@@ -131,8 +132,8 @@ void RadioButton::ApplySchemeSettings(IScheme *pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	_radioBoxImage->ApplySchemeSettings(pScheme, IsProportional());
 
-	SetFgColor(GetSchemeColor("RadioButton.TextColor", pScheme));
-	_selectedFgColor = GetSchemeColor("RadioButton.SelectedTextColor", GetSchemeColor("ControlText", pScheme), pScheme);
+	SetFgColor(GetSchemeColor("RadioButton.TextColor", GetSchemeColor("FgColor", pScheme), pScheme));
+	_selectedFgColor = GetSchemeColor("RadioButton.SelectedTextColor", GetSchemeColor("BrightControlText", GetSchemeColor("ControlText", pScheme), pScheme), pScheme);
 
 	SetContentAlignment(a_west);
 

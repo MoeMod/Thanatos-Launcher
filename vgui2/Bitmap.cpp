@@ -10,15 +10,16 @@
 #include <stdio.h>
 #include <vgui/ISurface.h>
 #include "bitmap.h"
-#include "vgui_internal.h"
 #include "filesystem.h"
-#include "UtlBuffer.h"
+#include <tier1/UtlBuffer.h>
 #include <tier0/dbg.h>
+
+#include <vgui_controls/Controls.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -76,7 +77,7 @@ void Bitmap::GetSize(int &wide, int &tall)
 	// if a size has not been set, get it from the texture
 	if ( 0 == _wide && 0 ==_tall )
 	{
-		g_pSurface->DrawGetTextureSize(_id, _wide, _tall);
+		surface()->DrawGetTextureSize(_id, _wide, _tall);
 
 	}
 	wide = _wide;
@@ -138,7 +139,7 @@ void Bitmap::Paint()
 	// if we don't have an _id then lets make one
 	if ( !_id )
 	{
-		_id = g_pSurface->CreateNewTextureID();
+		_id = surface()->CreateNewTextureID();
 	}
 	
 	// if we have not uploaded yet, lets go ahead and do so
@@ -148,14 +149,14 @@ void Bitmap::Paint()
 	}
 	
 	// set the texture current, set the color, and draw the biatch
-	g_pSurface->DrawSetColor( _color[0], _color[1], _color[2], _color[3] );
-	g_pSurface->DrawSetTexture( _id );
+	surface()->DrawSetColor( _color[0], _color[1], _color[2], _color[3] );
+	surface()->DrawSetTexture( _id );
 
 	if ( _wide == 0 )
 	{
 		GetSize( _wide, _tall);
 	}
-	g_pSurface->DrawTexturedRect(_pos[0], _pos[1], _pos[0] + _wide, _pos[1] + _tall);
+	surface()->DrawTexturedRect(_pos[0], _pos[1], _pos[0] + _wide, _pos[1] + _tall);
 }
 
 //-----------------------------------------------------------------------------
@@ -168,17 +169,17 @@ void Bitmap::ForceUpload()
 
 	if ( !_id )
 	{
-		_id = g_pSurface->CreateNewTextureID( _bProcedural );
+		_id = surface()->CreateNewTextureID( _bProcedural );
 	}
 
 	if ( !_bProcedural )
 	{
-		g_pSurface->DrawSetTextureFile( _id, _filename, _filtered, false );
+		surface()->DrawSetTextureFile( _id, _filename, _filtered, false );
 	}
 
 	_uploaded = true;
 
-	_valid = g_pSurface->IsTextureIDValid( _id );
+	_valid = surface()->IsTextureIDValid( _id );
 }
 
 //-----------------------------------------------------------------------------

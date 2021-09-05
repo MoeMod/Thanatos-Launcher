@@ -22,12 +22,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-PanelListPanel::PanelListPanel( vgui::Panel *parent, char const *panelName ) : Panel( parent, panelName )
+PanelListPanel::PanelListPanel( vgui2::Panel *parent, char const *panelName ) : Panel( parent, panelName )
 {
 	SetBounds( 0, 0, 100, 100 );
 

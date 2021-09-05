@@ -20,7 +20,7 @@ public:
 	virtual void Init(void);
 	virtual void VidInit(void);
 	virtual void Reset(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	virtual void OnThink(void);

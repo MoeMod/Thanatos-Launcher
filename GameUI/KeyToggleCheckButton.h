@@ -6,10 +6,10 @@
 
 #include <vgui_controls/CheckButton.h>
 
-class CKeyToggleCheckButton : public vgui::CheckButton
+class CKeyToggleCheckButton : public vgui2::CheckButton
 {
 public:
-	CKeyToggleCheckButton(vgui::Panel *parent, const char *panelName, const char *text, char const *keyname, char const *cmdname);
+	CKeyToggleCheckButton(vgui2::Panel *parent, const char *panelName, const char *text, char const *keyname, char const *cmdname);
 	~CKeyToggleCheckButton(void);
 
 public:
@@ -19,7 +19,7 @@ public:
 	bool HasBeenModified(void);
 
 private:
-	typedef vgui::CheckButton BaseClass;
+	typedef vgui2::CheckButton BaseClass;
 
 private:
 	char *m_pszKeyName;

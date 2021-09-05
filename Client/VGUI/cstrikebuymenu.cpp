@@ -12,7 +12,7 @@
 #include "buymouseoverpanelbutton.h"
 #include "buypresetbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSBuyMenu_CT::CCSBuyMenu_CT(void) : CCSBaseBuyMenu("BuySubMenu_CT")
 {
@@ -94,7 +94,7 @@ void CCSBaseBuyMenu::PerformLayout(void)
 	BaseClass::PerformLayout();
 }
 
-void CCSBaseBuyMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSBaseBuyMenu::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }
@@ -181,7 +181,7 @@ void CCSBaseBuyMenu::ActivateMenu(int iMenu)
 	g_pViewPort->ShowPanel(this, true);
 }
 
-CCSBuySubMenu::CCSBuySubMenu(vgui::Panel *parent, const char *name) : CBuySubMenu(parent, name)
+CCSBuySubMenu::CCSBuySubMenu(vgui2::Panel *parent, const char *name) : CBuySubMenu(parent, name)
 {
 #if USE_BUY_PRESETS
 	if (!TheBuyPresets)

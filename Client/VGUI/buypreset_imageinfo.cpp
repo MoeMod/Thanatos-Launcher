@@ -22,7 +22,7 @@
 
 #include "shared_util.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 #define DEBUG_DRAW_IMAGE_RECT 0
 
@@ -43,7 +43,7 @@ WeaponImageInfo::~WeaponImageInfo(void)
 	delete m_pAmmoText;
 }
 
-void WeaponImageInfo::ApplyTextSettings(vgui::IScheme *pScheme, bool isProportional)
+void WeaponImageInfo::ApplyTextSettings(vgui2::IScheme *pScheme, bool isProportional)
 {
 	Color color = pScheme->GetColor("FgColor", Color(0, 0, 0, 0));
 
@@ -217,7 +217,7 @@ ItemImageInfo::~ItemImageInfo(void)
 	delete m_pText;
 }
 
-void ItemImageInfo::ApplyTextSettings(vgui::IScheme *pScheme, bool isProportional)
+void ItemImageInfo::ApplyTextSettings(vgui2::IScheme *pScheme, bool isProportional)
 {
 	Color color = pScheme->GetColor("Label.TextColor", Color(0, 0, 0, 0));
 
@@ -246,7 +246,7 @@ void ItemImageInfo::SetItem(const char *imageFname, int count)
 
 	if (count > 1)
 	{
-		wchar_t *multiplierString = g_pVGuiLocalize->Find("#Cstrike_BuyMenuPresetMultiplier");
+		wchar_t *multiplierString = localize()->Find("#Cstrike_BuyMenuPresetMultiplier");
 
 		if (!multiplierString)
 			multiplierString = L"";
@@ -254,7 +254,7 @@ void ItemImageInfo::SetItem(const char *imageFname, int count)
 		const int BufLen = 32;
 		wchar_t buf[BufLen];
 
-		g_pVGuiLocalize->ConstructString(buf, sizeof(buf), multiplierString, 1, NumAsWString(count));
+		localize()->ConstructString(buf, sizeof(buf), multiplierString, 1, NumAsWString(count));
 		m_pText->SetText(buf);
 	}
 	else
@@ -299,7 +299,7 @@ void ItemImageInfo::SetTextColor(Color color)
 	m_pText->SetColor(color);
 }
 
-void ItemImageInfo::SetTextFont(vgui::HFont font)
+void ItemImageInfo::SetTextFont(vgui2::HFont font)
 {
 	m_pText->SetFont(font);
 }

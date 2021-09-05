@@ -9,20 +9,21 @@
 #include <math.h>
 #include <stdio.h>
 
-#include <vgui_controls/ProgressBar.h>
-#include <vgui_controls/Controls.h>
+#include "ProgressBar.h"
+#include "Controls.h"
 
 #include <vgui/ILocalize.h>
 #include <vgui/IScheme.h>
 #include <vgui/ISurface.h>
-#include <KeyValues.h>
+
+#include <tier1/KeyValues.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-DECLARE_BUILD_FACTORY(ProgressBar);
+DECLARE_BUILD_FACTORY( ProgressBar );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -31,8 +32,8 @@ ProgressBar::ProgressBar(Panel *parent, const char *panelName) : Panel(parent, p
 {
 	_progress = 0.0f;
 	m_pszDialogVar = NULL;
-	SetSegmentInfo(4, 8);
-	SetBarInset(4);
+	SetSegmentInfo( 4, 8 );
+	SetBarInset( 4 );
 	m_iProgressDirection = PROGRESS_EAST;
 }
 
@@ -41,13 +42,13 @@ ProgressBar::ProgressBar(Panel *parent, const char *panelName) : Panel(parent, p
 //-----------------------------------------------------------------------------
 ProgressBar::~ProgressBar()
 {
-	delete[] m_pszDialogVar;
+	delete [] m_pszDialogVar;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
-void ProgressBar::SetSegmentInfo(int gap, int width)
+void ProgressBar::SetSegmentInfo( int gap, int width )
 {
 	_segmentGap = gap;
 	_segmentWide = width;
@@ -76,9 +77,9 @@ void ProgressBar::PaintBackground()
 	surface()->DrawFilledRect(0, 0, wide, tall);
 }
 
-void ProgressBar::PaintSegment(int &x, int &y, int tall, int wide)
+void ProgressBar::PaintSegment( int &x, int &y, int tall, int wide )
 {
-	switch (m_iProgressDirection)
+	switch( m_iProgressDirection )
 	{
 	case PROGRESS_EAST:
 		x += _segmentGap;
@@ -93,12 +94,12 @@ void ProgressBar::PaintSegment(int &x, int &y, int tall, int wide)
 
 	case PROGRESS_NORTH:
 		y -= _segmentGap + _segmentWide;
-		surface()->DrawFilledRect(x, y, x + wide - (x * 2), y + _segmentWide);
+		surface()->DrawFilledRect(x, y, x + wide - (x * 2), y + _segmentWide );
 		break;
 
 	case PROGRESS_SOUTH:
 		y += _segmentGap;
-		surface()->DrawFilledRect(x, y, x + wide - (x * 2), y + _segmentWide);
+		surface()->DrawFilledRect(x, y, x + wide - (x * 2), y + _segmentWide );
 		y += _segmentWide;
 		break;
 	}
@@ -116,7 +117,7 @@ void ProgressBar::Paint()
 	int segmentTotal = 0, segmentsDrawn = 0;
 	int x = 0, y = 0;
 
-	switch (m_iProgressDirection)
+	switch( m_iProgressDirection )
 	{
 	case PROGRESS_WEST:
 		x = wide;
@@ -150,7 +151,7 @@ void ProgressBar::Paint()
 	surface()->DrawSetColor(GetFgColor());
 	for (int i = 0; i < segmentsDrawn; i++)
 	{
-		PaintSegment(x, y, tall, wide);
+		PaintSegment( x, y, tall, wide );
 	}
 }
 
@@ -191,8 +192,8 @@ void ProgressBar::ApplySchemeSettings(IScheme *pScheme)
 {
 	Panel::ApplySchemeSettings(pScheme);
 
-	SetFgColor(GetSchemeColor("ProgressBar.FgColor", pScheme));
-	SetBgColor(GetSchemeColor("ProgressBar.BgColor", pScheme));
+	SetFgColor(GetSchemeColor("ProgressBar.FgColor", GetSchemeColor("BrightControlText", pScheme), pScheme));
+	SetBgColor(GetSchemeColor("ProgressBar.BgColor", GetSchemeColor("WindowBgColor", pScheme), pScheme));
 	SetBorder(pScheme->GetBorder("ButtonDepressedBorder"));
 }
 
@@ -219,7 +220,7 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 		secondsRemaining = (int)(extrapolatedTotalTime - timeElapsed);
 	}
 	// if there's some time, make sure it's at least one second left
-	if (secondsRemaining == 0 && ((totalTime - timeElapsed) > 0))
+	if ( secondsRemaining == 0 && ( ( totalTime - timeElapsed ) > 0 ) )
 	{
 		secondsRemaining = 1;
 	}
@@ -232,17 +233,17 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 		secondsRemaining -= 60;
 	}
 
-	char minutesBuf[16];
-	Q_snprintf(minutesBuf, sizeof(minutesBuf), "%d", minutesRemaining);
-	char secondsBuf[16];
-	Q_snprintf(secondsBuf, sizeof(secondsBuf), "%d", secondsRemaining);
+    char minutesBuf[16];
+    Q_snprintf(minutesBuf, sizeof( minutesBuf ), "%d", minutesRemaining);
+    char secondsBuf[16];
+    Q_snprintf(secondsBuf, sizeof( secondsBuf ), "%d", secondsRemaining);
 
 	if (minutesRemaining > 0)
 	{
 		wchar_t unicodeMinutes[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(minutesBuf, unicodeMinutes, sizeof(unicodeMinutes));
+		localize()->ConvertANSIToUnicode(minutesBuf, unicodeMinutes, sizeof( unicodeMinutes ));
 		wchar_t unicodeSeconds[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof(unicodeSeconds));
+		localize()->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
 
 		const char *unlocalizedString = "#vgui_TimeLeftMinutesSeconds";
 		if (minutesRemaining == 1 && secondsRemaining == 1)
@@ -259,18 +260,18 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 		}
 
 		char unlocString[64];
-		Q_strncpy(unlocString, unlocalizedString, sizeof(unlocString));
+		Q_strncpy(unlocString, unlocalizedString,sizeof( unlocString ));
 		if (addRemainingSuffix)
 		{
-			Q_strncat(unlocString, "Remaining", sizeof(unlocString), COPY_ALL_CHARACTERS);
+			Q_strncat(unlocString, "Remaining", sizeof(unlocString ), COPY_ALL_CHARACTERS);
 		}
-		g_pVGuiLocalize->ConstructString(output, outputBufferSizeInBytes, g_pVGuiLocalize->Find(unlocString), 2, unicodeMinutes, unicodeSeconds);
+		localize()->ConstructString(output, outputBufferSizeInBytes, localize()->Find(unlocString), 2, unicodeMinutes, unicodeSeconds);
 
 	}
 	else if (secondsRemaining > 0)
 	{
 		wchar_t unicodeSeconds[16];
-		g_pVGuiLocalize->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof(unicodeSeconds));
+		localize()->ConvertANSIToUnicode(secondsBuf, unicodeSeconds, sizeof( unicodeSeconds ));
 
 		const char *unlocalizedString = "#vgui_TimeLeftSeconds";
 		if (secondsRemaining == 1)
@@ -278,12 +279,12 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 			unlocalizedString = "#vgui_TimeLeftSecond";
 		}
 		char unlocString[64];
-		Q_strncpy(unlocString, unlocalizedString, sizeof(unlocString));
+		Q_strncpy(unlocString, unlocalizedString,sizeof(unlocString));
 		if (addRemainingSuffix)
 		{
-			Q_strncat(unlocString, "Remaining", sizeof(unlocString), COPY_ALL_CHARACTERS);
+			Q_strncat(unlocString, "Remaining",sizeof(unlocString), COPY_ALL_CHARACTERS);
 		}
-		g_pVGuiLocalize->ConstructString(output, outputBufferSizeInBytes, g_pVGuiLocalize->Find(unlocString), 1, unicodeSeconds);
+		localize()->ConstructString(output, outputBufferSizeInBytes, localize()->Find(unlocString), 1, unicodeSeconds);
 	}
 	else
 	{
@@ -295,15 +296,15 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
-void ProgressBar::SetBarInset(int pixels)
-{
+void ProgressBar::SetBarInset( int pixels )
+{ 
 	m_iBarInset = pixels;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
-int ProgressBar::GetBarInset(void)
+int ProgressBar::GetBarInset( void )
 {
 	return m_iBarInset;
 }
@@ -331,7 +332,7 @@ void ProgressBar::ApplySettings(KeyValues *inResourceData)
 void ProgressBar::GetSettings(KeyValues *outResourceData)
 {
 	BaseClass::GetSettings(outResourceData);
-	outResourceData->SetFloat("progress", _progress);
+	outResourceData->SetFloat("progress", _progress );
 
 	if (m_pszDialogVar)
 	{
@@ -342,7 +343,7 @@ void ProgressBar::GetSettings(KeyValues *outResourceData)
 //-----------------------------------------------------------------------------
 // Purpose: Returns a string description of the panel fields for use in the UI
 //-----------------------------------------------------------------------------
-const char *ProgressBar::GetDescription(void)
+const char *ProgressBar::GetDescription( void )
 {
 	static char buf[1024];
 	_snprintf(buf, sizeof(buf), "%s, string progress, string variable", BaseClass::GetDescription());
@@ -365,7 +366,7 @@ void ProgressBar::OnDialogVariablesChanged(KeyValues *dialogVariables)
 }
 
 
-DECLARE_BUILD_FACTORY(ContinuousProgressBar);
+DECLARE_BUILD_FACTORY( ContinuousProgressBar );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -385,22 +386,22 @@ void ContinuousProgressBar::Paint()
 
 	surface()->DrawSetColor(GetFgColor());
 
-	switch (m_iProgressDirection)
+	switch( m_iProgressDirection )
 	{
 	case PROGRESS_EAST:
-		surface()->DrawFilledRect(x, y, x + (int)(wide * _progress), y + tall);
+		surface()->DrawFilledRect( x, y, x + (int)( wide * _progress ), y + tall );
 		break;
 
 	case PROGRESS_WEST:
-		surface()->DrawFilledRect(x + (int)(wide * (1.0f - _progress)), y, x + wide, y + tall);
+		surface()->DrawFilledRect( x + (int)( wide * ( 1.0f - _progress ) ), y, x + wide, y + tall );
 		break;
 
 	case PROGRESS_NORTH:
-		surface()->DrawFilledRect(x, y + (int)(tall * (1.0f - _progress)), x + wide, y + tall);
+		surface()->DrawFilledRect( x, y + (int)( tall * ( 1.0f - _progress ) ), x + wide, y + tall );
 		break;
 
 	case PROGRESS_SOUTH:
-		surface()->DrawFilledRect(x, y, x + wide, y + (int)(tall * _progress));
+		surface()->DrawFilledRect( x, y, x + wide, y + (int)( tall * _progress ) );
 		break;
 	}
 }

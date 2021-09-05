@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <Color.h>
 
 #include "ImageList.h"
@@ -13,7 +13,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: blank image, intentially draws nothing
@@ -56,7 +56,7 @@ ImageList::~ImageList()
 //-----------------------------------------------------------------------------
 // Purpose: adds a new image to the list, returning the index it was placed at
 //-----------------------------------------------------------------------------
-int ImageList::AddImage(vgui::IImage *image)
+int ImageList::AddImage(vgui2::IImage *image)
 {
 	return m_Images.AddToTail(image);
 }
@@ -64,7 +64,7 @@ int ImageList::AddImage(vgui::IImage *image)
 //-----------------------------------------------------------------------------
 // Purpose: sets an image at a specified index, growing and adding NULL images if necessary
 //-----------------------------------------------------------------------------
-void ImageList::SetImageAtIndex(int index, vgui::IImage *image)
+void ImageList::SetImageAtIndex(int index, vgui2::IImage *image)
 {
 	// allocate more images if necessary
 	while (m_Images.Count() <= index)
@@ -86,7 +86,7 @@ int ImageList::GetImageCount()
 //-----------------------------------------------------------------------------
 // Purpose: gets an image, imageIndex is of range [0, GetImageCount)
 //-----------------------------------------------------------------------------
-vgui::IImage *ImageList::GetImage(int imageIndex)
+vgui2::IImage *ImageList::GetImage(int imageIndex)
 {
 	return m_Images[imageIndex];
 }

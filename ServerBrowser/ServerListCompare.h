@@ -7,8 +7,8 @@
 
 #include <vgui_controls/ListPanel.h>
 
-using vgui::ListPanel;
-using vgui::ListPanelItem;
+using vgui2::ListPanel;
+using vgui2::ListPanelItem;
 
 int __cdecl PasswordCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPanelItem &p2);
 int __cdecl BotsCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPanelItem &p2);

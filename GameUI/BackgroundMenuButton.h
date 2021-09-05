@@ -7,27 +7,27 @@
 
 #include <vgui_controls/Button.h>
 
-class CBackgroundMenuButton : public vgui::Button
+class CBackgroundMenuButton : public vgui2::Button
 {
 public:
-	CBackgroundMenuButton(vgui::Panel *parent, const char *name);
+	CBackgroundMenuButton(vgui2::Panel *parent, const char *name);
 	~CBackgroundMenuButton(void);
 
 public:
 	virtual void SetVisible(bool state);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	virtual void OnKillFocus(void);
 	virtual void OnCommand(const char *command);
 
 protected:
-	vgui::Menu *RecursiveLoadGameMenu(KeyValues *datafile);
-	vgui::Menu *m_pMenu;
+	vgui2::Menu *RecursiveLoadGameMenu(KeyValues *datafile);
+	vgui2::Menu *m_pMenu;
 
 private:
-	vgui::IImage *m_pImage, *m_pMouseOverImage;
-	typedef vgui::Button BaseClass;
+	vgui2::IImage *m_pImage, *m_pMouseOverImage;
+	typedef vgui2::Button BaseClass;
 };
 
 #endif

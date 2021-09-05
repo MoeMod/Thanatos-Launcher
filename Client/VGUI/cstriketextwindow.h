@@ -22,15 +22,15 @@ public:
 	virtual void Update(void);
 	virtual void SetVisible(bool state);
 	virtual void ShowPanel(bool bShow);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
 
 protected:
-	vgui::KeyCode m_iScoreBoardKey;
+	vgui2::KeyCode m_iScoreBoardKey;
 
 public:
 	virtual void PaintBackground(void);
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
 	void ShowMapBriefing(void);

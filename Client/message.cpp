@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "parsemsg.h"
 
-vgui::HFont Newfont;
-vgui::HFont font;
+vgui2::HFont Newfont;
+vgui2::HFont font;
 
 DECLARE_MESSAGE(m_Message, HudText)
 DECLARE_MESSAGE(m_Message, HudTextPro)
@@ -30,7 +30,7 @@ int CHudMessage::VidInit(void)
 	m_HUD_title_half = gHUD.GetSpriteIndex("title_half");
 	m_HUD_title_life = gHUD.GetSpriteIndex("title_life");
 
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(vgui::scheme()->GetDefaultScheme());
+	vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(vgui2::scheme()->GetDefaultScheme());
 
 	if (pScheme)
 	{
@@ -281,11 +281,11 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 				szTempMessage[iMessageLength - 1] = 0;
 		}
 
-		pFullText = vgui::localize()->Find(szTempMessage);
+		pFullText = vgui2::localize()->Find(szTempMessage);
 
 		if (pClientMessage->numArgs)
 		{
-			vgui::localize()->ConstructString(textBuf, sizeof(textBuf), pFullText, pClientMessage->numArgs, pClientMessage->args[0], pClientMessage->args[1], pClientMessage->args[2], pClientMessage->args[3]);
+			vgui2::localize()->ConstructString(textBuf, sizeof(textBuf), pFullText, pClientMessage->numArgs, pClientMessage->args[0], pClientMessage->args[1], pClientMessage->args[2], pClientMessage->args[3]);
 			pFullText = textBuf;
 		}
 
@@ -297,7 +297,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 	}
 	else
 	{
-		vgui::localize()->ConvertANSIToUnicode(pMessage->pMessage, textBuf, sizeof(textBuf));
+		vgui2::localize()->ConvertANSIToUnicode(pMessage->pMessage, textBuf, sizeof(textBuf));
 		pFullText = textBuf;
 	}
 
@@ -316,7 +316,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 		}
 		else
 		{
-			vgui::surface()->GetCharABCwide(font, *pFullText, a, b, c);
+			vgui2::surface()->GetCharABCwide(font, *pFullText, a, b, c);
 			width += a + b + c;
 		}
 
@@ -325,7 +325,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 	}
 
 	m_parms.length = length;
-	m_parms.totalHeight = vgui::surface()->GetFontTall(font) * m_parms.lines;
+	m_parms.totalHeight = vgui2::surface()->GetFontTall(font) * m_parms.lines;
 
 	m_parms.y = YPosition(pMessage->y, m_parms.totalHeight);
 	pText = pFullText;
@@ -343,7 +343,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 		{
 			line[m_parms.lineLength] = *pText;
 
-			vgui::surface()->GetCharABCwide(font, *pText, a, b, c);
+			vgui2::surface()->GetCharABCwide(font, *pText, a, b, c);
 			m_parms.width += a + b + c;
 			m_parms.lineLength++;
 			pText++;
@@ -361,7 +361,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 		{
 			m_parms.text = line[j];
 
-			vgui::surface()->GetCharABCwide(font, m_parms.text, a, b, c);
+			vgui2::surface()->GetCharABCwide(font, m_parms.text, a, b, c);
 
 			int next = m_parms.x + a + b + c;
 
@@ -373,7 +373,7 @@ void CHudMessage::MessageDrawScan(client_message_t *pClientMessage, float time, 
 			m_parms.x = next;
 		}
 
-		m_parms.y += vgui::surface()->GetFontTall(font);
+		m_parms.y += vgui2::surface()->GetFontTall(font);
 	}
 }
 
@@ -595,7 +595,7 @@ int CHudMessage::MsgFunc_HudTextArgs(const char *pszName, int iSize, void *pbuf)
 			if (!tmp)
 				tmp = "";
 
-			vgui::localize()->ConvertANSIToUnicode(tmp, m_pMessages[slotNum].args[i], MESSAGE_ARG_LEN);
+			vgui2::localize()->ConvertANSIToUnicode(tmp, m_pMessages[slotNum].args[i], MESSAGE_ARG_LEN);
 		}
 	}
 

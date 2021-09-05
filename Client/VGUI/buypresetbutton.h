@@ -13,9 +13,9 @@
 
 class BuyPresetImagePanel;
 
-class BuyPresetButton : public vgui::Button
+class BuyPresetButton : public vgui2::Button
 {
-	typedef vgui::Button BaseClass;
+	typedef vgui2::Button BaseClass;
 
 public:
 	BuyPresetButton(Panel *parent, const char *panelName);
@@ -23,7 +23,7 @@ public:
 
 public:
 	void ApplySettings(KeyValues *resourceData);
-	void ApplySchemeSettings(vgui::IScheme *pScheme);
+	void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	void PerformLayout(void);
 	void DrawBox(int x, int y, int wide, int tall, Color color, float normalizedAlpha, bool hollow);
 	void Paint(void);
@@ -31,8 +31,8 @@ public:
 	void FireActionSignal(void);
 
 public:
-	void OnMousePressed(vgui::MouseCode code);
-	void OnMouseReleased(vgui::MouseCode code);
+	void OnMousePressed(vgui2::MouseCode code);
+	void OnMouseReleased(vgui2::MouseCode code);
 
 public:
 	void GetText(char *textOut, int bufferLen);
@@ -43,16 +43,16 @@ public:
 
 public:
 	void ClearWeapons(void);
-	void SetPrimaryWeapon(vgui::IImage *image);
-	void SetSecondaryWeapon(vgui::IImage *image);
-	void SetKnifeWeapon(vgui::IImage *image);
+	void SetPrimaryWeapon(vgui2::IImage *image);
+	void SetSecondaryWeapon(vgui2::IImage *image);
+	void SetKnifeWeapon(vgui2::IImage *image);
 
 protected:
 	BuyPresetImagePanel *m_pImagePanel;
 
-	vgui::IImage *m_pKeyboard;
-	vgui::IImage *m_pBlankSlot;
-	vgui::IImage *m_pSelect;
+	vgui2::IImage *m_pKeyboard;
+	vgui2::IImage *m_pBlankSlot;
+	vgui2::IImage *m_pSelect;
 
 	wchar_t *m_pFullText;
 	wchar_t *m_pText;
@@ -61,7 +61,7 @@ protected:
 	int m_iKeySize;
 
 	char *m_pSetCommand;
-	vgui::MouseCode m_iMousePressed;
+	vgui2::MouseCode m_iMousePressed;
 };
 
 #endif

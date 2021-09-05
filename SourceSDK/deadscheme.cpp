@@ -1,6 +1,6 @@
 #include <vgui/IScheme.h>
 
-namespace vgui
+namespace vgui2
 {
 
 const char *IScheme::GetFontName(const HFont& font)

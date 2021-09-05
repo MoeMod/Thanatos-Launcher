@@ -13,7 +13,7 @@
 #define PANEL_CLASS_CT "class_ct"
 #define PANEL_CLASS_TER "class_ter"
 
-using namespace vgui;
+using namespace vgui2;
 
 class CCSClassMenu_TER : public CClassMenu
 {

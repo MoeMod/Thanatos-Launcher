@@ -5,15 +5,14 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
 #include <vgui/Dar.h>
 #include <Color.h>
 #include <vgui_controls/Label.h>
 #include "vgui/mousecode.h"
 
-namespace vgui
+namespace vgui2
 {
-class URLButton : public Label
+class URLButton : public vgui2::Label
 {
 	DECLARE_CLASS_SIMPLE(URLButton, Label);
 
@@ -44,7 +43,7 @@ public:
 	}
 
 public:
-	virtual void SetMouseClickEnabled(MouseCode code, bool state);
+	virtual void SetMouseClickEnabled(vgui2::MouseCode code, bool state);
 
 public:
 	enum ActivationType_t
@@ -77,17 +76,17 @@ public:
 
 protected:
 	virtual void Paint(void);
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 protected:
 	MESSAGE_FUNC_INT(OnSetState, "SetState", state);
 
 protected:
-	virtual void OnMousePressed(MouseCode code);
-	virtual void OnMouseDoublePressed(MouseCode code);
-	virtual void OnMouseReleased(MouseCode code);
-	virtual void OnKeyCodePressed(KeyCode code);
-	virtual void OnKeyCodeReleased(KeyCode code);
+	virtual void OnMousePressed(vgui2::MouseCode code);
+	virtual void OnMouseDoublePressed(vgui2::MouseCode code);
+	virtual void OnMouseReleased(vgui2::MouseCode code);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
+	virtual void OnKeyCodeReleased(vgui2::KeyCode code);
 	virtual void GetSettings(KeyValues *outResourceData);
 	virtual void ApplySettings(KeyValues *inResourceData);
 	virtual const char *GetDescription(void);

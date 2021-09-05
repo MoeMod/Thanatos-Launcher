@@ -13,6 +13,7 @@
 #include <vgui/MouseCode.h>
 #include <vgui/IBorder.h>
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/ISystem.h>
 #include <vgui/IScheme.h>
 #include <vgui/ISurface.h>
@@ -22,10 +23,16 @@
 #include "Controls.h"
 #include "TextImage.h"
 
+#include <mathlib/mathlib.h>
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+#ifndef clamp
+#define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
+#endif
+
+using namespace vgui2;
 
 static const float NOB_SIZE = 8.0f;
 
@@ -265,12 +272,12 @@ void Slider::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetFgColor(GetSchemeColor("Slider/SliderFgColor", pScheme));
+	SetFgColor(GetSchemeColor("Slider/SliderFgColor", Color(255, 255, 255, 255), pScheme));
 	// this line is useful for debugging
 	//SetBgColor(GetSchemeColor("0 0 0 255"));
 
-	m_TickColor = pScheme->GetColor( "SliderTickColor", GetFgColor() );
-	m_TrackColor = pScheme->GetColor( "SliderTrackColor", GetFgColor() );
+	m_TickColor = pScheme->GetColor( "Slider.TextColor", pScheme->GetColor("SliderTickColor", GetFgColor()));
+	m_TrackColor = pScheme->GetColor( "Slider.TrackColor", pScheme->GetColor("SliderTrackColor", GetFgColor()));
 
 	m_DisabledTextColor1 = pScheme->GetColor( "Slider.DisabledTextColor1", GetFgColor() );
 	m_DisabledTextColor2 = pScheme->GetColor( "Slider.DisabledTextColor2", GetFgColor() );
@@ -390,7 +397,7 @@ void Slider::DrawTicks()
 
     if (IsEnabled())
     {
-        surface()->DrawSetColor( m_TickColor ); //vgui::Color( 127, 140, 127, 255 ) );
+        surface()->DrawSetColor( m_TickColor ); //vgui2::Color( 127, 140, 127, 255 ) );
     	for ( int i = 0; i <= m_nNumTicks; i++ )
     	{
     		int xpos = (int)( leftpixel + i * pixelspertick );
@@ -400,13 +407,13 @@ void Slider::DrawTicks()
     }
     else
     {
-        surface()->DrawSetColor( m_DisabledTextColor1 ); //vgui::Color( 127, 140, 127, 255 ) );
+        surface()->DrawSetColor( m_DisabledTextColor1 ); //vgui2::Color( 127, 140, 127, 255 ) );
     	for ( int i = 0; i <= m_nNumTicks; i++ )
     	{
     		int xpos = (int)( leftpixel + i * pixelspertick );
     		surface()->DrawFilledRect( xpos+1, y+1, xpos + 2, y + tickHeight + 1 );
     	}
-        surface()->DrawSetColor( m_DisabledTextColor2 ); //vgui::Color( 127, 140, 127, 255 ) );
+        surface()->DrawSetColor( m_DisabledTextColor2 ); //vgui2::Color( 127, 140, 127, 255 ) );
     	for ( int i = 0; i <= m_nNumTicks; i++ )
     	{
     		int xpos = (int)( leftpixel + i * pixelspertick );
@@ -430,9 +437,9 @@ void Slider::DrawTickLabels()
 
 	// Draw Start and end range values
     if (IsEnabled())
-	    surface()->DrawSetTextColor( m_TickColor ); //vgui::Color( 127, 140, 127, 255 ) );
+	    surface()->DrawSetTextColor( m_TickColor ); //vgui2::Color( 127, 140, 127, 255 ) );
     else
-	    surface()->DrawSetTextColor( m_DisabledTextColor1 ); //vgui::Color( 127, 140, 127, 255 ) );
+	    surface()->DrawSetTextColor( m_DisabledTextColor1 ); //vgui2::Color( 127, 140, 127, 255 ) );
 
 
 	if ( _leftCaption != NULL )

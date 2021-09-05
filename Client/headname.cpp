@@ -7,7 +7,7 @@
 #include <triangleapi.h>
 #include <cl_entity.h>
 #include <IEngineSurface.h>
-#include <VGUI/VGUI.h>
+#include <VGUI/VGUI2.h>
 #include <VGUI/ISurface.h>
 #include <VGUI/IScheme.h>
 #include "plugins.h"
@@ -28,12 +28,12 @@ int CHudHeadName::VidInit(void)
 
 	if (!m_hHeadFont)
 	{
-		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(vgui::scheme()->GetScheme("ClientScheme"));
+		vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(vgui2::scheme()->GetScheme("ClientScheme"));
 
 		if (pScheme)
 		{
 			m_hHeadFont = pScheme->GetFont("CreditsText");
-			pScheme = vgui::scheme()->GetIScheme(vgui::scheme()->GetDefaultScheme());
+			pScheme = vgui2::scheme()->GetIScheme(vgui2::scheme()->GetDefaultScheme());
 
 			if (!m_hHeadFont)
 				m_hHeadFont = pScheme->GetFont("CreditsFont");
@@ -123,19 +123,19 @@ int CHudHeadName::Draw(float flTime)
 				continue;
 
 			int w, t;
-			vgui::surface()->GetScreenSize(w, t);
+			vgui2::surface()->GetScreenSize(w, t);
 			w /= 2;
 			t /= 2;
 			screenPos[0] = screenPos[0] * w + w;
 			screenPos[1] = -screenPos[1] * t + t;
 
 			int textWide, textTall;
-			vgui::surface()->GetTextSize(m_hHeadFont, m_sUnicodes[i], textWide, textTall);
-			vgui::surface()->DrawSetTextPos(screenPos[0] - ((textWide) / 2), screenPos[1] - ((textTall) / 2));
-			vgui::surface()->DrawSetTextColor(255, 255, 255, 128);
+			vgui2::surface()->GetTextSize(m_hHeadFont, m_sUnicodes[i], textWide, textTall);
+			vgui2::surface()->DrawSetTextPos(screenPos[0] - ((textWide) / 2), screenPos[1] - ((textTall) / 2));
+			vgui2::surface()->DrawSetTextColor(255, 255, 255, 128);
 
 			for (size_t j = 0; j < wcslen(m_sUnicodes[i]); j++)
-				vgui::surface()->DrawUnicodeCharAdd(m_sUnicodes[i][j]);
+				vgui2::surface()->DrawUnicodeCharAdd(m_sUnicodes[i][j]);
 		}
 	}
 

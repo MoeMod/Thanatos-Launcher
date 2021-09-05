@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include "links.h"
 #include "CounterStrikeViewport.h"
+#include <vgui/IInputInternal.h>
 #include "game_shared/voice_status.h"
 
 extern int g_iAlive;
@@ -435,12 +436,12 @@ void IN_MLookUp(void)
 
 void IN_NeedKBInput(void)
 {
-	gEngfuncs.Con_DPrintf("vgui::surface()->NeedKBInput():%d\n", vgui::surface()->NeedKBInput());
+	gEngfuncs.Con_DPrintf("vgui2::surface()->NeedKBInput():%d\n", vgui2::surface()->NeedKBInput());
 }
 
 void IN_CalculateMouseVisible(void)
 {
-	vgui::surface()->CalculateMouseVisible();
+	vgui2::surface()->CalculateMouseVisible();
 }
 
 void IN_TestMouseVisible(void)
@@ -449,39 +450,39 @@ void IN_TestMouseVisible(void)
 	bool m_bNeedsMouse = false;
 	bool m_bNeedsKeyboard = false;
 
-	if (vgui::input()->GetMouseCapture() != 0)
+	if (vgui2::input()->GetMouseCapture() != 0)
 		return;
 
-	for (i = 0; i < vgui::surface()->GetPopupCount(); i++)
+	for (i = 0; i < vgui2::surface()->GetPopupCount(); i++)
 	{
-		vgui::VPANEL pop = (vgui::VPANEL)vgui::surface()->GetPopup(i);
+		vgui2::VPANEL pop = (vgui2::VPANEL)vgui2::surface()->GetPopup(i);
 
 		if (!pop)
 			continue;
 
-		bool isVisible = vgui::ipanel()->IsVisible(pop);
-		vgui::VPANEL p = vgui::ipanel()->GetParent(pop);
+		bool isVisible = vgui2::ipanel()->IsVisible(pop);
+		vgui2::VPANEL p = vgui2::ipanel()->GetParent(pop);
 
 		while (p && isVisible)
 		{
-			if (vgui::ipanel()->IsVisible(p) == false)
+			if (vgui2::ipanel()->IsVisible(p) == false)
 			{
 				isVisible = false;
 				break;
 			}
 
-			p = vgui::ipanel()->GetParent(p);
+			p = vgui2::ipanel()->GetParent(p);
 		}
 
-		const char *name = vgui::ipanel()->GetName(pop);
+		const char *name = vgui2::ipanel()->GetName(pop);
 
 		if (strlen(name) > 0)
 			gEngfuncs.Con_DPrintf("Popup Panel: %s\n", name);
 
 		if (isVisible)
 		{
-			m_bNeedsMouse = m_bNeedsMouse || vgui::ipanel()->IsMouseInputEnabled(pop);
-			m_bNeedsKeyboard = m_bNeedsKeyboard || vgui::ipanel()->IsKeyBoardInputEnabled(pop);
+			m_bNeedsMouse = m_bNeedsMouse || vgui2::ipanel()->IsMouseInputEnabled(pop);
+			m_bNeedsKeyboard = m_bNeedsKeyboard || vgui2::ipanel()->IsKeyBoardInputEnabled(pop);
 		}
 	}
 

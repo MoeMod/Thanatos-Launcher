@@ -26,7 +26,7 @@ bool CommandMenu::LoadFromFile(const char *fileName)
 {
 	KeyValues *kv = new KeyValues(fileName);
 
-	if (!kv->LoadFromFile(g_pFullFileSystem, fileName, "GAME"))
+	if (!kv->LoadFromFile(filesystem(), fileName, "GAME"))
 		return false;
 
 	bool ret = LoadFromKeyValues(kv);
@@ -40,7 +40,7 @@ CommandMenu::~CommandMenu(void)
 	ClearMenu();
 }
 
-void CommandMenu::OnKeyCodeTyped(vgui::KeyCode code)
+void CommandMenu::OnKeyCodeTyped(vgui2::KeyCode code)
 {
 	BaseClass::OnKeyCodeTyped(code);
 

@@ -9,6 +9,8 @@
 #include <vgui/ISurface.h>
 #include <vgui/ISystem.h>
 #include <vgui/IVGui.h>
+#include <vgui/IPanel.h>
+#include <vgui/IScheme.h>
 
 #include <tier1/KeyValues.h>
 #include <tier1/mempool.h>
@@ -25,18 +27,19 @@
 
 #include <mathlib/mathlib.h>
 
+#include <random>
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/dbg.h>
 // for SRC
-#include <vstdlib/random.h>
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 static CUtlSymbolTable g_ScriptSymbols(0, 128, true);
 
 // singleton accessor for animation controller for use by the vgui controls
-namespace vgui
+namespace vgui2
 {
 AnimationController *GetAnimationController()
 {
@@ -141,7 +144,7 @@ void AnimationController::ReloadScriptFile()
 //-----------------------------------------------------------------------------
 bool AnimationController::LoadScriptFile(const char *fileName)
 {
-	FileHandle_t f = g_pFullFileSystem->Open(fileName, "rt");
+	FileHandle_t f = filesystem()->Open(fileName, "rt");
 	if (!f)
 	{
 		Warning("Couldn't find script file %s\n", fileName);
@@ -149,7 +152,7 @@ bool AnimationController::LoadScriptFile(const char *fileName)
 	}
 
 	// read the whole thing into memory
-	int size = g_pFullFileSystem->Size(f);
+	int size = filesystem()->Size(f);
 	// read into temporary memory block
 	int nBufSize = size + 1;
 	if (IsXbox())
@@ -157,10 +160,10 @@ bool AnimationController::LoadScriptFile(const char *fileName)
 		nBufSize = AlignValue(nBufSize, 512);
 	}
 	char *pMem = (char *)malloc(nBufSize);
-	int bytesRead = g_pFullFileSystem->Read(pMem, size, f);
+	int bytesRead = filesystem()->Read(pMem, size, f);
 	Assert(bytesRead <= size);
 	pMem[bytesRead] = 0;
-	g_pFullFileSystem->Close(f);
+	filesystem()->Close(f);
 	// parse
 	bool success = ParseScriptFile(pMem, bytesRead);
 	free(pMem);
@@ -270,7 +273,7 @@ void AnimationController::SetupPosition( AnimCmdAnimate_t& cmd, float *output, c
 	// scale the values
 	if (IsProportional())
 	{
-		pos = vgui::scheme()->GetProportionalScaledValueEx( GetScheme(), pos );
+		pos = scheme()->GetProportionalScaledValueEx( GetScheme(), pos );
 	}
 
 	// adjust the positions
@@ -294,7 +297,7 @@ void AnimationController::SetupPosition( AnimCmdAnimate_t& cmd, float *output, c
 bool AnimationController::ParseScriptFile(char *pMem, int length)
 {
 	// get the scheme (for looking up color names)
-	IScheme *scheme = vgui::scheme()->GetIScheme(GetScheme());
+	IScheme *scheme = vgui2::scheme()->GetIScheme(GetScheme());
 
 	// get our screen size (for left/right/center alignment)
 	int screenWide = m_nScreenBounds[ 2 ];
@@ -333,13 +336,6 @@ bool AnimationController::ParseScriptFile(char *pMem, int length)
 
 		// get the open brace or a conditional
 		pMem = ParseFile(pMem, token, NULL);
-		if ( Q_stristr( token, "[$" ) )
-		{
-			bAccepted = EvaluateConditional( token );
-
-			// now get the open brace
-			pMem = ParseFile(pMem, token, NULL);
-		}
 
 		if (stricmp(token, "{"))
 		{
@@ -417,8 +413,8 @@ bool AnimationController::ParseScriptFile(char *pMem, int length)
 				{
 					if (IsProportional())
 					{
-						cmdAnimate.target.a = static_cast<float>( vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a) );
-						cmdAnimate.target.b = static_cast<float>( vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.b) );
+						cmdAnimate.target.a = static_cast<float>( vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a) );
+						cmdAnimate.target.b = static_cast<float>( vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.b) );
 					}
 				}
 				else if (cmdAnimate.variable == m_sWide ||
@@ -427,7 +423,7 @@ bool AnimationController::ParseScriptFile(char *pMem, int length)
 					if (IsProportional())
 					{
 						// Wide and tall both use.a
-						cmdAnimate.target.a = static_cast<float>( vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a) );
+						cmdAnimate.target.a = static_cast<float>( vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a) );
 					}
 				}
 				
@@ -564,17 +560,6 @@ bool AnimationController::ParseScriptFile(char *pMem, int length)
 			{
 				Warning("Couldn't parse script sequence '%s': expected <anim command>, found '%s'\n", g_ScriptSymbols.String(seq.name), token);
 				return false;
-			}
-			
-			// Look ahead one token for a conditional
-			char *peek = ParseFile(pMem, token, NULL);
-			if ( Q_stristr( token, "[$" ) )
-			{
-				if ( !EvaluateConditional( token ) )
-				{
-					seq.cmdList.Remove( cmdIndex );
-				}
-				pMem = peek;
 			}
 		}
 
@@ -815,7 +800,10 @@ AnimationController::Value_t AnimationController::GetInterpolatedValue(int inter
 		pos = 0.5f + 0.5f * ( cos( pos * 2.0f * M_PI * interpolatorParam ) );
 		break;
 	case INTERPOLATOR_FLICKER:
-		if ( RandomFloat( 0.0f, 1.0f ) < interpolatorParam )
+	{
+		// if ( gEngfuncs.pfnRandomFloat( 0.0f, 1.0f ) < interpolatorParam )
+		static std::random_device rd;
+		if (std::uniform_real<float>(0.0f, 1.0f)(rd) < interpolatorParam)
 		{
 			pos = 1.0f;
 		}
@@ -824,6 +812,7 @@ AnimationController::Value_t AnimationController::GetInterpolatedValue(int inter
 			pos = 0.0f;
 		}
 		break;
+	}
 	case INTERPOLATOR_LINEAR:
 	default:
 		break;
@@ -903,7 +892,7 @@ bool AnimationController::StartAnimationSequence(Panel *pWithinParent, const cha
 //-----------------------------------------------------------------------------
 // Purpose: Runs a custom command from code, not from a script file
 //-----------------------------------------------------------------------------
-void AnimationController::RunAnimationCommand(vgui::Panel *panel, const char *variable, float targetValue, float startDelaySeconds, float duration, Interpolators_e interpolator, float animParameter /* = 0 */ )
+void AnimationController::RunAnimationCommand(vgui2::Panel *panel, const char *variable, float targetValue, float startDelaySeconds, float duration, Interpolators_e interpolator, float animParameter /* = 0 */ )
 {
 	// clear any previous animations of this variable
 	UtlSymId_t var = g_ScriptSymbols.AddString(variable);
@@ -927,7 +916,7 @@ void AnimationController::RunAnimationCommand(vgui::Panel *panel, const char *va
 //-----------------------------------------------------------------------------
 // Purpose: Runs a custom command from code, not from a script file
 //-----------------------------------------------------------------------------
-void AnimationController::RunAnimationCommand(vgui::Panel *panel, const char *variable, Color targetValue, float startDelaySeconds, float duration, Interpolators_e interpolator, float animParameter /* = 0 */ )
+void AnimationController::RunAnimationCommand(vgui2::Panel *panel, const char *variable, Color targetValue, float startDelaySeconds, float duration, Interpolators_e interpolator, float animParameter /* = 0 */ )
 {
 	// clear any previous animations of this variable
 	UtlSymId_t var = g_ScriptSymbols.AddString(variable);
@@ -1023,7 +1012,7 @@ void AnimationController::RemoveQueuedAnimationCommands(UtlSymId_t seqName, Pane
 //-----------------------------------------------------------------------------
 // Purpose: removes the specified queued animation
 //-----------------------------------------------------------------------------
-void AnimationController::RemoveQueuedAnimationByType(vgui::Panel *panel, UtlSymId_t variable, UtlSymId_t sequenceToIgnore)
+void AnimationController::RemoveQueuedAnimationByType(vgui2::Panel *panel, UtlSymId_t variable, UtlSymId_t sequenceToIgnore)
 {
 	for (int i = 0; i < m_ActiveAnimations.Count(); i++)
 	{
@@ -1492,7 +1481,7 @@ private:
 
 char const *CPanelAnimationDictionary::StripNamespace( char const *className )
 {
-	if ( !Q_strnicmp( className, "vgui::", 6 ) )
+	if ( !Q_strnicmp( className, "vgui2::", 6 ) )
 	{
 		return className + 6;
 	}

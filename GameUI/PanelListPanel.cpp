@@ -11,25 +11,23 @@
 #include <vgui/ISurface.h>
 #include "PanelListPanel.h"
 
-using namespace vgui;
-
-class VScrollBarReversedButtons : public ScrollBar
+class VScrollBarReversedButtons : public vgui2::ScrollBar
 {
 public:
 	VScrollBarReversedButtons(Panel *parent, const char *panelName, bool vertical);
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 };
 
 VScrollBarReversedButtons::VScrollBarReversedButtons(Panel *parent, const char *panelName, bool vertical) : ScrollBar(parent, panelName, vertical)
 {
 }
 
-void VScrollBarReversedButtons::ApplySchemeSettings(IScheme *pScheme)
+void VScrollBarReversedButtons::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	ScrollBar::ApplySchemeSettings(pScheme);
 }
 
-CPanelListPanel::CPanelListPanel(vgui::Panel *parent, char const *panelName, bool inverseButtons) : Panel(parent, panelName)
+CPanelListPanel::CPanelListPanel(vgui2::Panel *parent, char const *panelName, bool inverseButtons) : Panel(parent, panelName)
 {
 	SetBounds(0, 0, 100, 100);
 	_sliderYOffset = 0;
@@ -37,7 +35,7 @@ CPanelListPanel::CPanelListPanel(vgui::Panel *parent, char const *panelName, boo
 	if (inverseButtons)
 		_vbar = new VScrollBarReversedButtons(this, "CPanelListPanelVScroll", true);
 	else
-		_vbar = new ScrollBar(this, "CPanelListPanelVScroll", true);
+		_vbar = new vgui2::ScrollBar(this, "CPanelListPanelVScroll", true);
 
 	_vbar->SetBounds(0, 0, 20, 20);
 	_vbar->SetVisible(false);
@@ -82,7 +80,7 @@ int CPanelListPanel::computeVPixelsNeeded(void)
 	return pixels;
 }
 
-Panel *CPanelListPanel::GetCellRenderer(int row)
+vgui2::Panel *CPanelListPanel::GetCellRenderer(int row)
 {
 	DATAITEM *item = _dataItems[row];
 
@@ -110,7 +108,7 @@ int CPanelListPanel::GetItemCount(void)
 	return _dataItems.GetCount();
 }
 
-Panel *CPanelListPanel::GetItem(int itemIndex)
+vgui2::Panel *CPanelListPanel::GetItem(int itemIndex)
 {
 	if (itemIndex < 0 || itemIndex >= _dataItems.GetCount())
 		return NULL;
@@ -199,7 +197,7 @@ void CPanelListPanel::PaintBackground(void)
 	Panel::PaintBackground();
 }
 
-void CPanelListPanel::ApplySchemeSettings(IScheme *pScheme)
+void CPanelListPanel::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	Panel::ApplySchemeSettings(pScheme);
 

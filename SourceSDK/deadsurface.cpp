@@ -1,6 +1,6 @@
 #include <vgui/ISurface.h>
 
-namespace vgui
+namespace vgui2
 {
 
 int ISurface::DrawGetTextureId(char const *filename)

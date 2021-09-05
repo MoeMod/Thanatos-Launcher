@@ -4,15 +4,16 @@
 //
 //=============================================================================//
 
-#include <vgui_controls/CheckButtonList.h>
-#include <vgui_controls/CheckButton.h>
-#include <vgui_controls/ScrollBar.h>
-#include <KeyValues.h>
+#include "CheckButton.h"
+#include "CheckButtonList.h"
+#include "ScrollBar.h"
+
+#include <tier1/KeyValues.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -36,10 +37,10 @@ CheckButtonList::~CheckButtonList()
 int CheckButtonList::AddItem(const char *itemText, bool startsSelected, KeyValues *userData)
 {
 	CheckItem_t newItem;
-	newItem.checkButton = new vgui::CheckButton(this, NULL, itemText);
-	newItem.checkButton->SetSilentMode(true);
+	newItem.checkButton = new CheckButton(this, NULL, itemText);
+	newItem.checkButton->SetSilentMode( true );
 	newItem.checkButton->SetSelected(startsSelected);
-	newItem.checkButton->SetSilentMode(false);
+	newItem.checkButton->SetSilentMode( false );
 	newItem.checkButton->AddActionSignalTarget(this);
 	newItem.userData = userData;
 	InvalidateLayout();
@@ -176,17 +177,17 @@ void CheckButtonList::SetItemCheckable(int itemID, bool state)
 //-----------------------------------------------------------------------------
 // Purpose: Forwards up check button selected message
 //-----------------------------------------------------------------------------
-void CheckButtonList::OnCheckButtonChecked(KeyValues *pParams)
+void CheckButtonList::OnCheckButtonChecked( KeyValues *pParams )
 {
-	vgui::Panel *pPanel = (vgui::Panel *)pParams->GetPtr("panel");
+	Panel *pPanel = (Panel *)pParams->GetPtr( "panel" );
 	int c = m_CheckItems.Count();
-	for (int i = 0; i < c; ++i)
+	for ( int i = 0; i < c; ++i )
 	{
-		if (pPanel == m_CheckItems[i].checkButton)
+		if ( pPanel == m_CheckItems[i].checkButton )
 		{
-			KeyValues *kv = new KeyValues("CheckButtonChecked", "itemid", i);
-			kv->SetInt("state", pParams->GetInt("state"));
-			PostActionSignal(kv);
+			KeyValues *kv = new KeyValues( "CheckButtonChecked", "itemid", i );
+			kv->SetInt( "state", pParams->GetInt( "state" ) );
+			PostActionSignal( kv );
 			break;
 		}
 	}

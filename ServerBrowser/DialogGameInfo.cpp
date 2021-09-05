@@ -18,11 +18,11 @@
 
 #include <stdio.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 static const long RETRY_TIME = 10000;
 
-CDialogGameInfo::CDialogGameInfo(vgui::Panel *parent, serveritem_t &server) : Frame(parent, "DialogGameInfo"), m_Servers(this), m_GetChallenge(this), m_PlayerInfo(this)
+CDialogGameInfo::CDialogGameInfo(vgui2::Panel *parent, serveritem_t &server) : Frame(parent, "DialogGameInfo"), m_Servers(this), m_GetChallenge(this), m_PlayerInfo(this)
 {
 	SetBounds(0, 0, 512, 512);
 	SetMinimumSize(416, 340);

@@ -12,14 +12,18 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#ifdef PropertySheet
+#undef PropertySheet
+#endif
+
+#include <vgui/VGUI2.h>
 
 #include "EditablePanel.h"
 #include "PHandle.h"
 
 #include <tier1/utlvector.h>
 
-namespace vgui
+namespace vgui2
 {
 
 class PageTab;
@@ -130,6 +134,7 @@ protected:
 	virtual void OnKeyCodeTyped(KeyCode code);
 	virtual void OnCommand(const char *command);
 	virtual void ApplySchemeSettings(IScheme *pScheme);
+	virtual void PaintBackground();
 
 	// internal message handlers
 	MESSAGE_FUNC_PTR( OnTabPressed, "TabPressed", panel );
@@ -176,8 +181,14 @@ private:
 	bool	m_bDraggableTabs;
 	bool	m_bContextButton;
 	bool	m_bKBNavigationEnabled;
+
+protected:
+	bool m_bImageBackground;
+	IImage *m_pTopBackground[3];
+	IImage *m_pCenterBackground[3];
+	IImage *m_pBottomBackground[3];
 };
 
-}; // namespace vgui
+}; // namespace vgui2
 
 #endif // PROPERTYSHEET_H

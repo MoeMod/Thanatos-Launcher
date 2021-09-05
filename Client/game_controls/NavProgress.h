@@ -9,10 +9,10 @@
 
 #define PANEL_NAV_PROGRESS "nav_progress"
 
-class CNavProgress : public vgui::Frame, public CViewPortPanel
+class CNavProgress : public vgui2::Frame, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CNavProgress, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CNavProgress, vgui2::Frame);
 
 public:
 	CNavProgress(void);
@@ -33,7 +33,7 @@ public:
 	DECLARE_VIEWPORT_PANEL_SIMPLE();
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PerformLayout(void);
 
 public:
@@ -44,11 +44,11 @@ protected:
 	int m_numTicks;
 	int m_currentTick;
 
-	vgui::Label *m_pTitle;
-	vgui::Label *m_pText;
-	vgui::Panel *m_pProgressBarBorder;
-	vgui::Panel *m_pProgressBar;
-	vgui::Panel *m_pProgressBarSizer;
+	vgui2::Label *m_pTitle;
+	vgui2::Label *m_pText;
+	vgui2::Panel *m_pProgressBarBorder;
+	vgui2::Panel *m_pProgressBar;
+	vgui2::Panel *m_pProgressBarSizer;
 };
 
 #endif

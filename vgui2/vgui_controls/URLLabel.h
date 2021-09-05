@@ -12,10 +12,10 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include "Label.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class URLLabel : public Label

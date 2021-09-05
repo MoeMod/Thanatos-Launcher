@@ -17,7 +17,7 @@
 #include "MessageBox.h"
 #include "Button.h"
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -28,8 +28,8 @@ class QueryBox : public MessageBox
 	DECLARE_CLASS_SIMPLE( QueryBox, MessageBox );
 
 public:
-	QueryBox(const char *title, const char *queryText,vgui::Panel *parent = NULL );
-	QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText,vgui::Panel *parent = NULL);
+	QueryBox(const char *title, const char *queryText, Panel *parent = NULL );
+	QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText, Panel *parent = NULL);
 	~QueryBox();
 
 	// Layout the window for drawing 

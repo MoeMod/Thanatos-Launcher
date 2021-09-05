@@ -1,2 +1,2 @@
 
-void SchemeManager_InstallHook(vgui::ISchemeManager *pSchemeManager);
+void SchemeManager_InstallHook(vgui2::ISchemeManager *pSchemeManager);

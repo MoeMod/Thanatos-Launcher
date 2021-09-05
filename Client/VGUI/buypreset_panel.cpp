@@ -22,7 +22,7 @@
 #include "shared_util.h"
 #include <mathlib/Vector4D.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 const float horizTitleRatio = 18.0f / 68.0f;
 
@@ -52,16 +52,16 @@ int GetScaledValue(HScheme hScheme, int unscaled)
 	return GetAlternateProportionalValueFromScaled(hScheme, val);
 }
 
-class PresetBackgroundPanel : public vgui::Panel
+class PresetBackgroundPanel : public vgui2::Panel
 {
-	typedef vgui::Panel BaseClass;
+	typedef vgui2::Panel BaseClass;
 
 public:
-	PresetBackgroundPanel(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
+	PresetBackgroundPanel(vgui2::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 	{
 	}
 
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		BaseClass::ApplySchemeSettings(pScheme);
 		SetBorder(pScheme->GetBorder("ButtonBorder"));
@@ -99,8 +99,8 @@ public:
 	{
 		BaseClass::PaintBackground();
 
-		vgui::surface()->DrawSetColor(m_lineColor);
-		vgui::surface()->DrawSetTextColor(m_lineColor);
+		vgui2::surface()->DrawSetColor(m_lineColor);
+		vgui2::surface()->DrawSetTextColor(m_lineColor);
 
 		for (int i = 0; i < m_scaledLines.Count(); ++i)
 		{
@@ -111,7 +111,7 @@ public:
 			x2 = m_scaledLines[i][2];
 			y2 = m_scaledLines[i][3];
 
-			vgui::surface()->DrawFilledRect(x1, y1, x2, y2);
+			vgui2::surface()->DrawFilledRect(x1, y1, x2, y2);
 		}
 	}
 
@@ -210,7 +210,7 @@ void BuyPresetEditPanel::SetWeaponSet(const WeaponSet *pWeaponSet, bool current)
 		{
 			const int BufLen = 256;
 			wchar_t wbuf[BufLen];
-			g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#Cstrike_BuyPresetPlainCost"), 1, NumAsWString(pWeaponSet->FullCost()));
+			localize()->ConstructString(wbuf, sizeof(wbuf), localize()->Find("#Cstrike_BuyPresetPlainCost"), 1, NumAsWString(pWeaponSet->FullCost()));
 			m_pCostLabel->SetText(wbuf);
 		}
 

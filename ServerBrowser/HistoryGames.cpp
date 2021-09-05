@@ -19,9 +19,9 @@
 #include <vgui_controls/ImagePanel.h>
 #include <vgui_controls/MessageBox.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-CHistoryGames::CHistoryGames(vgui::Panel *parent) : CBaseGamesPage(parent, "HistoryGames")
+CHistoryGames::CHistoryGames(vgui2::Panel *parent) : CBaseGamesPage(parent, "HistoryGames")
 {
 	m_bRefreshOnListReload = false;
 }

@@ -10,12 +10,12 @@
 
 class CBitmapImagePanel;
 
-class CLoadingDialog : public vgui::Frame
+class CLoadingDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE(CLoadingDialog, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CLoadingDialog, vgui2::Frame);
 
 public:
-	CLoadingDialog(vgui::Panel *parent);
+	CLoadingDialog(vgui2::Panel *parent);
 	~CLoadingDialog(void);
 
 public:
@@ -34,7 +34,7 @@ protected:
 	virtual void PerformLayout(void);
 	virtual void OnThink(void);
 	virtual void OnClose(void);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
 	virtual void PaintBackground(void);
 
 private:
@@ -42,12 +42,12 @@ private:
 	void SetupControlSettingsForErrorDisplay(const char *settingsFile);
 
 public:
-	vgui::Panel *m_pParent;
-	vgui::ProgressBar *m_pProgress;
-	vgui::ProgressBar *m_pProgress2;
-	vgui::Label *m_pInfoLabel;
-	vgui::Label *m_pTimeRemainingLabel;
-	vgui::Button *m_pCancelButton;
+	vgui2::Panel *m_pParent;
+	vgui2::ProgressBar *m_pProgress;
+	vgui2::ProgressBar *m_pProgress2;
+	vgui2::Label *m_pInfoLabel;
+	vgui2::Label *m_pTimeRemainingLabel;
+	vgui2::Button *m_pCancelButton;
 	static CBitmapImagePanel *m_pLoadingBackground;
 	int m_iRangeMin, m_iRangeMax;
 	bool m_bShowingSecondaryProgress;
@@ -58,7 +58,7 @@ public:
 	float m_flProgressFraction;
 	char m_szBackgroundImage[MAX_PATH];
 	bool m_bShowBackground;
-	vgui::VPANEL m_RestrictPanel;
+	vgui2::VPANEL m_RestrictPanel;
 
 public:
 	CPanelAnimationVar(int, m_iAdditionalIndentX, "AdditionalIndentX", "0");

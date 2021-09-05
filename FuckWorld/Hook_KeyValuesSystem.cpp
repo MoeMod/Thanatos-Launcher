@@ -38,11 +38,11 @@ void CKeyValuesSystem::RegisterSizeofKeyValues(int size)
 
 void *CKeyValuesSystem::AllocKeyValuesMemory(int size)
 {
-	return malloc(size);
+	return ::operator new(size);
 }
 void CKeyValuesSystem::FreeKeyValuesMemory(void *pMem)
 {
-	return free(pMem);
+	return ::operator delete(pMem);
 }
 
 HKeySymbol CKeyValuesSystem::GetSymbolForString(const char *name)

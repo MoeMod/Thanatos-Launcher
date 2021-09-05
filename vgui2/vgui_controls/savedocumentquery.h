@@ -16,7 +16,7 @@
 // Forward declarations
 //-----------------------------------------------------------------------------
 class KeyValues;
-namespace vgui
+namespace vgui2
 {
 class Panel;
 }
@@ -31,7 +31,7 @@ class Panel;
 //		"commandname" - additional command send after saving (SAVEDOC_POSTCOMMAND_AFTER_SAVE)
 //		"OnMarkNotDirty" - when we want to mark the file not dirty
 //-----------------------------------------------------------------------------
-void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand );
+void ShowSaveDocumentQuery( vgui2::Panel *pParent, const char *pFileName, const char *pFileType, int nContext, vgui2::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand );
 
 
 #endif // SAVEDOCUMENTQUERY_H

@@ -7,7 +7,7 @@
 #include "UtlVector.h"
 #include <KeyValues.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 #define PANEL_CMDMENU "cmdmenu"
 
@@ -53,10 +53,10 @@ public:
 	virtual void OnCustomItem(KeyValues *params) {}
 	virtual bool CheckRules(const char *rule, const char *ruledata);
 	virtual void SetVisible(bool state);
-	virtual void SetCloseKey(vgui::KeyCode code) { m_nCloseKey = code; }
+	virtual void SetCloseKey(vgui2::KeyCode code) { m_nCloseKey = code; }
 
 protected:
-	void OnKeyCodeTyped(vgui::KeyCode code);
+	void OnKeyCodeTyped(vgui2::KeyCode code);
 	void OnMessage(const KeyValues *params, VPANEL fromPanel);
 
 protected:
@@ -77,7 +77,7 @@ protected:
 
 	KeyValues *m_MenuKeys;
 
-	CUtlStack<vgui::Menu *> m_pMenuStack;
+	CUtlStack<vgui2::Menu *> m_pMenuStack;
 	CUtlVector<CommandMenuItem> m_MenuItems;
 };
 

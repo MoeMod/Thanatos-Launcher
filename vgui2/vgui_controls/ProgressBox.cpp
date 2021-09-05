@@ -6,6 +6,7 @@
 //=============================================================================//
 
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/ILocalize.h>
 #include <vgui/ISurface.h>
 #include <vgui/ISystem.h>
@@ -24,7 +25,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 #ifndef max
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
@@ -36,19 +37,19 @@ using namespace vgui;
 ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnknownTimeString, Panel *parent) : Frame(parent, NULL, parent ? false : true)
 {	
 	// save off the non-localized title, since we may need to dynamically localize it (on progress updates)
-	const wchar_t *ws = g_pVGuiLocalize->Find(title);
+	const wchar_t *ws = localize()->Find(title);
 	if (ws)
 	{
 		wcsncpy(m_wszTitleString, ws, sizeof(m_wszTitleString) / sizeof(wchar_t));
 	}
 	else
 	{
-		g_pVGuiLocalize->ConvertANSIToUnicode(title, m_wszTitleString, sizeof(m_wszTitleString));
+		localize()->ConvertANSIToUnicode(title, m_wszTitleString, sizeof(m_wszTitleString));
 	}
 
 	m_pMessageLabel = new Label(this, NULL, pszUnknownTimeString);
 
-	ws = g_pVGuiLocalize->Find(text);
+	ws = localize()->Find(text);
 	if (ws)
 	{
 		wcsncpy(m_wcsInfoString, ws, sizeof(m_wcsInfoString) / sizeof(wchar_t));
@@ -58,7 +59,7 @@ ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnk
 		m_wcsInfoString[0] = 0;
 	}
 
-	ws = g_pVGuiLocalize->Find(pszUnknownTimeString);
+	ws = localize()->Find(pszUnknownTimeString);
 	if (ws)
 	{
 		wcsncpy(m_wszUnknownTimeString, ws, sizeof(m_wszUnknownTimeString) / sizeof(wchar_t));
@@ -246,7 +247,7 @@ void ProgressBox::UpdateTitle()
 	{
 		completion[0] = 0;
 	}
-	g_pVGuiLocalize->ConstructString(unicode, sizeof(unicode), m_wszTitleString, 1, completion);
+	localize()->ConstructString(unicode, sizeof(unicode), m_wszTitleString, 1, completion);
 	SetTitle(unicode, true);
 }
 
@@ -262,7 +263,7 @@ void ProgressBox::OnThink()
 		if (ProgressBar::ConstructTimeRemainingString(timeRemaining, sizeof(timeRemaining), m_flFirstProgressUpdate, (float)system()->GetFrameTime(), m_flCurrentProgress, m_flLastProgressUpdate, true))
 		{
 			wchar_t unicode[256];
-			g_pVGuiLocalize->ConstructString(unicode, sizeof(unicode), m_wcsInfoString, 1, timeRemaining);
+			localize()->ConstructString(unicode, sizeof(unicode), m_wcsInfoString, 1, timeRemaining);
 			m_pMessageLabel->SetText(unicode);
 		}
 		else

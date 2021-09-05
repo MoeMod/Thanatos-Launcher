@@ -7,7 +7,8 @@
 
 #include <vgui/IScheme.h>
 #include <vgui/Cursor.h>
-#include <vgui/iinput.h>
+#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 
 #include "Splitter.h"
 
@@ -18,8 +19,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+#ifndef clamp
+#define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
+#endif
 
+using namespace vgui2;
 
 enum
 {
@@ -30,7 +34,7 @@ enum
 //-----------------------------------------------------------------------------
 // Splitter handle
 //-----------------------------------------------------------------------------
-namespace vgui
+namespace vgui2
 {
 
 class SplitterHandle : public Panel
@@ -160,7 +164,7 @@ void SplitterHandle::OnMouseDoublePressed( MouseCode code )
 //-----------------------------------------------------------------------------
 // Returns a panel that chains user configs
 //-----------------------------------------------------------------------------
-namespace vgui
+namespace vgui2
 {
 
 class SplitterChildPanel : public EditablePanel
@@ -191,12 +195,12 @@ public:
 // Splitter panel
 //
 //-----------------------------------------------------------------------------
-vgui::Panel *Splitter_V_Factory()
+vgui2::Panel *Splitter_V_Factory()
 {
 	return new Splitter( NULL, NULL, SPLITTER_MODE_VERTICAL, 1 );
 }
 
-vgui::Panel *Splitter_H_Factory()
+vgui2::Panel *Splitter_H_Factory()
 {
 	return new Splitter( NULL, NULL, SPLITTER_MODE_HORIZONTAL, 1 );
 }

@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/IPanel.h>
 #include <vgui/ILocalize.h>
 #include <vgui/IScheme.h>
@@ -28,7 +29,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 enum
 {
@@ -39,7 +40,7 @@ enum
 	COLUMN_DATA_GAP = 2,
 };
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -612,7 +613,7 @@ private:
 	Color m_OutOfFocusSelectedTextColor;
 	Color m_ArmedBgColor;
 	Color m_SelectionBG2Color;
-	CUtlVector<vgui::TextImage *> m_TextImages;
+	CUtlVector<vgui2::TextImage *> m_TextImages;
 
 	bool m_bSelected;
 	bool m_bOverrideColors;
@@ -623,7 +624,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-SectionedListPanel::SectionedListPanel(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
+SectionedListPanel::SectionedListPanel(vgui2::Panel *parent, const char *name) : BaseClass(parent, name)
 {
 	m_pScrollBar = new ScrollBar(this, "SectionedScrollBar", true);
 	m_pScrollBar->SetVisible(false);
@@ -976,10 +977,10 @@ void SectionedListPanel::RemoveAllSections()
 bool SectionedListPanel::AddColumnToSection(int sectionID, const char *columnName, const char *columnText, int columnFlags, int width, HFont fallbackFont /*= INVALID_FONT*/ )
 {
 	wchar_t wtext[64];
-	wchar_t *pwtext = g_pVGuiLocalize->Find(columnText);
+	wchar_t *pwtext = localize()->Find(columnText);
 	if (!pwtext)
 	{
-		g_pVGuiLocalize->ConvertANSIToUnicode(columnText, wtext, sizeof(wtext));
+		localize()->ConvertANSIToUnicode(columnText, wtext, sizeof(wtext));
 		pwtext = wtext;
 	}
 	return AddColumnToSection(sectionID, columnName, pwtext, columnFlags, width, fallbackFont );
@@ -1601,7 +1602,7 @@ void SectionedListPanel::InvalidateItem(int itemID)
 //-----------------------------------------------------------------------------
 // Purpose: set up a field for editing
 //-----------------------------------------------------------------------------
-void SectionedListPanel::EnterEditMode(int itemID, int column, vgui::Panel *editPanel)
+void SectionedListPanel::EnterEditMode(int itemID, int column, vgui2::Panel *editPanel)
 {
 	m_hEditModePanel = editPanel;
 	m_iEditModeItemID = itemID;

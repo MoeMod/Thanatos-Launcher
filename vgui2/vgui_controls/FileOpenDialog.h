@@ -14,7 +14,7 @@
 
 #include "Frame.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class FileCompletionEdit;		// local
@@ -31,7 +31,7 @@ enum FileOpenDialogType_t
 };
 
 
-class FileOpenDialog : public vgui::Frame
+class FileOpenDialog : public vgui2::Frame
 {
 	DECLARE_CLASS_SIMPLE( FileOpenDialog, Frame );
 
@@ -130,19 +130,19 @@ private:
 	// Creates a new folder
 	void NewFolder( char const *folderName );
 
-	vgui::ComboBox 		*m_pFullPathEdit;
-	vgui::ListPanel		*m_pFileList;
+	vgui2::ComboBox 		*m_pFullPathEdit;
+	vgui2::ListPanel		*m_pFileList;
 	
 	FileCompletionEdit 	*m_pFileNameEdit;
 
-	vgui::ComboBox 		*m_pFileTypeCombo;
-	vgui::Button 		*m_pOpenButton;
-	vgui::Button 		*m_pCancelButton;
-	vgui::Button 		*m_pFolderUpButton;
-	vgui::Button		*m_pNewFolderButton;
-	vgui::Button		*m_pOpenInExplorerButton;
-	vgui::ImagePanel 	*m_pFolderIcon;
-	vgui::Label			*m_pFileTypeLabel;
+	vgui2::ComboBox 		*m_pFileTypeCombo;
+	vgui2::Button 		*m_pOpenButton;
+	vgui2::Button 		*m_pCancelButton;
+	vgui2::Button 		*m_pFolderUpButton;
+	vgui2::Button		*m_pNewFolderButton;
+	vgui2::Button		*m_pOpenInExplorerButton;
+	vgui2::ImagePanel 	*m_pFolderIcon;
+	vgui2::Label			*m_pFileTypeLabel;
 
 	KeyValues			*m_pContextKeyValues;
 
@@ -152,7 +152,7 @@ private:
 	bool m_bFileSelected : 1;
 
 	VPANEL				m_SaveModal;
-	vgui::DHANDLE< vgui::InputDialog >	m_hInputDialog;
+	vgui2::DHANDLE< vgui2::InputDialog >	m_hInputDialog;
 };
 
 } // namespace vgui

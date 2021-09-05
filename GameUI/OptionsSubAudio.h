@@ -18,12 +18,12 @@ class CCvarToggleCheckButton;
 //-----------------------------------------------------------------------------
 // Purpose: Audio Details, Part of OptionsDialog
 //-----------------------------------------------------------------------------
-class COptionsSubAudio : public vgui::PropertyPage
+class COptionsSubAudio : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubAudio, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE( COptionsSubAudio, vgui2::PropertyPage );
 
 public:
-	COptionsSubAudio(vgui::Panel *parent);
+	COptionsSubAudio(vgui2::Panel *parent);
 	~COptionsSubAudio();
 
 	virtual void OnResetData();
@@ -40,7 +40,7 @@ private:
 	CCvarSlider					*m_pMP3Slider;
 	CLabeledCommandComboBox		*m_pSoundQualityCombo;
 
-	typedef vgui::PropertyPage BaseClass;
+	typedef vgui2::PropertyPage BaseClass;
 };
 
 

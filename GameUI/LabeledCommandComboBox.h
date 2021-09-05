@@ -9,12 +9,12 @@
 #include <vgui_controls/Panel.h>
 #include "UtlVector.h"
 
-class CLabeledCommandComboBox : public vgui::ComboBox
+class CLabeledCommandComboBox : public vgui2::ComboBox
 {
-	DECLARE_CLASS_SIMPLE(CLabeledCommandComboBox, vgui::ComboBox);
+	DECLARE_CLASS_SIMPLE(CLabeledCommandComboBox, vgui2::ComboBox);
 
 public:
-	CLabeledCommandComboBox(vgui::Panel *parent, const char *panelName);
+	CLabeledCommandComboBox(vgui2::Panel *parent, const char *panelName);
 	~CLabeledCommandComboBox(void);
 
 public:

@@ -16,7 +16,7 @@
 #include <vgui_controls/PropertyPage.h>
 #include "igameuifuncs.h"
 
-namespace vgui
+namespace vgui2
 {
 class CheckButton;
 class ComboBox;
@@ -28,19 +28,19 @@ class CCvarToggleCheckButton;
 //-----------------------------------------------------------------------------
 // Purpose: Video Details, Part of OptionsDialog
 //-----------------------------------------------------------------------------
-class COptionsSubVideo : public vgui::PropertyPage
+class COptionsSubVideo : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubVideo, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE( COptionsSubVideo, vgui2::PropertyPage );
 
 public:
-	COptionsSubVideo(vgui::Panel *parent);
+	COptionsSubVideo(vgui2::Panel *parent);
 	~COptionsSubVideo();
 
 	virtual void OnResetData();
 	virtual void OnApplyChanges();
 
 private:
-	typedef vgui::PropertyPage BaseClass;
+	typedef vgui2::PropertyPage BaseClass;
 
 	struct CVidSettings
 	{
@@ -69,16 +69,16 @@ private:
     void        SetRendererComboItem();
 	void		PrepareResolutionList( void );
 
-	vgui::ComboBox *m_pMode;
-	vgui::ComboBox *m_pRenderer;
-	vgui::ComboBox *m_pColorDepth;
-	vgui::CheckButton *m_pWindowed;
-	vgui::ComboBox *m_pAspectRatio;
+	vgui2::ComboBox *m_pMode;
+	vgui2::ComboBox *m_pRenderer;
+	vgui2::ComboBox *m_pColorDepth;
+	vgui2::CheckButton *m_pWindowed;
+	vgui2::ComboBox *m_pAspectRatio;
 	CCvarToggleCheckButton *m_pDetailTextures;
 	CCvarToggleCheckButton *m_pVsync;
-	vgui::CheckButton *m_pHDModels;
-	vgui::CheckButton *m_pAddonsFolder;
-	vgui::CheckButton *m_pLowVideoDetail;
+	vgui2::CheckButton *m_pHDModels;
+	vgui2::CheckButton *m_pAddonsFolder;
+	vgui2::CheckButton *m_pLowVideoDetail;
 
 	CCvarSlider		*m_pBrightnessSlider;
 	CCvarSlider		*m_pGammaSlider;

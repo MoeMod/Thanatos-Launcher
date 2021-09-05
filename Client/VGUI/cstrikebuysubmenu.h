@@ -9,7 +9,6 @@
 class BuyPresetEditPanel;
 class BuyPresetButton;
 
-using namespace vgui;
 
 class CCSBuySubMenu : public CBuySubMenu
 {
@@ -17,7 +16,7 @@ private:
 	DECLARE_CLASS_SIMPLE(CCSBuySubMenu, CBuySubMenu);
 
 public:
-	CCSBuySubMenu(vgui::Panel *parent, const char *name = "BuySubMenu");
+	CCSBuySubMenu(vgui2::Panel *parent, const char *name = "BuySubMenu");
 
 protected:
 	virtual void OnCommand(const char *command);
@@ -40,7 +39,7 @@ public:
 private:
 	BuyPresetButton *m_pBuyPresetButtons[NUM_BUY_PRESET_BUTTONS];
 	BuyPresetEditPanel *m_pLoadout;
-	vgui::Label *m_pMoney;
+	vgui2::Label *m_pMoney;
 	int m_lastMoney;
 };
 

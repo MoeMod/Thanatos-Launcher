@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
-//
-// Purpose: 
-//
-// $NoKeywords: $
-//=============================================================================
-
 #ifndef CREATEMULTIPLAYERGAMEGAMEPLAYPAGE_H
 #define CREATEMULTIPLAYERGAMEGAMEPLAYPAGE_H
 #ifdef _WIN32
@@ -20,10 +13,10 @@ class mpcontrol_t;
 //-----------------------------------------------------------------------------
 // Purpose: server options page of the create game server dialog
 //-----------------------------------------------------------------------------
-class CCreateMultiplayerGameGameplayPage : public vgui::PropertyPage
+class CCreateMultiplayerGameGameplayPage : public vgui2::PropertyPage
 {
 public:
-	CCreateMultiplayerGameGameplayPage(vgui::Panel *parent, const char *name);
+	CCreateMultiplayerGameGameplayPage(vgui2::Panel *parent, const char *name);
 	~CCreateMultiplayerGameGameplayPage();
 
 	// returns currently entered information about the server

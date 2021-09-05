@@ -7,14 +7,14 @@
 
 #include <vgui_controls/Menu.h>
 
-class CServerContextMenu : public vgui::Menu
+class CServerContextMenu : public vgui2::Menu
 {
 public:
-	CServerContextMenu(vgui::Panel *parent);
+	CServerContextMenu(vgui2::Panel *parent);
 	~CServerContextMenu();
 
 public:
-	void ShowMenu(vgui::Panel *target, unsigned int serverID, bool showConnect, bool showViewGameInfo, bool showRefresh, bool showAddToFavorites);
+	void ShowMenu(vgui2::Panel *target, unsigned int serverID, bool showConnect, bool showViewGameInfo, bool showRefresh, bool showAddToFavorites);
 };
 
 #endif

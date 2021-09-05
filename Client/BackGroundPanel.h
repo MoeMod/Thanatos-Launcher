@@ -1,11 +1,11 @@
 #include <vgui_controls/Frame.h>
 
-class CBackGroundPanel : public vgui::Frame
+class CBackGroundPanel : public vgui2::Frame
 {
-	typedef vgui::Frame BaseClass;
+	typedef vgui2::Frame BaseClass;
 
 public:
-	CBackGroundPanel(vgui::Panel *parent) : BaseClass(parent, "ViewPortBackGround")
+	CBackGroundPanel(vgui2::Panel *parent) : BaseClass(parent, "ViewPortBackGround")
 	{
 		SetScheme("ClientScheme");
 
@@ -18,7 +18,7 @@ public:
 	}
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		BaseClass::ApplySchemeSettings(pScheme);
 
@@ -30,11 +30,11 @@ public:
 		BaseClass::PerformLayout();
 	}
 
-	virtual void OnMousePressed(vgui::MouseCode code)
+	virtual void OnMousePressed(vgui2::MouseCode code)
 	{
 	}
 
-	virtual vgui::VPANEL IsWithinTraverse(int x, int y, bool traversePopups)
+	virtual vgui2::VPANEL IsWithinTraverse(int x, int y, bool traversePopups)
 	{
 		return NULL;
 	}

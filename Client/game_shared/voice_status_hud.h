@@ -36,7 +36,7 @@ public:
 		m_pLabel->SetParent( gViewPortInterface->GetViewPortPanel() );
 		m_pLabel->SetProportional(true);
 		m_pLabel->SetScheme("ClientScheme");
-		vgui::SETUP_PANEL(m_pLabel);
+		vgui2::SETUP_PANEL(m_pLabel);
 		m_clientindex = -1; // -1 means unassigned
 		m_locationString = NULL;
 		m_playerName = NULL;
@@ -73,15 +73,15 @@ private:
 	// Purpose: inner class that overrides ApplySchemeSettings() for the label so an image can be loaded, also saves colors away
 	//   so ApplySchemeSettings() doesn't override them
 	//-----------------------------------------------------------------------------
-	class VoiceVGUILabel : public vgui::Label
+	class VoiceVGUILabel : public vgui2::Label
 	{
 	public:
-		VoiceVGUILabel( vgui::Panel *parent, const char *name, const char *text): Label(parent, name, text) {}
+		VoiceVGUILabel( vgui2::Panel *parent, const char *name, const char *text): Label(parent, name, text) {}
 
 
 	private:
 		// VGUI2 overrides
-		virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+		virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 		{
 			Label::ApplySchemeSettings(pScheme);
 			SetTextImageIndex(1);
@@ -91,7 +91,7 @@ private:
 			SetImagePreOffset( 1, 3); // shift the text over a little
 #endif
 			// you need to load the image here, after Label::ApplySchemeSettings()(as applysettings nulls out all existing images)
-			SetImageAtIndex( 0, vgui::scheme()->GetImage( "gfx/vgui/speaker4", false), 1 );
+			SetImageAtIndex( 0, vgui2::scheme()->GetImage( "gfx/vgui/speaker4", false), 1 );
 		}
 
 	};
@@ -154,7 +154,7 @@ private:
 	// Labels telling who is speaking.
 	CUtlVector<CVoiceLabel *> m_Labels;
 
-	vgui::ImagePanel *m_pLocalPlayerTalkIcon;
+	vgui2::ImagePanel *m_pLocalPlayerTalkIcon;
 };
 
 

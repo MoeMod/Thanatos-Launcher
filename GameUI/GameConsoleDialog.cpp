@@ -10,9 +10,11 @@
 #include "IBaseUI.h"
 
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/IScheme.h>
 #include <vgui/IVGui.h>
 #include <vgui/ISurface.h>
+#include <vgui/ILocalize.h>
 #include <KeyValues.h>
 
 #include <vgui_controls/Button.h>
@@ -29,8 +31,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
-
 extern IBaseUI *baseuifuncs;
 
 
@@ -40,22 +40,22 @@ extern IBaseUI *baseuifuncs;
 //-----------------------------------------------------------------------------
 // Purpose: forwards tab key presses up from the text entry so we can do autocomplete
 //-----------------------------------------------------------------------------
-class TabCatchingTextEntry : public TextEntry
+class TabCatchingTextEntry : public vgui2::TextEntry
 {
 public:
-	TabCatchingTextEntry(Panel *parent, const char *name, VPANEL comp) : TextEntry(parent, name), m_pCompletionList( comp )
+	TabCatchingTextEntry(Panel *parent, const char *name, vgui2::VPANEL comp) : TextEntry(parent, name), m_pCompletionList( comp )
 	{
 		SetAllowNonAsciiCharacters( true );
 	}
 
-	virtual void OnKeyCodeTyped(KeyCode code)
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code)
 	{
-		if ( code == KEY_PAD_ENTER )
+		if ( code == vgui2::KeyCode::KEY_PAD_ENTER )
 		{
-			code = KEY_ENTER;
+			code = vgui2::KeyCode::KEY_ENTER;
 		}
 
-		if ( code != KEY_DOWN && code != KEY_UP && code != KEY_ENTER )
+		if ( code != vgui2::KeyCode::KEY_DOWN && code != vgui2::KeyCode::KEY_UP && code != vgui2::KeyCode::KEY_ENTER )
 		{
 			GetParent()->OnKeyCodeTyped(code);
 		}
@@ -78,18 +78,18 @@ public:
 
 	virtual void OnKillFocus()
 	{
-		if ( input()->GetFocus() != m_pCompletionList ) // if its not the completion window trying to steal our focus
+		if (vgui2::input()->GetFocus() != m_pCompletionList ) // if its not the completion window trying to steal our focus
 		{
 			PostMessage(GetParent(), new KeyValues("CloseCompletionList"));
 		}
 	}
 
 private:
-	VPANEL m_pCompletionList;
+	vgui2::VPANEL m_pCompletionList;
 	bool m_bIgnoreKeyTyped;
 };
 
-class CNoKeyboardInputRichText : public RichText
+class CNoKeyboardInputRichText : public vgui2::RichText
 {
 public:
 	CNoKeyboardInputRichText(Panel *parent, const char *name, Panel *pFocusPanel) : RichText(parent, name)
@@ -97,17 +97,17 @@ public:
 		m_pFocusPanel = pFocusPanel;
 	}
 
-	virtual void OnRequestFocus(VPANEL subFocus, VPANEL defaultPanel)
+	virtual void OnRequestFocus(vgui2::VPANEL subFocus, vgui2::VPANEL defaultPanel)
 	{
 		m_pFocusPanel->RequestFocus();
 	}
 
-	virtual void OnKeyCodeTyped(KeyCode code)
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code)
 	{
 		RichText::OnKeyCodeTyped( code );
 	}
 	
-	virtual void ApplySchemeSettings(IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		RichText::ApplySchemeSettings( pScheme );
 
@@ -215,9 +215,9 @@ CGameConsoleDialog::CGameConsoleDialog() : BaseClass(NULL, "GameConsole", false)
 	SetTitle("#GameUI_Console", true);
 
 	// create controls
-	m_pSubmit = new Button(this, "ConsoleSubmit", "#GameUI_Submit");
+	m_pSubmit = new vgui2::Button(this, "ConsoleSubmit", "#GameUI_Submit");
 	m_pSubmit->SetCommand("submit");
-	m_pCompletionList = new Menu(this, "CompletionList");
+	m_pCompletionList = new vgui2::Menu(this, "CompletionList");
 	m_pCompletionList->MakePopup();
 	m_pCompletionList->SetVisible(false);
 
@@ -309,7 +309,7 @@ void CGameConsoleDialog::RebuildCompletionList(const char *text)
 		return;
 
 	// look through the command list for all matches
-	unsigned int cmd = engine->GetFirstCmdFunctionHandle();
+	auto cmd = engine->GetFirstCmdFunctionHandle();
 	while (cmd)
 	{
 		if (!strnicmp(text, engine->GetCmdFunctionName(cmd), len))
@@ -516,20 +516,20 @@ void CGameConsoleDialog::OnCommand(const char *command)
 //-----------------------------------------------------------------------------
 // Purpose: swallows tab key pressed
 //-----------------------------------------------------------------------------
-void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
+void CGameConsoleDialog::OnKeyCodeTyped(vgui2::KeyCode code)
 {
 	BaseClass::OnKeyCodeTyped(code);
 
-	KeyCode consolecode = gameuifuncs->GetVGUI2KeyCodeForBind( "toggleconsole" );
-	bool bShiftPressed = input()->IsKeyDown( KEY_LSHIFT ) || input()->IsKeyDown( KEY_RSHIFT );
+	vgui2::KeyCode consolecode = gameuifuncs->GetVGUI2KeyCodeForBind( "toggleconsole" );
+	bool bShiftPressed = vgui2::input()->IsKeyDown(vgui2::KEY_LSHIFT ) || vgui2::input()->IsKeyDown(vgui2::KEY_RSHIFT );
 
 	// check for processing
-	if (input()->GetFocus() == m_pEntry->GetVPanel())
+	if (vgui2::input()->GetFocus() == m_pEntry->GetVPanel())
 	{
-		if (code == KEY_TAB)
+		if (code == vgui2::KEY_TAB)
 		{
 			bool reverse = false;
-			if (input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT))
+			if (vgui2::input()->IsKeyDown(vgui2::KEY_LSHIFT) || vgui2::input()->IsKeyDown(vgui2::KEY_RSHIFT))
 			{
 				reverse = true;
 			}
@@ -538,7 +538,7 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 			OnAutoComplete(reverse);
 			m_pEntry->RequestFocus();
 		}
-		else if (code == KEY_DOWN)
+		else if (code == vgui2::KEY_DOWN)
 		{
 			OnAutoComplete(false);
 		//	UpdateCompletionListPosition();
@@ -546,7 +546,7 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 
 			m_pEntry->RequestFocus();
 		}
-		else if (code == KEY_UP)
+		else if (code == vgui2::KEY_UP)
 		{
 			OnAutoComplete(true);
 			m_pEntry->RequestFocus();
@@ -555,17 +555,17 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 
 	m_pEntry->GetText( m_szPartialText, sizeof( m_szPartialText ) );
 
-	bool bCtrlDown = input()->IsKeyDown( KEY_LCONTROL ) || input()->IsKeyDown( KEY_RCONTROL );
-	bool bWinDown = input()->IsKeyDown( KEY_LWIN ) || input()->IsKeyDown( KEY_RWIN );
+	bool bCtrlDown = vgui2::input()->IsKeyDown( vgui2::KEY_LCONTROL ) || vgui2::input()->IsKeyDown( vgui2::KEY_RCONTROL );
+	bool bWinDown = vgui2::input()->IsKeyDown( vgui2::KEY_LWIN ) || vgui2::input()->IsKeyDown( vgui2::KEY_RWIN );
 
 	if ( strlen( m_szPartialText ) == 0 && ( bCtrlDown/* || ( bWinDown && IsOSX() )*/ ) )
 	{
-		if ( code == KEY_X || code == KEY_C )
+		if ( code == vgui2::KEY_X || code == vgui2::KeyCode::KEY_C )
 		{
 			m_pHistory->CopySelected();
 		}
 
-		if ( code == KEY_A )
+		if ( code == vgui2::KEY_A )
 		{
 			m_pHistory->SelectAllText();
 		}
@@ -573,7 +573,7 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 
 	if ( !bShiftPressed && code == consolecode )
 	{
-		if ( consolecode != KEY_NONE )
+		if ( consolecode != vgui2::KeyCode::KEY_NONE )
 		{
 			m_pEntry->SetText( "" );
 			m_pEntry->IgnoreNextTextInput( true );
@@ -583,7 +583,7 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 			{
 				if ( LoadingDialog() )
 				{
-					surface()->RestrictPaintToSinglePanel( LoadingDialog()->GetVPanel() );
+					vgui2::surface()->RestrictPaintToSinglePanel( LoadingDialog()->GetVPanel() );
 				}
 				else
 				{
@@ -605,7 +605,7 @@ void CGameConsoleDialog::PerformLayout()
 	// setup tab ordering
 	GetFocusNavGroup().SetDefaultButton(m_pSubmit);
 
-	IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
+	vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme( GetScheme() );
 	m_pEntry->SetBorder(pScheme->GetBorder("DepressedButtonBorder"));
 	m_pHistory->SetBorder(pScheme->GetBorder("DepressedButtonBorder"));
 
@@ -656,7 +656,7 @@ void CGameConsoleDialog::CloseCompletionList()
 //-----------------------------------------------------------------------------
 // Purpose: sets up colors
 //-----------------------------------------------------------------------------
-void CGameConsoleDialog::ApplySchemeSettings(IScheme *pScheme)
+void CGameConsoleDialog::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -780,7 +780,7 @@ void CGameConsoleDialog::DumpConsoleTextToFile()
 	for ( int i = 0 ; i < CONDUMP_FILES_MAX_NUM ; ++i )
 	{
 		_snprintf( szfile, sizeof(szfile), "condump%03d.txt", i );
-		if ( !g_pFullFileSystem->FileExists(szfile) )
+		if ( !vgui2::filesystem()->FileExists(szfile) )
 		{
 			found = true;
 			break;
@@ -793,7 +793,7 @@ void CGameConsoleDialog::DumpConsoleTextToFile()
 		return;
 	}
 
-	handle = g_pFullFileSystem->Open(szfile, "wb");
+	handle = vgui2::filesystem()->Open(szfile, "wb");
 	if ( handle != FILESYSTEM_INVALID_HANDLE )
 	{
 		int pos = 0;
@@ -809,7 +809,7 @@ void CGameConsoleDialog::DumpConsoleTextToFile()
 
 			// convert to ansi
 			char ansi[512];
-			localize()->ConvertUnicodeToANSI(buf, ansi, sizeof(ansi));
+			vgui2::localize()->ConvertUnicodeToANSI(buf, ansi, sizeof(ansi));
 
 			// write to disk
 			int len = strlen(ansi);
@@ -819,14 +819,14 @@ void CGameConsoleDialog::DumpConsoleTextToFile()
 				if (ansi[i] == '\n')
 				{
 					char ret = '\r';
-					g_pFullFileSystem->Write( &ret, 1, handle );
+					vgui2::filesystem()->Write( &ret, 1, handle );
 				}
 
-				g_pFullFileSystem->Write( ansi + i, 1, handle );
+				vgui2::filesystem()->Write( ansi + i, 1, handle );
 			}
 		}
 
-		g_pFullFileSystem->Close( handle );
+		vgui2::filesystem()->Close( handle );
 
 		Print( "console dumped to " );
 		Print( szfile );

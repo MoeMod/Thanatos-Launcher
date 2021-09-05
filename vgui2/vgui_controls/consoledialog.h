@@ -11,7 +11,7 @@
 #include "EditablePanel.h"
 #include "Frame.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class CHistoryItem
@@ -33,9 +33,9 @@ private:
 	bool		m_bHasExtra;
 };
 
-class CConsolePanel : public vgui::EditablePanel
+class CConsolePanel : public vgui2::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CConsolePanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE( CConsolePanel, EditablePanel );
 
 public:
 	CConsolePanel( Panel *pParent, const char *pName, bool bStatusVersion = false );
@@ -65,7 +65,7 @@ private:
 	public:
 		CompletionItem( void );
 		CompletionItem( const CompletionItem& src );
-		CompletionItem& CompletionItem::operator =( const CompletionItem& src );
+		CompletionItem& operator =( const CompletionItem& src );
 		~CompletionItem( void );
 		const char *GetItemText( void );
 		const char *GetCommand( void ) const;
@@ -86,15 +86,15 @@ protected:
 	void AddToHistory( const char *commandText, const char *extraText );
 
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void OnCommand(const char *command);
-	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code);
 	virtual void OnThink();
 
-	vgui::RichText *m_pHistory;
-	vgui::TextEntry *m_pEntry;
-	vgui::Button *m_pSubmit;
-	vgui::Menu *m_pCompletionList;
+	vgui2::RichText *m_pHistory;
+	vgui2::TextEntry *m_pEntry;
+	vgui2::Button *m_pSubmit;
+	vgui2::Menu *m_pCompletionList;
 	Color m_PrintColor;
 	Color m_DPrintColor;
 
@@ -112,12 +112,12 @@ protected:
 };
 
 
-class CConsoleDialog : public vgui::Frame
+class CConsoleDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE( CConsoleDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE( CConsoleDialog, Frame );
 
 public:
-	CConsoleDialog( vgui::Panel *pParent, const char *pName, bool bStatusVersion );
+	CConsoleDialog( vgui2::Panel *pParent, const char *pName, bool bStatusVersion );
 
 	virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
 	virtual void Close();

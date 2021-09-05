@@ -87,12 +87,12 @@ enum EDialogType
 //-----------------------------------------------------------------------------
 // Purpose: Simple modal dialog box for Xbox 360 warnings and messages
 //-----------------------------------------------------------------------------
-class CMessageDialog : public vgui::Frame
+class CMessageDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMessageDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CMessageDialog, Frame ); 
 
 public:
-	CMessageDialog( vgui::Panel *parent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui::Panel *pParent, bool bShowActivity );
+	CMessageDialog( vgui2::Panel *parent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui2::Panel *pParent, bool bShowActivity );
 	~CMessageDialog();
 
 	enum
@@ -105,14 +105,14 @@ public:
 
 	struct ButtonLabel_s
 	{
-		vgui::Label *pIcon;
-		vgui::Label *pText;
+		vgui2::Label *pIcon;
+		vgui2::Label *pText;
 		int			nWide;
 		bool		bCreated;
 	};
 
-	virtual void		OnKeyCodePressed( vgui::KeyCode code );
-	virtual void		ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void		OnKeyCodePressed( vgui2::KeyCode code );
+	virtual void		ApplySchemeSettings( vgui2::IScheme *pScheme );
 	virtual void		ApplySettings( KeyValues *inResourceData );
 	virtual void		PaintBackground();
 	uint				GetType( void );
@@ -122,16 +122,16 @@ private:
 	void				CreateButtonLabel( ButtonLabel_s *pButton, const char *pIcon, const char *pText );
 	void				DoCommand( int button );
 
-	vgui::Panel			*m_pCreator;
+	vgui2::Panel			*m_pCreator;
 
-	vgui::Label			*m_pTitle;
-	vgui::Label			*m_pMsg;
-	vgui::ImagePanel	*m_pBackground;
+	vgui2::Label			*m_pTitle;
+	vgui2::Label			*m_pMsg;
+	vgui2::ImagePanel	*m_pBackground;
 
-	vgui::AnimatingImagePanel	*m_pAnimatingPanel;
+	vgui2::AnimatingImagePanel	*m_pAnimatingPanel;
 
-	vgui::HFont			m_hButtonFont;
-	vgui::HFont			m_hTextFont;
+	vgui2::HFont			m_hButtonFont;
+	vgui2::HFont			m_hTextFont;
 	uint				m_nType;
 	Color				m_ButtonTextColor;
 	int					m_ButtonPressed;

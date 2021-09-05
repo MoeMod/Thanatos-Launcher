@@ -3,7 +3,7 @@
 #include "BuySubMenu.h"
 #include "mouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CBuyMenu::CBuyMenu(void) : WizardPanel(NULL, PANEL_BUY)
 {

@@ -12,18 +12,18 @@ class CKeyToggleCheckButton;
 class CCvarToggleCheckButton;
 class CCvarSlider;
 
-namespace vgui
+namespace vgui2
 {
 	class Label;
 	class Panel;
 }
 
-class COptionsSubMouse : public vgui::PropertyPage
+class COptionsSubMouse : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE(COptionsSubMouse, vgui::PropertyPage);
+	DECLARE_CLASS_SIMPLE(COptionsSubMouse, vgui2::PropertyPage);
 
 public:
-	COptionsSubMouse(vgui::Panel *parent);
+	COptionsSubMouse(vgui2::Panel *parent);
 	~COptionsSubMouse(void);
 
 public:
@@ -32,7 +32,7 @@ public:
 	virtual void OnApplyChanges(void);
 
 protected:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 private:
 	MESSAGE_FUNC_PTR(OnControlModified, "ControlModified", panel);
@@ -54,7 +54,7 @@ private:
 	CKeyToggleCheckButton *m_pJoystickLookCheckBox;
 
 	CCvarSlider *m_pMouseSensitivitySlider;
-	vgui::TextEntry *m_pMouseSensitivityLabel;
+	vgui2::TextEntry *m_pMouseSensitivityLabel;
 
 	CCvarToggleCheckButton *m_pAutoAimCheckBox;
 };

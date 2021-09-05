@@ -16,10 +16,10 @@
 #define TYPE_SPECTATORS 3
 #define TYPE_BLANK 4
 
-class CClientScoreBoardDialog : public vgui::Frame, public CViewPortPanel
+class CClientScoreBoardDialog : public vgui2::Frame, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CClientScoreBoardDialog, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CClientScoreBoardDialog, vgui2::Frame);
 
 protected:
 	enum { NAME_WIDTH = 160, SCORE_WIDTH = 60, DEATH_WIDTH = 60, PING_WIDTH = 80, VOICE_WIDTH = 0, FRIENDS_WIDTH = 0 };
@@ -61,11 +61,11 @@ protected:
 	virtual int GetAdditionalHeight(void) { return 0; }
 
 protected:
-	static bool StaticPlayerSortFunc(vgui::SectionedListPanel *list, int itemID1, int itemID2);
+	static bool StaticPlayerSortFunc(vgui2::SectionedListPanel *list, int itemID1, int itemID2);
 
 protected:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	virtual void PostApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
+	virtual void PostApplySchemeSettings(vgui2::IScheme *pScheme);
 
 protected:
 	int FindItemIDForPlayerIndex(int playerIndex);
@@ -75,7 +75,7 @@ protected:
 protected:
 	int m_iNumTeams;
 
-	vgui::SectionedListPanel *m_pPlayerList;
+	vgui2::SectionedListPanel *m_pPlayerList;
 	int m_iSectionId;
 
 	int s_VoiceImage[5];
@@ -83,7 +83,7 @@ protected:
 	int m_HLTVSpectators;
 	float m_fNextUpdateTime;
 
-	vgui::ImageList *m_pImageList;
+	vgui2::ImageList *m_pImageList;
 	int m_iImageAvatars[32 + 1];
 	CUtlMap<int, int> m_mapAvatarsToImageList;
 
@@ -98,7 +98,7 @@ protected:
 private:
 	int m_iPlayerIndexSymbol;
 	int m_iDesiredHeight;
-	vgui::KeyCode m_nCloseKey;
+	vgui2::KeyCode m_nCloseKey;
 
 private:
 	void FillScoreBoard(void);

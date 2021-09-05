@@ -5,18 +5,32 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#include "vgui_controls/pch_vgui_controls.h"
+#include <tier1/KeyValues.h>
+
+#include <vgui/IPanel.h>
+#include <vgui/IInputInternal.h>
+#include <vgui/ISurface.h>
+#include <vgui/IVGUI.h>
+
+#include "Controls.h"
+#include "MenuItem.h"
+#include "MenuButton.h"
+#include "Menu.h"
+#include "TextImage.h"
+#include "ScrollBar.h"
 
 // memdbgon must be the last include file in a .cpp file
 #include "tier0/memdbgon.h"
 #define MENU_SEPARATOR_HEIGHT 3
 
-using namespace vgui;
+#include "wctype.h"
+
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: divider line in a menu
 //-----------------------------------------------------------------------------
-class vgui::MenuSeparator : public Panel
+class vgui2::MenuSeparator : public Panel
 {
 public:
 	DECLARE_CLASS_SIMPLE(MenuSeparator, Panel);
@@ -74,6 +88,7 @@ Menu::Menu(Panel *parent, const char *panelName) : Panel(parent, panelName)
 
 	m_bUseFallbackFont = false;
 	m_hFallbackItemFont = INVALID_FONT;
+	m_bImageBackground = false;
 
 	if (IsProportional())
 	{
@@ -1454,7 +1469,7 @@ void Menu::OnKillFocus()
 
 }
 
-namespace vgui
+namespace vgui2
 {
 
 	class CMenuManager
@@ -1631,11 +1646,11 @@ namespace vgui
 
 }  // end namespace vgui
 
-//-----------------------------------------------------------------------------
-// Purpose: Static method called on mouse released to see if Menu objects should be aborted
-// Input  : *other - 
-//			code - 
-//-----------------------------------------------------------------------------
+   //-----------------------------------------------------------------------------
+   // Purpose: Static method called on mouse released to see if Menu objects should be aborted
+   // Input  : *other - 
+   //			code - 
+   //-----------------------------------------------------------------------------
 void Menu::OnInternalMousePressed(Panel *other, MouseCode code)
 {
 	g_MenuMgr.OnInternalMousePressed(other, code);
@@ -1679,10 +1694,26 @@ void Menu::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetFgColor(GetSchemeColor("Menu.TextColor", pScheme));
-	SetBgColor(GetSchemeColor("Menu.BgColor", pScheme));
+	SetFgColor(GetSchemeColor("Menu.TextColor", GetSchemeColor("Menu/FgColor", Color(255, 255, 255, 155), pScheme), pScheme));
+	SetBgColor(GetSchemeColor("Menu.BgColor", GetSchemeColor("Menu/BgColor", Color(255, 255, 255, 155), pScheme), pScheme));
 
-	_borderDark = pScheme->GetColor("BorderDark", Color(255, 255, 255, 0));
+	_borderDark = GetSchemeColor("Border.Dark", GetSchemeColor("BorderDark", Color(255, 255, 255, 0), pScheme), pScheme);
+
+	const char *resourceString = pScheme->GetResourceString("Menu/TopLeft");
+
+	if (resourceString[0])
+	{
+		m_bImageBackground = true;
+		m_pTopBackground[0] = scheme()->GetImage(resourceString, true);
+		m_pTopBackground[1] = scheme()->GetImage(pScheme->GetResourceString("Menu/TopCenter"), true);
+		m_pTopBackground[2] = scheme()->GetImage(pScheme->GetResourceString("Menu/TopRight"), true);
+		m_pCenterBackground[0] = scheme()->GetImage(pScheme->GetResourceString("Menu/MiddleLeft"), true);
+		m_pCenterBackground[1] = scheme()->GetImage(pScheme->GetResourceString("Menu/MiddleCenter"), true);
+		m_pCenterBackground[2] = scheme()->GetImage(pScheme->GetResourceString("Menu/MiddleRight"), true);
+		m_pBottomBackground[0] = scheme()->GetImage(pScheme->GetResourceString("Menu/BottomLeft"), true);
+		m_pBottomBackground[1] = scheme()->GetImage(pScheme->GetResourceString("Menu/BottomCenter"), true);
+		m_pBottomBackground[2] = scheme()->GetImage(pScheme->GetResourceString("Menu/BottomRight"), true);
+	}
 
 	FOR_EACH_LL(m_MenuItems, i)
 	{
@@ -2010,7 +2041,7 @@ void Menu::OnSliderMoved()
 {
 	CloseOtherMenus(NULL); // close any cascading menus
 
-	// Invalidate so we redraw the menu!
+						   // Invalidate so we redraw the menu!
 	InvalidateLayout();
 	Repaint();
 }
@@ -2469,13 +2500,54 @@ void Menu::SetUseFallbackFont(bool bState, HFont hFallback)
 //-----------------------------------------------------------------------------
 void Menu::Validate(CValidator &validator, char *pchName)
 {
-	validator.Push("vgui::Menu", this, pchName);
+	validator.Push("vgui2::Menu", this, pchName);
 
 	m_MenuItems.Validate(validator, "m_MenuItems");
 	m_SortedItems.Validate(validator, "m_SortedItems");
 
-	BaseClass::Validate(validator, "vgui::Menu");
+	BaseClass::Validate(validator, "vgui2::Menu");
 
 	validator.Pop();
 }
 #endif // DBGFLAG_VALIDATE
+
+void Menu::PaintBackground()
+{
+	if (!m_bImageBackground)
+		return BaseClass::PaintBackground();
+
+	int wide, tall;
+	GetSize(wide, tall);
+
+	const int iOffset = 0;
+
+	m_pTopBackground[0]->SetPos(0, 0);
+	m_pTopBackground[0]->SetSize(7, 7);
+	m_pTopBackground[0]->Paint();
+	m_pTopBackground[1]->SetPos(7, 0);
+	m_pTopBackground[1]->SetSize(wide - 14 - iOffset, 7);
+	m_pTopBackground[1]->Paint();
+	m_pTopBackground[2]->SetPos(wide - 7 - iOffset, 0);
+	m_pTopBackground[2]->SetSize(7, 7);
+	m_pTopBackground[2]->Paint();
+
+	m_pCenterBackground[0]->SetPos(0, 7);
+	m_pCenterBackground[0]->SetSize(7, tall - 14);
+	m_pCenterBackground[0]->Paint();
+	m_pCenterBackground[1]->SetPos(7, 7);
+	m_pCenterBackground[1]->SetSize(wide - 14 - iOffset, tall - 14);
+	m_pCenterBackground[1]->Paint();
+	m_pCenterBackground[2]->SetPos(wide - 7 - iOffset, 7);
+	m_pCenterBackground[2]->SetSize(7, tall - 14);
+	m_pCenterBackground[2]->Paint();
+
+	m_pBottomBackground[0]->SetPos(0, tall - 7);
+	m_pBottomBackground[0]->SetSize(7, 7);
+	m_pBottomBackground[0]->Paint();
+	m_pBottomBackground[1]->SetPos(7, tall - 7);
+	m_pBottomBackground[1]->SetSize(wide - 14 - iOffset, 7);
+	m_pBottomBackground[1]->Paint();
+	m_pBottomBackground[2]->SetPos(wide - 7, tall - 7);
+	m_pBottomBackground[2]->SetSize(7, 7);
+	m_pBottomBackground[2]->Paint();
+}

@@ -10,11 +10,11 @@
 #pragma once
 #endif
 
-#include "Panel.h"
+#include "vgui/KeyCode.h"
 
-#define BUTTON_CODE_NONE ((vgui::KeyCode)0)
+#define BUTTON_CODE_NONE ((vgui2::KeyCode)0)
 
-namespace vgui
+namespace vgui2
 {
 
 enum KEYREPEAT_ALIASES
@@ -40,13 +40,13 @@ public:
 	}
 
 	void		Reset( void ) { memset( m_bAliasDown, 0, sizeof(bool) * FM_NUM_KEYREPEAT_ALIASES ); m_bHaveKeyDown = false; }
-	void		KeyDown( vgui::KeyCode code );
-	void		KeyUp( vgui::KeyCode code );
-	vgui::KeyCode	KeyRepeated( void );
-	void		SetKeyRepeatTime( vgui::KeyCode code, float flRepeat );
+	void		KeyDown( vgui2::KeyCode code );
+	void		KeyUp( vgui2::KeyCode code );
+	vgui2::KeyCode	KeyRepeated( void );
+	void		SetKeyRepeatTime( vgui2::KeyCode code, float flRepeat );
 
 private:
-	int			GetIndexForCode( vgui::KeyCode code )
+	int			GetIndexForCode( vgui2::KeyCode code )
 	{ 
 		return -1;
 	}

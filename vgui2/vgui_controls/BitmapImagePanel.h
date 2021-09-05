@@ -13,12 +13,13 @@
 
 #include "Label.h"
 
-namespace vgui {
+namespace vgui2 
+{
 
-class CBitmapImagePanel : public vgui::Panel
+class CBitmapImagePanel : public Panel
 {
 public:
-	CBitmapImagePanel( vgui::Panel *parent, char const *panelName, char const *filename = NULL );
+	CBitmapImagePanel( vgui2::Panel *parent, char const *panelName, char const *filename = NULL );
 
 	virtual void	PaintBackground();
 
@@ -37,7 +38,7 @@ protected:
 	virtual void PaintBorder();
 
 private:
-	typedef vgui::Panel BaseClass;
+	typedef vgui2::Panel BaseClass;
 
 	virtual void ComputeImagePosition(int &x, int &y, int &w, int &h);
 	Label::Alignment  m_contentAlignment;

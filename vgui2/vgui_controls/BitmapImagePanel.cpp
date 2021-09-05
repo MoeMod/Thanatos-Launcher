@@ -22,7 +22,7 @@
 #define min(a, b)  (((a) < (b)) ? (a) : (b))
 #endif
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 /**

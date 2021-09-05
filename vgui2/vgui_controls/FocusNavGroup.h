@@ -12,10 +12,10 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include "PHandle.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class Panel;

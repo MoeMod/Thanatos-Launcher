@@ -6,9 +6,9 @@
 #include <FileSystem.h>
 #include "cdll_dll.h"
 
-using namespace vgui;
+using namespace vgui2;
 
-CBuySubMenu::CBuySubMenu(vgui::Panel *parent, const char *name) : WizardSubPanel(parent, name)
+CBuySubMenu::CBuySubMenu(vgui2::Panel *parent, const char *name) : WizardSubPanel(parent, name)
 {
 	m_NextPanel = NULL;
 	m_pFirstButton = NULL;
@@ -141,12 +141,12 @@ void CBuySubMenu::SetupNextSubPanel(const char *fileName)
 	}
 }
 
-void CBuySubMenu::SetNextSubPanel(vgui::WizardSubPanel *panel)
+void CBuySubMenu::SetNextSubPanel(vgui2::WizardSubPanel *panel)
 {
 	m_NextPanel = panel;
 }
 
-vgui::WizardSubPanel *CBuySubMenu::GetNextSubPanel(void)
+vgui2::WizardSubPanel *CBuySubMenu::GetNextSubPanel(void)
 {
 	return m_NextPanel;
 }

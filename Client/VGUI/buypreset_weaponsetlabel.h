@@ -5,11 +5,11 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui_controls/ImagePanel.h>
 #include <vgui/IImage.h>
 
-namespace vgui
+namespace vgui2
 {
 	class TextImage;
 	class TextEntry;
@@ -17,7 +17,7 @@ namespace vgui
 
 struct ImageInfo
 {
-	vgui::IImage *image;
+	vgui2::IImage *image;
 	int w;
 	int h;
 	int x;
@@ -40,7 +40,7 @@ public:
 	void SetCentered(bool isCentered);
 	void SetScaleAt1024(int weaponScale, int ammoScale);
 	void SetWeapon(const BuyPresetWeapon *pWeapon, bool isPrimary, bool useCurrentAmmoType);
-	void ApplyTextSettings(vgui::IScheme *pScheme, bool isProportional);
+	void ApplyTextSettings(vgui2::IScheme *pScheme, bool isProportional);
 	void Paint(void);
 	void PaintBackground(void);
 
@@ -63,7 +63,7 @@ private:
 	ImageInfo m_weapon;
 	ImageInfo m_ammo;
 
-	vgui::TextImage *m_pAmmoText;
+	vgui2::TextImage *m_pAmmoText;
 };
 
 class ItemImageInfo
@@ -75,11 +75,11 @@ public:
 public:
 	void SetBounds(int left, int top, int wide, int tall);
 	void SetItem(const char *imageFname, int count);
-	void ApplyTextSettings(vgui::IScheme *pScheme, bool isProportional);
+	void ApplyTextSettings(vgui2::IScheme *pScheme, bool isProportional);
 	void Paint(void);
 	void PaintBackground(void);
 	void SetTextColor(Color color);
-	void SetTextFont(vgui::HFont font);
+	void SetTextFont(vgui2::HFont font);
 
 private:
 	void PerformLayout(void);
@@ -95,22 +95,22 @@ public:
 	bool m_needLayout;
 	ImageInfo m_image;
 
-	vgui::TextImage *m_pText;
+	vgui2::TextImage *m_pText;
 };
 
-class WeaponLabel : public vgui::ImagePanel
+class WeaponLabel : public vgui2::ImagePanel
 {
-	typedef vgui::ImagePanel BaseClass;
+	typedef vgui2::ImagePanel BaseClass;
 
 public:
-	WeaponLabel(vgui::Panel *parent, const char *panelName);
+	WeaponLabel(vgui2::Panel *parent, const char *panelName);
 	~WeaponLabel(void);
 
 public:
 	void SetWeapon(const BuyPresetWeapon *pWeapon, bool isPrimary);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PerformLayout(void);
 	virtual void Paint(void);
 	virtual void PaintBackground(void);
@@ -119,12 +119,12 @@ protected:
 	WeaponImageInfo m_weapon;
 };
 
-class EquipmentLabel : public vgui::ImagePanel
+class EquipmentLabel : public vgui2::ImagePanel
 {
-	typedef vgui::ImagePanel BaseClass;
+	typedef vgui2::ImagePanel BaseClass;
 
 public:
-	EquipmentLabel(vgui::Panel *parent, const char *panelName, int maxSlot = 1);
+	EquipmentLabel(vgui2::Panel *parent, const char *panelName, int maxSlot = 1);
 	~EquipmentLabel(void);
 
 public:
@@ -132,7 +132,7 @@ public:
 	void SetItem(int index, const char *imageFname, int count);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PerformLayout(void);
 	virtual void Paint(void);
 	virtual void PaintBackground(void);
@@ -140,20 +140,20 @@ public:
 protected:
 	CUtlVector<ItemImageInfo *> m_items;
 	Color m_textColor;
-	vgui::HFont m_textFont;
+	vgui2::HFont m_textFont;
 };
 
-class BuyPresetEditPanel : public vgui::EditablePanel
+class BuyPresetEditPanel : public vgui2::EditablePanel
 {
-	typedef vgui::EditablePanel BaseClass;
+	typedef vgui2::EditablePanel BaseClass;
 
 public:
-	BuyPresetEditPanel(vgui::Panel *parent, const char *panelName, const char *resourceFilename, int fallbackIndex, bool editableName);
+	BuyPresetEditPanel(vgui2::Panel *parent, const char *panelName, const char *resourceFilename, int fallbackIndex, bool editableName);
 	virtual ~BuyPresetEditPanel(void);
 
 public:
 	virtual void SetText(const wchar_t *text);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PaintBackground(void);
 	virtual void OnCommand(const char *command);
 	virtual void OnSizeChanged(int wide, int tall);
@@ -171,11 +171,11 @@ protected:
 	void Reset(void);
 
 protected:
-	vgui::Panel *m_pBgPanel;
+	vgui2::Panel *m_pBgPanel;
 
-	vgui::TextEntry *m_pTitleEntry;
-	vgui::Label *m_pTitleLabel;
-	vgui::Label *m_pCostLabel;
+	vgui2::TextEntry *m_pTitleEntry;
+	vgui2::Label *m_pTitleLabel;
+	vgui2::Label *m_pCostLabel;
 
 	WeaponLabel *m_pPrimaryWeapon;
 	WeaponLabel *m_pSecondaryWeapon;

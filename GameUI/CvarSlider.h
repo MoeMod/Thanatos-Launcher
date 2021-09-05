@@ -6,13 +6,13 @@
 
 #include <vgui_controls/Slider.h>
 
-class CCvarSlider : public vgui::Slider
+class CCvarSlider : public vgui2::Slider
 {
-	DECLARE_CLASS_SIMPLE(CCvarSlider, vgui::Slider);
+	DECLARE_CLASS_SIMPLE(CCvarSlider, vgui2::Slider);
 
 public:
-	CCvarSlider(vgui::Panel *parent, const char *panelName);
-	CCvarSlider(vgui::Panel *parent, const char *panelName, char const *caption, float minValue, float maxValue, char const *cvarname, bool bAllowOutOfRange = false);
+	CCvarSlider(vgui2::Panel *parent, const char *panelName);
+	CCvarSlider(vgui2::Panel *parent, const char *panelName, char const *caption, float minValue, float maxValue, char const *cvarname, bool bAllowOutOfRange = false);
 	~CCvarSlider(void);
 
 public:

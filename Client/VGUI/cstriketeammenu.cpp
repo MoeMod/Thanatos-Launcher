@@ -18,7 +18,7 @@
 #include "CounterStrikeViewport.h"
 #include "newmouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSTeamMenu::CCSTeamMenu(void) : CTeamMenu()
 {
@@ -124,7 +124,7 @@ void CCSTeamMenu::PerformLayout(void)
 	BaseClass::PerformLayout();
 }
 
-void CCSTeamMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSTeamMenu::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }

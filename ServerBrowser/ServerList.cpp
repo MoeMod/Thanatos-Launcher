@@ -1,4 +1,4 @@
-#include "IServerRefreshResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
 #include "ServerList.h"
 #include "Socket.h"
 #include "proto_oob.h"

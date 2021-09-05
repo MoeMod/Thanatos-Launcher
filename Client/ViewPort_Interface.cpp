@@ -6,14 +6,14 @@
 #include "ViewPort.h"
 #include "vgui2.h"
 
-vgui::IEngineVGui *enginevgui;
+IEngineVGui *enginevgui;
 
 class CClientVGUI : public IClientVGUI
 {
 public:
 	virtual void Initialize(CreateInterfaceFn *factories, int count);
 	virtual void Start(void);
-	virtual void SetParent(vgui::VPANEL parent);
+	virtual void SetParent(vgui2::VPANEL parent);
 	virtual bool UseVGUI1(void);
 	virtual void HideScoreBoard(void);
 	virtual void HideAllVGUIMenu(void);
@@ -31,7 +31,7 @@ EXPOSE_SINGLE_INTERFACE(CClientVGUI, IClientVGUI, CLIENTVGUI_INTERFACE_VERSION);
 
 void(__fastcall *g_pfnCClientVGUI_Initialize)(CClientVGUI *, int, CreateInterfaceFn *, int) = NULL;
 void(__fastcall *g_pfnCClientVGUI_Start)(CClientVGUI *, int) = NULL;
-void(__fastcall *g_pfnCClientVGUI_SetParent)(CClientVGUI *, int, vgui::VPANEL) = NULL;
+void(__fastcall *g_pfnCClientVGUI_SetParent)(CClientVGUI *, int, vgui2::VPANEL) = NULL;
 bool(__fastcall *g_pfnCClientVGUI_UseVGUI1)(CClientVGUI *, int) = NULL;
 void(__fastcall *g_pfnCClientVGUI_HideScoreBoard)(CClientVGUI *, int) = NULL;
 void(__fastcall *g_pfnCClientVGUI_HideAllVGUIMenu)(CClientVGUI *, int) = NULL;
@@ -40,15 +40,14 @@ void(__fastcall *g_pfnCClientVGUI_HideClientUI)(CClientVGUI *, int) = NULL;
 
 void CClientVGUI::Initialize(CreateInterfaceFn *factories, int count)
 {
-	if (!vgui::VGui_InitInterfacesList("ClientUI", factories, count))
+	if (!vgui2::VGuiControls_Init("ClientUI", factories, count))
 		return;
 
-	g_pVGuiLocalize->AddFile(g_pFullFileSystem, "Resource/location_%language%.txt");
+	vgui2::localize()->AddFile(vgui2::filesystem(), "Resource/location_%language%.txt");
 
-	//enginevguifuncs = (IEngineVGui *)factories[0](VENGINE_VGUI_VERSION, NULL);
-	//enginesurfacefuncs = (vgui::ISurface *)factories[0](VGUI_SURFACE_INTERFACE_VERSION, NULL);
+	enginevgui = (IEngineVGui *)factories[0](VENGINE_VGUI_VERSION, NULL);
+	//enginesurfacefuncs = (vgui2::ISurface *)factories[0](VGUI_SURFACE_INTERFACE_VERSION, NULL);
 	//gameuifuncs = (IGameUIFuncs *)factories[0](VENGINE_GAMEUIFUNCS_VERSION, NULL);
-	enginevgui = enginevguifuncs;
 
 	//g_pClientVGUI = (IClientVGUI *)((CreateInterfaceFn)gExportfuncs.ClientFactory())(CLIENTVGUI_INTERFACE_VERSION, NULL);
 	//g_pClientVGUI->Initialize(factories, count);
@@ -62,7 +61,7 @@ void CClientVGUI::Start(void)
 	g_pViewPort->Start();
 }
 
-void CClientVGUI::SetParent(vgui::VPANEL parent)
+void CClientVGUI::SetParent(vgui2::VPANEL parent)
 {
 	g_pfnCClientVGUI_SetParent(this, 0, parent);
 	g_pViewPort->SetParent(parent);
@@ -99,33 +98,33 @@ void CClientVGUI::HideClientUI(void)
 
 void CClientVGUI::HideAllPanel(void)
 {
-	vgui::VPANEL rootpanel = enginevguifuncs->GetPanel(vgui::PANEL_CLIENTDLL);
-	int count = vgui::ipanel()->GetChildCount(rootpanel);
+	vgui2::VPANEL rootpanel = enginevgui->GetPanel(PANEL_CLIENTDLL);
+	int count = vgui2::ipanel()->GetChildCount(rootpanel);
 
 	for (int i = 0; i < count; i++)
 	{
-		vgui::VPANEL p = vgui::ipanel()->GetChild(rootpanel, i);
+		vgui2::VPANEL p = vgui2::ipanel()->GetChild(rootpanel, i);
 
 		if (!p)
 			continue;
 
-		vgui::ipanel()->SetParent(p, NULL);
+		vgui2::ipanel()->SetParent(p, NULL);
 	}
 }
 
 void CClientVGUI::HidePanel(const char *name)
 {
-	vgui::VPANEL rootpanel = enginevguifuncs->GetPanel(vgui::PANEL_CLIENTDLL);
-	int count = vgui::ipanel()->GetChildCount(rootpanel);
+	vgui2::VPANEL rootpanel = enginevgui->GetPanel(PANEL_CLIENTDLL);
+	int count = vgui2::ipanel()->GetChildCount(rootpanel);
 
 	for (int i = 0; i < count; i++)
 	{
-		vgui::VPANEL p = vgui::ipanel()->GetChild(rootpanel, i);
+		vgui2::VPANEL p = vgui2::ipanel()->GetChild(rootpanel, i);
 
-		if (!p || strcmp(vgui::ipanel()->GetName(p), name))
+		if (!p || strcmp(vgui2::ipanel()->GetName(p), name))
 			continue;
 
-		vgui::ipanel()->SetParent(p, NULL);
+		vgui2::ipanel()->SetParent(p, NULL);
 	}
 }
 

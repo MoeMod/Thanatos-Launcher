@@ -10,8 +10,6 @@
 
 #include "CreateMultiplayerGameBotPage.h"
 
-using namespace vgui;
-
 #include <KeyValues.h>
 #include <vgui_controls/ComboBox.h>
 #include <vgui_controls/CheckButton.h>
@@ -95,7 +93,7 @@ void CCreateMultiplayerGameBotPage::SetChatterCombo( const char *chatter )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CCreateMultiplayerGameBotPage::CCreateMultiplayerGameBotPage( vgui::Panel *parent, const char *name, KeyValues *botKeys ) : PropertyPage( parent, name )
+CCreateMultiplayerGameBotPage::CCreateMultiplayerGameBotPage( vgui2::Panel *parent, const char *name, KeyValues *botKeys ) : PropertyPage( parent, name )
 {
 	m_allowRogues = new CCvarToggleCheckButton( this, "BotAllowRogueCheck", "", "bot_allow_rogues" );
 	m_allowPistols = new CCvarToggleCheckButton( this, "BotAllowPistolsCheck", "", "bot_allow_pistols" );
@@ -113,14 +111,14 @@ CCreateMultiplayerGameBotPage::CCreateMultiplayerGameBotPage( vgui::Panel *paren
 
 	// set up team join combo box
 	// NOTE: If order of AddItem is changed, update the associated enum
-	m_joinTeamCombo = new ComboBox( this, "BotJoinTeamCombo", 3, false );
+	m_joinTeamCombo = new vgui2::ComboBox( this, "BotJoinTeamCombo", 3, false );
 	m_joinTeamCombo->AddItem( "#Cstrike_Random", NULL );
 	m_joinTeamCombo->AddItem( "#Cstrike_ScoreBoard_CT", NULL );
 	m_joinTeamCombo->AddItem( "#Cstrike_ScoreBoard_Ter", NULL );
 
 	// set up chatter combo box
 	// NOTE: If order of AddItem is changed, update the associated enum
-	m_chatterCombo = new ComboBox( this, "BotChatterCombo", 4, false );
+	m_chatterCombo = new vgui2::ComboBox( this, "BotChatterCombo", 4, false );
 	m_chatterCombo->AddItem( "#Cstrike_Bot_Chatter_Normal", NULL );
 	m_chatterCombo->AddItem( "#Cstrike_Bot_Chatter_Minimal", NULL );
 	m_chatterCombo->AddItem( "#Cstrike_Bot_Chatter_Radio", NULL );
@@ -128,7 +126,7 @@ CCreateMultiplayerGameBotPage::CCreateMultiplayerGameBotPage( vgui::Panel *paren
 
 	// create text entry fields for quota and prefix
 	//m_quotaEntry = new TextEntry( this, "BotQuotaEntry" );
-	m_prefixEntry = new TextEntry( this, "BotPrefixEntry" );
+	m_prefixEntry = new vgui2::TextEntry( this, "BotPrefixEntry" );
 
 	// set positions and sizes from resources file
 	LoadControlSettings( "Resource/CreateMultiplayerGameBotPage.res" );

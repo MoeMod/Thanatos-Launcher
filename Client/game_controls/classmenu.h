@@ -15,15 +15,15 @@
 
 #define PANEL_CLASS "class"
 
-namespace vgui
+namespace vgui2
 {
 	class TextEntry;
 }
 
-class CClassMenu : public vgui::Frame, public CViewPortPanel
+class CClassMenu : public vgui2::Frame, public CViewPortPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE(CClassMenu, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CClassMenu, vgui2::Frame);
 
 public:
 	CClassMenu(void);
@@ -48,9 +48,9 @@ public:
 	DECLARE_VIEWPORT_PANEL_SIMPLE();
 
 protected:
-	virtual vgui::Panel *CreateControlByName(const char *controlName);
-	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui::EditablePanel *panel);
-	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual vgui2::Panel *CreateControlByName(const char *controlName);
+	virtual MouseOverPanelButton *CreateNewMouseOverPanelButton(vgui2::EditablePanel *panel);
+	virtual void OnKeyCodePressed(vgui2::KeyCode code);
 
 protected:
 	void SetLabelText(const char *textEntryName, const char *text);
@@ -61,9 +61,9 @@ protected:
 	void OnCommand(const char *command);
 
 protected:
-	vgui::KeyCode m_iScoreBoardKey;
+	vgui2::KeyCode m_iScoreBoardKey;
 	int m_iTeam;
-	vgui::EditablePanel *m_pPanel;
+	vgui2::EditablePanel *m_pPanel;
 	CUtlVector<MouseOverPanelButton *> m_mouseoverButtons;
 };
 

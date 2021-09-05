@@ -1,6 +1,7 @@
 #include "consoledialog.h"
 
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/IScheme.h>
 #include <vgui/IVGUI.h>
 #include <vgui/ISurface.h>
@@ -22,7 +23,7 @@
 
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 class CNonFocusableMenu : public Menu
 {
@@ -227,7 +228,7 @@ const char *CConsolePanel::CompletionItem::GetCommand( void ) const
 	return text;
 }
 
-CConsolePanel::CConsolePanel( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) : 
+CConsolePanel::CConsolePanel( vgui2::Panel *pParent, const char *pName, bool bStatusVersion ) : 
 	BaseClass( pParent, pName ), m_bStatusVersion( bStatusVersion )
 {
 	SetKeyBoardInputEnabled( true );
@@ -389,8 +390,8 @@ void CConsolePanel::OnTextChanged(Panel *panel)
 
 	bool hitTilde = ( m_szPartialText[len - 1] == '~' || m_szPartialText[len - 1] == '`' ) ? true : false;
 
-	bool altKeyDown = ( vgui::input()->IsKeyDown( KEY_LALT ) || vgui::input()->IsKeyDown( KEY_RALT ) ) ? true : false;
-	bool ctrlKeyDown = ( vgui::input()->IsKeyDown( KEY_LCONTROL ) || vgui::input()->IsKeyDown( KEY_RCONTROL ) ) ? true : false;
+	bool altKeyDown = ( vgui2::input()->IsKeyDown( KEY_LALT ) || vgui2::input()->IsKeyDown( KEY_RALT ) ) ? true : false;
+	bool ctrlKeyDown = ( vgui2::input()->IsKeyDown( KEY_LCONTROL ) || vgui2::input()->IsKeyDown( KEY_RCONTROL ) ) ? true : false;
 
 	if ( ( len > 0 ) && hitTilde )
 	{
@@ -727,7 +728,7 @@ void CConsolePanel::DumpConsoleTextToFile()
 	for ( int i = 0 ; i < CONDUMP_FILES_MAX_NUM ; ++i )
 	{
 		_snprintf( szfile, sizeof(szfile), "condump%03d.txt", i );
-		if ( !g_pFullFileSystem->FileExists(szfile) )
+		if ( !filesystem()->FileExists(szfile) )
 		{
 			found = true;
 			break;
@@ -740,7 +741,7 @@ void CConsolePanel::DumpConsoleTextToFile()
 		return;
 	}
 
-	handle = g_pFullFileSystem->Open( szfile, "wb" );
+	handle = filesystem()->Open( szfile, "wb" );
 	if ( handle != FILESYSTEM_INVALID_HANDLE )
 	{
 		int pos = 0;
@@ -754,7 +755,7 @@ void CConsolePanel::DumpConsoleTextToFile()
 				break;
 
 			char ansi[512];
-			g_pVGuiLocalize->ConvertUnicodeToANSI(buf, ansi, sizeof(ansi));
+			localize()->ConvertUnicodeToANSI(buf, ansi, sizeof(ansi));
 
 			int len = strlen(ansi);
 			for (int i = 0; i < len; i++)
@@ -762,14 +763,14 @@ void CConsolePanel::DumpConsoleTextToFile()
 				if (ansi[i] == '\n')
 				{
 					char ret = '\r';
-					g_pFullFileSystem->Write( &ret, 1, handle );
+					filesystem()->Write( &ret, 1, handle );
 				}
 
-				g_pFullFileSystem->Write( ansi + i, 1, handle );
+				filesystem()->Write( ansi + i, 1, handle );
 			}
 		}
 
-		g_pFullFileSystem->Close( handle );
+		filesystem()->Close( handle );
 
 		Print( "console dumped to " );
 		Print( szfile );
@@ -783,7 +784,7 @@ void CConsolePanel::DumpConsoleTextToFile()
 	}
 }
 
-CConsoleDialog::CConsoleDialog( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) : 
+CConsoleDialog::CConsoleDialog( vgui2::Panel *pParent, const char *pName, bool bStatusVersion ) : 
 	BaseClass( pParent, pName )
 {
 	SetVisible( false );

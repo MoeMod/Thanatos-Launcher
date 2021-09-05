@@ -20,7 +20,7 @@ public:
 	void VidInit(void) {}
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void UpdateSpectatorPlayerList(void);
 	virtual void Update(void);
 	virtual bool NeedsUpdate(void);
@@ -44,14 +44,14 @@ protected:
 	bool ControlsPresent(void) const;
 
 protected:
-	vgui::Label *m_pCTLabel;
-	vgui::Label *m_pCTScore;
-	vgui::Label *m_pTerLabel;
-	vgui::Label *m_pTerScore;
-	vgui::Panel *m_pTimer;
-	vgui::Label *m_pTimerLabel;
-	vgui::Panel *m_pDivider;
-	vgui::Label *m_pExtraInfo;
+	vgui2::Label *m_pCTLabel;
+	vgui2::Label *m_pCTScore;
+	vgui2::Label *m_pTerLabel;
+	vgui2::Label *m_pTerScore;
+	vgui2::Panel *m_pTimer;
+	vgui2::Label *m_pTimerLabel;
+	vgui2::Panel *m_pDivider;
+	vgui2::Label *m_pExtraInfo;
 
 	int m_scoreWidth;
 	int m_extraInfoWidth;

@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/ILocalize.h>
 
 #include "Image.h"
@@ -21,7 +21,7 @@
 
 class KeyValues;
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -47,9 +47,9 @@ public:
 	virtual StringIndex_t GetUnlocalizedTextSymbol();
 
 	// set the font of the text
-	virtual void SetFont(vgui::HFont font);
+	virtual void SetFont(vgui2::HFont font);
 	// get the font of the text
-	virtual vgui::HFont GetFont();
+	virtual vgui2::HFont GetFont();
 
 	// set the width of the text to be drawn
 	// use this function if the textImage is in another window to cause 
@@ -87,8 +87,8 @@ private:
 	wchar_t *_utext;	// unicode version of the text
 	short _textBufferLen;	// size of the text buffer
 	short _textLen;		// length of the text string
-	vgui::HFont _font;	// font of the text string
-	vgui::HFont _fallbackFont;
+	vgui2::HFont _font;	// font of the text string
+	vgui2::HFont _fallbackFont;
 	int _drawWidth;		// this is the width of the window we are drawing into. 
 						// if there is not enough room truncate the txt	and add an elipsis
 

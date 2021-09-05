@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -14,12 +14,12 @@
 inline bool IsSteamInOfflineMode()
 {
 	int offline = 0;
-	vgui::system()->GetRegistryInteger( STEAM_OFFLINE_MODE, offline );
+	vgui2::system()->GetRegistryInteger( STEAM_OFFLINE_MODE, offline );
 	return ( offline == 1 );
 }inline bool IsSteamInAuthenticationFailSafeMode()
 {
 	int offline = 0;
-	vgui::system()->GetRegistryInteger( STEAM_AFS_MODE, offline );
+	vgui2::system()->GetRegistryInteger( STEAM_AFS_MODE, offline );
 	return ( offline == 1 );
 }
 

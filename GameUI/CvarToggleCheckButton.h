@@ -6,12 +6,12 @@
 
 #include <vgui_controls/CheckButton.h>
 
-class CCvarToggleCheckButton : public vgui::CheckButton
+class CCvarToggleCheckButton : public vgui2::CheckButton
 {
-	DECLARE_CLASS_SIMPLE(CCvarToggleCheckButton, vgui::CheckButton);
+	DECLARE_CLASS_SIMPLE(CCvarToggleCheckButton, vgui2::CheckButton);
 
 public:
-	CCvarToggleCheckButton(vgui::Panel *parent, const char *panelName, const char *text, char const *cvarname);
+	CCvarToggleCheckButton(vgui2::Panel *parent, const char *panelName, const char *text, char const *cvarname);
 	~CCvarToggleCheckButton(void);
 
 public:

@@ -18,24 +18,24 @@
 #include <tier0/memdbgon.h>
 
 
-using namespace vgui;
+using namespace vgui2;
 
 
 //-----------------------------------------------------------------------------
 // This dialog asks if you want to save your work
 //-----------------------------------------------------------------------------
-class CSaveDocumentQuery : public vgui::Frame
+class CSaveDocumentQuery : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE( CSaveDocumentQuery, vgui::Frame );
+	DECLARE_CLASS_SIMPLE( CSaveDocumentQuery, Frame );
 
 public:
-	CSaveDocumentQuery(	vgui::Panel *pParent, const char *filename, const char *pFileType, int nContext, 
-		vgui::Panel *pActionSignalTarget = 0, KeyValues *pKeyValues = 0 );
+	CSaveDocumentQuery(	vgui2::Panel *pParent, const char *filename, const char *pFileType, int nContext, 
+		vgui2::Panel *pActionSignalTarget = 0, KeyValues *pKeyValues = 0 );
 	~CSaveDocumentQuery();
 
-	// Inherited from vgui::Frame
+	// Inherited from vgui2::Frame
 	virtual void		OnCommand( char const *cmd );
-	virtual void		ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void		ApplySchemeSettings( vgui2::IScheme *pScheme );
 
 	// Put the message box into a modal state
 	void				DoModal();
@@ -44,11 +44,11 @@ private:
 	// Posts commands to the action signal target
 	void				PostCommand( const char *pCommand );
 
-	vgui::Label			*m_pMessageLabel;
-	vgui::Button		*m_pYesButton;
-	vgui::Button		*m_pNoButton;
-	vgui::Button		*m_pCancelButton;
-	vgui::Panel			*m_pActionSignalTarget;
+	vgui2::Label			*m_pMessageLabel;
+	vgui2::Button		*m_pYesButton;
+	vgui2::Button		*m_pNoButton;
+	vgui2::Button		*m_pCancelButton;
+	vgui2::Panel			*m_pActionSignalTarget;
 
 	char				m_szFileName[ 256 ];
 	char				m_szFileType[ 256 ];
@@ -60,7 +60,7 @@ private:
 //-----------------------------------------------------------------------------
 // Show the save document query dialog
 //-----------------------------------------------------------------------------
-void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand )
+void ShowSaveDocumentQuery( vgui2::Panel *pParent, const char *pFileName, const char *pFileType, int nContext, vgui2::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand )
 {
 	CSaveDocumentQuery *query = new CSaveDocumentQuery( pParent, pFileName, pFileType, nContext, pActionSignalTarget, pPostSaveCommand );
 	query->SetSmallCaption( true );
@@ -71,7 +71,7 @@ void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const c
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CSaveDocumentQuery::CSaveDocumentQuery( vgui::Panel *pParent, char const *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand ) :
+CSaveDocumentQuery::CSaveDocumentQuery( vgui2::Panel *pParent, char const *pFileName, const char *pFileType, int nContext, vgui2::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand ) :
 	BaseClass( pParent, "SaveDocumentQuery" ),
 	m_nContext( nContext ), 
 	m_pActionSignalTarget( pActionSignalTarget )
@@ -120,7 +120,7 @@ CSaveDocumentQuery::~CSaveDocumentQuery()
 void CSaveDocumentQuery::PostCommand( const char *pCommand )
 {
 	KeyValues *kv = new KeyValues( pCommand );
-	vgui::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), kv, 0 );
+	vgui2::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), kv, 0 );
 }
 
 
@@ -140,7 +140,7 @@ void CSaveDocumentQuery::OnCommand( char const *cmd )
 		{
 			kv->AddSubKey( m_pPostSaveKeyValues->MakeCopy() );
 		}
-		vgui::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), kv, 0 );
+		vgui2::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), kv, 0 );
 		MarkForDeletion();
 	}
 	else if ( !Q_stricmp( cmd, "no" ) )
@@ -148,7 +148,7 @@ void CSaveDocumentQuery::OnCommand( char const *cmd )
 		PostCommand( "OnMarkNotDirty" );
 		if ( m_pPostSaveKeyValues )
 		{
-			vgui::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), m_pPostSaveKeyValues->MakeCopy(), 0 );
+			vgui2::ivgui()->PostMessage( m_pActionSignalTarget->GetVPanel(), m_pPostSaveKeyValues->MakeCopy(), 0 );
 		}
 		MarkForDeletion();
 	}

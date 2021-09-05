@@ -18,7 +18,7 @@
 #include <vgui_controls/ImagePanel.h>
 #include <vgui_controls/EditablePanel.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 class BuyPresetImagePanel : public EditablePanel
 {
@@ -126,7 +126,7 @@ void BuyPresetButton::ApplySchemeSettings(IScheme *pScheme)
 		m_iKeyOffset = atoi(pScheme->GetResourceString("BuyPresetButton.KeyboardOffset"));
 
 		if (IsProportional())
-			m_iKeyOffset = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
+			m_iKeyOffset = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
 	}
 
 	if (m_iKeySize == -1)
@@ -134,7 +134,7 @@ void BuyPresetButton::ApplySchemeSettings(IScheme *pScheme)
 		m_iKeySize = atoi(pScheme->GetResourceString("BuyPresetButton.KeyboardSize"));
 
 		if (IsProportional())
-			m_iKeySize = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
+			m_iKeySize = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
 	}
 
 	if (m_pFullText)
@@ -267,7 +267,7 @@ void BuyPresetButton::OnMouseReleased(MouseCode code)
 
 void BuyPresetButton::GetText(char *textOut, int bufferLen)
 {
-	g_pVGuiLocalize->ConvertUnicodeToANSI(m_pFullText, textOut, bufferLen);
+	localize()->ConvertUnicodeToANSI(m_pFullText, textOut, bufferLen);
 }
 
 void BuyPresetButton::GetText(wchar_t *textOut, int bufLenInBytes)
@@ -291,12 +291,12 @@ void BuyPresetButton::SetText(const char *text)
 
 	if (text[0] == '#')
 	{
-		wtext = g_pVGuiLocalize->Find(text);
+		wtext = localize()->Find(text);
 	}
 	else
 	{
 		wchar_t unicodeVar[256];
-		g_pVGuiLocalize->ConvertANSIToUnicode(text, unicodeVar, sizeof(unicodeVar));
+		localize()->ConvertANSIToUnicode(text, unicodeVar, sizeof(unicodeVar));
 		wtext = unicodeVar;
 	}
 

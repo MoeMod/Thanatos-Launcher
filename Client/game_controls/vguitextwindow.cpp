@@ -16,7 +16,7 @@
 
 #include "plugins.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 #define TEMP_HTML_FILE "textwindow_temp.html"
 
@@ -51,7 +51,7 @@ void CTextWindow::ApplySchemeSettings(IScheme *pScheme)
 
 CTextWindow::~CTextWindow(void)
 {
-	g_pFullFileSystem->RemoveFile(TEMP_HTML_FILE, "DEFAULT_WRITE_PATH");
+	filesystem()->RemoveFile(TEMP_HTML_FILE, "DEFAULT_WRITE_PATH");
 }
 
 void CTextWindow::Reset(void)
@@ -120,15 +120,15 @@ void CTextWindow::ShowIndex(const char *entry)
 		return;
 	}
 
-	FileHandle_t hFile = g_pFullFileSystem->Open(TEMP_HTML_FILE, "wb", "DEFAULT_WRITE_PATH");
+	FileHandle_t hFile = filesystem()->Open(TEMP_HTML_FILE, "wb", "DEFAULT_WRITE_PATH");
 
 	if (hFile == FILESYSTEM_INVALID_HANDLE)
 		return;
 
-	g_pFullFileSystem->Write(data, length, hFile);
-	g_pFullFileSystem->Close(hFile);
+	filesystem()->Write(data, length, hFile);
+	filesystem()->Close(hFile);
 
-	if (g_pFullFileSystem->Size(TEMP_HTML_FILE) == (unsigned int)length)
+	if (filesystem()->Size(TEMP_HTML_FILE) == (unsigned int)length)
 		ShowFile(TEMP_HTML_FILE);
 }
 
@@ -140,22 +140,22 @@ void CTextWindow::ShowFile(const char *filename)
 		Q_strncpy(localURL, "file://", sizeof(localURL));
 
 		char pPathData[_MAX_PATH];
-		g_pFullFileSystem->GetLocalPath(filename, pPathData, sizeof(pPathData));
+		filesystem()->GetLocalPath(filename, pPathData, sizeof(pPathData));
 		Q_strncat(localURL, pPathData, sizeof(localURL), COPY_ALL_CHARACTERS);
 
 		ShowURL(localURL);
 	}
 	else
 	{
-		FileHandle_t f = g_pFullFileSystem->Open(m_szMessage, "rb", "GAME");
+		FileHandle_t f = filesystem()->Open(m_szMessage, "rb", "GAME");
 
 		if (!f)
 			return;
 
 		char buffer[2048];
-		int size = min(g_pFullFileSystem->Size(f), sizeof(buffer) - 1);
-		g_pFullFileSystem->Read(buffer, size, f);
-		g_pFullFileSystem->Close(f);
+		int size = min(filesystem()->Size(f), sizeof(buffer) - 1);
+		filesystem()->Read(buffer, size, f);
+		filesystem()->Close(f);
 		buffer[size] = 0;
 
 		ShowText(buffer);
@@ -205,7 +205,7 @@ void CTextWindow::OnCommand(const char *command)
 
 		m_bIsExited = true;
 		g_pViewPort->ShowPanel(this, false);
-		g_pFullFileSystem->RemoveFile(TEMP_HTML_FILE, "DEFAULT_WRITE_PATH");
+		filesystem()->RemoveFile(TEMP_HTML_FILE, "DEFAULT_WRITE_PATH");
 	}
 
 	BaseClass::OnCommand(command);

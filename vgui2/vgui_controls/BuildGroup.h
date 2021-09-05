@@ -16,17 +16,19 @@
 #include <tier1/utlsymbol.h>
 #include <tier1/utlhandletable.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include <vgui/Dar.h>
 #include <vgui/Cursor.h>
 #include <vgui/IScheme.h>
+#include <vgui/MouseCode.h>
+#include <vgui/KeyCode.h>
 
 #include "Controls.h"
 #include "PHandle.h"
 
 class KeyValues;
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -168,7 +170,7 @@ private:
 	bool	_showRulers;	   // toggles ruler display
 	CUtlVector<CUtlSymbol> m_RegisteredControlSettingsFiles;
 
-	friend class Panel;
+	friend class vgui2::Panel;
 };
 
 

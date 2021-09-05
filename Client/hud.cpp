@@ -112,7 +112,7 @@ public:
 		if (entindex >= 0 && entindex < MAX_PLAYERS)
 		{
 			int iTeam = g_PlayerExtraInfo[entindex].teamnumber;
-			vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(gViewPortInterface->GetViewPortScheme());
+			vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(gViewPortInterface->GetViewPortScheme());
 			Color clr = pScheme->GetColor(GetStringTeamColor(iTeam), Color(255, 255, 255, 255));
 
 			color[0] = clr.r();
@@ -300,7 +300,7 @@ void CHud::Init(void)
 	g_pViewPort->Init();
 }
 
-extern vgui::HFont font;
+extern vgui2::HFont font;
 
 void CHud::VidInit(void)
 {
@@ -408,7 +408,7 @@ void CHud::VidInit(void)
 
 	HudZ4EDamageStar().VidInit();
 
-	m_iFontEngineHeight = vgui::surface()->GetFontTall(font);
+	m_iFontEngineHeight = vgui2::surface()->GetFontTall(font);
 
 	g_pViewPort->VidInit();
 }

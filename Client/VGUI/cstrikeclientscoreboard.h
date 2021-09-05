@@ -23,7 +23,7 @@ public:
 	virtual void Update(void);
 	virtual void PaintBackground(void);
 	virtual void PaintBorder(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void ShowPanel(bool bShow);
 
 public:
@@ -35,7 +35,7 @@ public:
 	void MsgFunc_TimeLeft(void);
 
 private:
-	void InitPlayerList(vgui::SectionedListPanel *pPlayerList, int teamNumber);
+	void InitPlayerList(vgui2::SectionedListPanel *pPlayerList, int teamNumber);
 	void UpdateTeamInfo(void);
 	void UpdatePlayerList(void);
 	void UpdateSpectatorList(void);
@@ -44,18 +44,18 @@ private:
 	bool ShouldShowAsSpectator(int iPlayerIndex);
 
 private:
-	static bool CSPlayerSortFunc(vgui::SectionedListPanel *list, int itemID1, int itemID2);
+	static bool CSPlayerSortFunc(vgui2::SectionedListPanel *list, int itemID1, int itemID2);
 
 private:
-	vgui::SectionedListPanel *m_pPlayerListT;
-	vgui::SectionedListPanel *m_pPlayerListCT;
+	vgui2::SectionedListPanel *m_pPlayerListT;
+	vgui2::SectionedListPanel *m_pPlayerListCT;
 
-	vgui::Label *m_pPlayerCountLabel_T;
-	vgui::Label *m_pScoreLabel_T;
-	vgui::Label *m_pPingLabel_T;
-	vgui::Label *m_pPlayerCountLabel_CT;
-	vgui::Label *m_pScoreLabel_CT;
-	vgui::Label *m_pPingLabel_CT;
+	vgui2::Label *m_pPlayerCountLabel_T;
+	vgui2::Label *m_pScoreLabel_T;
+	vgui2::Label *m_pPingLabel_T;
+	vgui2::Label *m_pPlayerCountLabel_CT;
+	vgui2::Label *m_pScoreLabel_CT;
+	vgui2::Label *m_pPingLabel_CT;
 
 	float m_flTimeLeft;
 	int m_iListWidth;

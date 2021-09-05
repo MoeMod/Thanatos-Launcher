@@ -1,6 +1,6 @@
 //========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Implementation of vgui::TextImage control
+// Purpose: Implementation of vgui2::TextImage control
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@
 // enable this define if you want unlocalized strings logged to files unfound.txt and unlocalized.txt
 // #define LOG_UNLOCALIZED_STRINGS
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -97,11 +97,11 @@ void TextImage::SetText(const char *text)
 	if (*text == '#')
 	{
 		// try lookup in localization tables
-		_unlocalizedTextSymbol = g_pVGuiLocalize->FindIndex(text + 1);
+		_unlocalizedTextSymbol = localize()->FindIndex(text + 1);
 		
 		if (_unlocalizedTextSymbol != INVALID_STRING_INDEX)
 		{
-			wchar_t *unicode = g_pVGuiLocalize->GetValueByIndex(_unlocalizedTextSymbol);
+			wchar_t *unicode = localize()->GetValueByIndex(_unlocalizedTextSymbol);
 			SetText(unicode);
 			return;
 		}
@@ -163,7 +163,7 @@ void TextImage::SetText(const char *text)
 
 	// convert the ansi string to unicode and use that
 	wchar_t unicode[1024];
-	g_pVGuiLocalize->ConvertANSIToUnicode(text, unicode, sizeof(unicode));
+	localize()->ConvertANSIToUnicode(text, unicode, sizeof(unicode));
 	SetText(unicode);
 }
 
@@ -222,7 +222,7 @@ void TextImage::SetText(const wchar_t *unicode, bool bClearUnlocalizedSymbol)
 //-----------------------------------------------------------------------------
 void TextImage::GetText(char *buffer, int bufferSize)
 {
-	g_pVGuiLocalize->ConvertUnicodeToANSI(_utext, buffer, bufferSize);
+	localize()->ConvertUnicodeToANSI(_utext, buffer, bufferSize);
 }
 
 //-----------------------------------------------------------------------------
@@ -240,7 +240,7 @@ void TextImage::GetUnlocalizedText(char *buffer, int bufferSize)
 {
 	if (_unlocalizedTextSymbol != INVALID_STRING_INDEX)
 	{
-		const char *text = g_pVGuiLocalize->GetNameByIndex(_unlocalizedTextSymbol);
+		const char *text = localize()->GetNameByIndex(_unlocalizedTextSymbol);
 		buffer[0] = '#';
 		Q_strncpy(buffer + 1, text, bufferSize - 1);
 		buffer[bufferSize-1] = 0;

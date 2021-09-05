@@ -42,7 +42,7 @@ public:
 	CScriptListItem *pNext;
 };
 
-class CScriptObject : public vgui::Panel
+class CScriptObject : public vgui2::Panel
 {
 public:
 	CScriptObject(void);
@@ -120,18 +120,18 @@ namespace vgui
 	class Panel;
 }
 
-class mpcontrol_t : public vgui::Panel
+class mpcontrol_t : public vgui2::Panel
 {
 public:
-	mpcontrol_t(vgui::Panel *parent, char const *panelName);
+	mpcontrol_t(vgui2::Panel *parent, char const *panelName);
 
 public:
 	virtual void OnSizeChanged(int wide, int tall);
 
 public:
 	objtype_t type;
-	vgui::Panel *pControl;
-	vgui::Label *pPrompt;
+	vgui2::Panel *pControl;
+	vgui2::Label *pPrompt;
 	CScriptObject *pScrObj;
 	mpcontrol_t *next;
 };

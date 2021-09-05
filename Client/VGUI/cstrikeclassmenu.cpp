@@ -14,7 +14,7 @@
 
 #include "newmouseoverpanelbutton.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSClassMenu_TER::CCSClassMenu_TER(void) : CClassMenu(PANEL_CLASS_TER)
 {
@@ -31,7 +31,7 @@ void CCSClassMenu_TER::Reset(void)
 	CClassMenu::Reset();
 }
 
-MouseOverPanelButton *CCSClassMenu_TER::CreateNewMouseOverPanelButton(vgui::EditablePanel *panel)
+MouseOverPanelButton *CCSClassMenu_TER::CreateNewMouseOverPanelButton(vgui2::EditablePanel *panel)
 {
 	return new NewMouseOverPanelButton(this, "MouseOverPanelButton", panel);
 }
@@ -80,7 +80,7 @@ void CCSClassMenu_CT::Reset(void)
 	CClassMenu::Reset();
 }
 
-MouseOverPanelButton *CCSClassMenu_CT::CreateNewMouseOverPanelButton(vgui::EditablePanel *panel)
+MouseOverPanelButton *CCSClassMenu_CT::CreateNewMouseOverPanelButton(vgui2::EditablePanel *panel)
 {
 	return new NewMouseOverPanelButton(this, "MouseOverPanelButton", panel);
 }
@@ -124,7 +124,7 @@ void CCSClassMenu_TER::PerformLayout(void)
 	BaseClass::PerformLayout();
 }
 
-void CCSClassMenu_TER::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSClassMenu_TER::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }
@@ -139,7 +139,7 @@ void CCSClassMenu_CT::PerformLayout(void)
 	BaseClass::PerformLayout();
 }
 
-void CCSClassMenu_CT::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSClassMenu_CT::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }

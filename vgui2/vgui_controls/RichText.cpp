@@ -1,15 +1,26 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================//
 
-#include "vgui_controls/pch_vgui_controls.h"
-#include "vgui/ilocalize.h"
+#include "Controls.h"
+#include "Panel.h"
+#include "RichText.h"
+#include "ScrollBar.h"
+#include "Menu.h"
+#include <vgui/ILocalize.h>
+#include <vgui/ISurface.h>
+#include <vgui/IInputInternal.h>
+#include <vgui/ISystem.h>
+#include <tier1/KeyValues.h>
+#include <filesystem.h>
 
 // memdbgon must be the last include file in a .cpp file
-#include "tier0/memdbgon.h"
+#include <tier0/memdbgon.h>
+
+#include <wctype.h>
 
 enum
 {
@@ -18,13 +29,13 @@ enum
 	DRAW_OFFSET_Y =	1,
 };
 
-using namespace vgui;
+using namespace vgui2;
 
 #ifndef max
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 #endif
 
-namespace vgui
+namespace vgui2
 {
 
 // #define DRAW_CLICK_PANELS
@@ -233,16 +244,18 @@ void RichText::ApplySchemeSettings(IScheme *pScheme)
 	_font = pScheme->GetFont("Default", IsProportional() );
 	m_hFontUnderline = pScheme->GetFont("DefaultUnderline", IsProportional() );
 	
-	SetFgColor(GetSchemeColor("RichText.TextColor", pScheme));
-	SetBgColor(GetSchemeColor("RichText.BgColor", pScheme));
+	SetFgColor(GetSchemeColor("RichText.TextColor", GetSchemeColor("WindowFgColor", pScheme), pScheme));
+	SetBgColor(GetSchemeColor("RichText.BgColor", GetSchemeColor("WindowBgColor", pScheme), pScheme));
 	
-	_selectionTextColor = GetSchemeColor("RichText.SelectedTextColor", GetFgColor(), pScheme);
-	_selectionColor = GetSchemeColor("RichText.SelectedBgColor", pScheme);
+	_selectionTextColor = GetSchemeColor("RichText.SelectedTextColor", GetSchemeColor("SelectionFgColor", GetFgColor(), pScheme), pScheme);
+	_selectionColor = GetSchemeColor("RichText.SelectedBgColor", GetSchemeColor("SelectionBgColor", pScheme), pScheme);
 
 	if ( Q_strlen( pScheme->GetResourceString( "RichText.InsetX" ) ) )
 	{
 		SetDrawOffsets( atoi( pScheme->GetResourceString( "RichText.InsetX" ) ), atoi( pScheme->GetResourceString( "RichText.InsetY" ) ) );
 	}
+
+	SetBorder(pScheme->GetBorder("ButtonDepressedBorder"));
 }
 
 //-----------------------------------------------------------------------------
@@ -336,7 +349,7 @@ const wchar_t *RichText::ResolveLocalizedTextAndVariables( char const *pchLookup
 	if ( pchLookup[ 0 ] == '#' )
 	{
 		// try lookup in localization tables
-		StringIndex_t index = g_pVGuiLocalize->FindIndex( pchLookup + 1 );
+		StringIndex_t index = localize()->FindIndex( pchLookup + 1 );
 		if ( index == INVALID_STRING_INDEX )
 		{
 /*			// if it's not found, maybe it's a special expanded variable - look for an expansion
@@ -364,7 +377,7 @@ const wchar_t *RichText::ResolveLocalizedTextAndVariables( char const *pchLookup
 		// see if we have a valid string
 		if ( index != INVALID_STRING_INDEX )
 		{
-			wchar_t *format = g_pVGuiLocalize->GetValueByIndex( index );
+			wchar_t *format = localize()->GetValueByIndex( index );
 			Assert( format );
 			if ( format )
 			{
@@ -671,7 +684,7 @@ void RichText::CalculateFade( TRenderState &renderState )
 				float frac = ( m_FormatStream[renderState.formatStreamIndex].fade.flFadeStartTime -  system()->GetCurrentTime() ) / m_FormatStream[renderState.formatStreamIndex].fade.flFadeLength;
 
 				int alpha = frac * m_FormatStream[renderState.formatStreamIndex].fade.iOriginalAlpha;
-				alpha = clamp( alpha, 0, m_FormatStream[renderState.formatStreamIndex].fade.iOriginalAlpha );
+				alpha = min( max(alpha, 0), m_FormatStream[renderState.formatStreamIndex].fade.iOriginalAlpha );
 
 				renderState.textColor.SetColor( renderState.textColor.r(), renderState.textColor.g(), renderState.textColor.b(), alpha );
 			}
@@ -2286,21 +2299,21 @@ void RichText::ApplySettings(KeyValues *inResourceData)
 		const char *textfilename = inResourceData->GetString("textfile", NULL);
 		if ( textfilename )
 		{
-			FileHandle_t f = g_pFullFileSystem->Open( textfilename, "rt" );
+			FileHandle_t f = filesystem()->Open( textfilename, "rt" );
 			if (!f)
 			{
 				Warning( "RichText: textfile parameter '%s' not found.\n", textfilename );
 				return;
 			}
 
-			int len = g_pFullFileSystem->Size( f );
+			int len = filesystem()->Size( f );
 			delete [] m_pszInitialText;
 			m_pszInitialText = new char[ len + 1 ];
-			g_pFullFileSystem->Read( m_pszInitialText, len, f );
+			filesystem()->Read( m_pszInitialText, len, f );
 			m_pszInitialText[len - 1] = 0;
 			SetText( m_pszInitialText );
 
-			g_pFullFileSystem->Close( f );
+			filesystem()->Close( f );
 		}
 	}
 }
@@ -2579,7 +2592,7 @@ void RichText::SetUnderlineFont( HFont font )
 //-----------------------------------------------------------------------------
 void RichText::Validate( CValidator &validator, char *pchName )
 {
-	validator.Push( "vgui::RichText", this, pchName );
+	validator.Push( "vgui2::RichText", this, pchName );
 
 	ValidateObj( m_TextStream );
 	ValidateObj( m_FormatStream );
@@ -2587,7 +2600,7 @@ void RichText::Validate( CValidator &validator, char *pchName )
 	ValidateObj( _clickableTextPanels );
 	validator.ClaimMemory( m_pszInitialText );
 
-	BaseClass::Validate( validator, "vgui::RichText" );
+	BaseClass::Validate( validator, "vgui2::RichText" );
 
 	validator.Pop();
 }

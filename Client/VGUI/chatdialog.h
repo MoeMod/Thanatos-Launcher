@@ -56,12 +56,12 @@ extern Color g_ColorGrey;
 #include "vgui_controls/EditablePanel.h"
 #include "vgui_controls/TextEntry.h"
 
-class CChatDialogLine : public vgui::RichText
+class CChatDialogLine : public vgui2::RichText
 {
-	typedef vgui::RichText BaseClass;
+	typedef vgui2::RichText BaseClass;
 
 public:
-	CChatDialogLine(vgui::Panel *parent, const char *panelNam);
+	CChatDialogLine(vgui2::Panel *parent, const char *panelNam);
 	~CChatDialogLine(void);
 
 public:
@@ -72,13 +72,13 @@ public:
 	int GetCount(void);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void PerformFadeout(void);
 	virtual void InsertAndColorizeText(wchar_t *buf, int clientIndex);
 	virtual void Colorize(int alpha = 255);
 
 public:
-	vgui::HFont GetFont(void) { return m_hFont; }
+	vgui2::HFont GetFont(void) { return m_hFont; }
 	Color GetTextColor(void) { return m_clrText; }
 	void SetNameLength(int iLength) { m_iNameLength = iLength; }
 	void SetNameColor(Color cColor) { m_clrNameColor = cColor; }
@@ -86,7 +86,7 @@ public:
 
 protected:
 	int m_iNameLength;
-	vgui::HFont m_hFont;
+	vgui2::HFont m_hFont;
 
 	Color m_clrText;
 	Color m_clrNameColor;
@@ -101,29 +101,29 @@ protected:
 private:
 	float m_flStartTime;
 	int m_nCount;
-	vgui::HFont m_hFontMarlett;
+	vgui2::HFont m_hFontMarlett;
 
 private:
 	CChatDialogLine(const CChatDialogLine &);
 };
 
-class CChatDialogHistory : public vgui::RichText
+class CChatDialogHistory : public vgui2::RichText
 {
-	DECLARE_CLASS_SIMPLE(CChatDialogHistory, vgui::RichText);
+	DECLARE_CLASS_SIMPLE(CChatDialogHistory, vgui2::RichText);
 
 public:
-	CChatDialogHistory(vgui::Panel *pParent, const char *panelName);
+	CChatDialogHistory(vgui2::Panel *pParent, const char *panelName);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void Paint(void);
 };
 
 class CChatDialogInputLine;
 
-class CChatDialog : public vgui::Frame, public CViewPortPanel
+class CChatDialog : public vgui2::Frame, public CViewPortPanel
 {
-	DECLARE_CLASS_SIMPLE(CChatDialog, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CChatDialog, vgui2::Frame);
 
 public:
 	enum
@@ -156,7 +156,7 @@ public:
 	void Clear(void);
 
 public:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 	virtual void Paint(void);
 	virtual void OnThink(void);
 	virtual void Reset(void);
@@ -177,7 +177,7 @@ public:
 	static int m_nLineCounter;
 
 public:
-	vgui::Panel *GetInputPanel(void);
+	vgui2::Panel *GetInputPanel(void);
 	CChatDialogHistory *GetChatHistory(void);
 	void FadeChatHistory(void);
 
@@ -208,15 +208,15 @@ private:
 
 private:
 	int m_nMessageMode;
-	vgui::HFont m_hChatFont;
+	vgui2::HFont m_hChatFont;
 };
 
-class CChatDialogEntry : public vgui::TextEntry
+class CChatDialogEntry : public vgui2::TextEntry
 {
-	typedef vgui::TextEntry BaseClass;
+	typedef vgui2::TextEntry BaseClass;
 
 public:
-	CChatDialogEntry(vgui::Panel *parent, char const *panelName, CChatDialog *pChat) : BaseClass(parent, panelName)
+	CChatDialogEntry(vgui2::Panel *parent, char const *panelName, CChatDialog *pChat) : BaseClass(parent, panelName)
 	{
 		SetCatchEnterKey(true);
 		SetAllowNonAsciiCharacters(true);
@@ -224,11 +224,11 @@ public:
 		m_pChatDialog = pChat;
 	}
 
-	virtual void OnKeyCodeTyped(vgui::KeyCode code)
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code)
 	{
-		if (code == vgui::KEY_ENTER || code == vgui::KEY_ESCAPE)
+		if (code == vgui2::KEY_ENTER || code == vgui2::KEY_ESCAPE)
 		{
-			if (code != vgui::KEY_ESCAPE)
+			if (code != vgui2::KEY_ESCAPE)
 			{
 				if (m_pChatDialog)
 					m_pChatDialog->Send();
@@ -237,7 +237,7 @@ public:
 			if (m_pChatDialog)
 				m_pChatDialog->StopMessageMode();
 		}
-		else if (code == vgui::KEY_TAB)
+		else if (code == vgui2::KEY_TAB)
 		{
 			return;
 		}
@@ -249,9 +249,9 @@ private:
 	CChatDialog *m_pChatDialog;
 };
 
-class CChatDialogInputLine : public vgui::Panel
+class CChatDialogInputLine : public vgui2::Panel
 {
-	typedef vgui::Panel BaseClass;
+	typedef vgui2::Panel BaseClass;
 
 public:
 	CChatDialogInputLine(CChatDialog *parent, char const *panelName);
@@ -264,15 +264,15 @@ public:
 
 public:
 	virtual void PerformLayout(void);
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme);
 
 public:
-	vgui::Panel *GetInputPanel(void);
-	virtual vgui::VPANEL GetCurrentKeyFocus(void) { return m_pInput->GetVPanel(); }
-	vgui::TextEntry *GetPrompt(void) { return m_pPrompt; }
+	vgui2::Panel *GetInputPanel(void);
+	virtual vgui2::VPANEL GetCurrentKeyFocus(void) { return m_pInput->GetVPanel(); }
+	vgui2::TextEntry *GetPrompt(void) { return m_pPrompt; }
 
 public:
-	vgui::TextEntry *m_pPrompt;
+	vgui2::TextEntry *m_pPrompt;
 	CChatDialogEntry *m_pInput;
 };
 

@@ -1,4 +1,4 @@
-#include "VGUI\VGUI.h"
+#include "VGUI/VGUI2.h"
 #include "VGuiLibrary.h"
 
 class TeamFortressViewport
@@ -50,7 +50,7 @@ public:
 	virtual void InputPlayerSpecial(void) = 0;
 	virtual void OnTick(void) = 0;
 	virtual int GetViewPortScheme(void) = 0;
-	virtual vgui::VPANEL GetViewPortPanel(void) = 0;
+	virtual vgui2::VPANEL GetViewPortPanel(void) = 0;
 	virtual int GetAllowSpectators(void) = 0;
 	virtual void OnLevelChange(void) = 0;
 	virtual void HideBackGround(void) = 0;

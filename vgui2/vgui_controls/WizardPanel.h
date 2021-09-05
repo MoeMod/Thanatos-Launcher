@@ -14,7 +14,7 @@
 
 #include "Frame.h"
 
-namespace vgui
+namespace vgui2
 {
 
 class WizardSubPanel;
@@ -91,7 +91,7 @@ protected:
 	virtual void ActivatePrevSubPanel();
 	virtual void CreateButtons();
 	virtual void RecalculateTabOrdering();
-	virtual vgui::WizardSubPanel *GetCurrentSubPanel()	{ return _currentSubPanel; }
+	virtual vgui2::WizardSubPanel *GetCurrentSubPanel()	{ return _currentSubPanel; }
 
 	// overrides
 	virtual void PerformLayout();

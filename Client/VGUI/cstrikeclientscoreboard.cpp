@@ -21,7 +21,7 @@
 #include "CounterStrikeViewport.h"
 #include "client.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 CCSClientScoreBoardDialog::CCSClientScoreBoardDialog(void) : CClientScoreBoardDialog()
 {
@@ -62,8 +62,8 @@ void CCSClientScoreBoardDialog::SetServerName(const char *hostname)
 	if (control)
 	{
 		wchar_t wzServerLabel[64], wzServerName[64];
-		g_pVGuiLocalize->ConvertANSIToUnicode(hostname, wzServerName, sizeof(wzServerName));
-		g_pVGuiLocalize->ConstructString(wzServerLabel, sizeof(wzServerLabel), g_pVGuiLocalize->Find("#Cstrike_SB_Server"), 1, wzServerName);
+		localize()->ConvertANSIToUnicode(hostname, wzServerName, sizeof(wzServerName));
+		localize()->ConstructString(wzServerLabel, sizeof(wzServerLabel), localize()->Find("#Cstrike_SB_Server"), 1, wzServerName);
 		PostMessage(control, new KeyValues("SetText", "text", wzServerLabel));
 		control->MoveToFront();
 	}
@@ -132,7 +132,7 @@ void CCSClientScoreBoardDialog::PaintBorder(void)
 	BaseClass::PaintBorder();
 }
 
-void CCSClientScoreBoardDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSClientScoreBoardDialog::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
@@ -206,7 +206,7 @@ void CCSClientScoreBoardDialog::Reset(void)
 		SetMapName(mapname);
 }
 
-bool CCSClientScoreBoardDialog::CSPlayerSortFunc(vgui::SectionedListPanel *list, int itemID1, int itemID2)
+bool CCSClientScoreBoardDialog::CSPlayerSortFunc(vgui2::SectionedListPanel *list, int itemID1, int itemID2)
 {
 	KeyValues *it1 = list->GetItemData(itemID1);
 	KeyValues *it2 = list->GetItemData(itemID2);
@@ -289,8 +289,8 @@ void CCSClientScoreBoardDialog::UpdateRoundTimer(void)
 
 		wchar_t wzClockLabel[64];
 		wchar_t wzClockTimer[32];
-		g_pVGuiLocalize->ConvertANSIToUnicode(szText, wzClockTimer, sizeof(wzClockTimer));
-		g_pVGuiLocalize->ConstructString(wzClockLabel, sizeof(wzClockLabel), g_pVGuiLocalize->Find("#Cstrike_Time_LeftVariable"), 1, wzClockTimer);
+		localize()->ConvertANSIToUnicode(szText, wzClockTimer, sizeof(wzClockTimer));
+		localize()->ConstructString(wzClockLabel, sizeof(wzClockLabel), localize()->Find("#Cstrike_Time_LeftVariable"), 1, wzClockTimer);
 		PostMessage(control, new KeyValues("SetText", "text", wzClockLabel));
 		control->MoveToFront();
 
@@ -341,7 +341,7 @@ void CCSClientScoreBoardDialog::UpdateTeamInfo(void)
 
 		if (!teamName)
 		{
-			g_pVGuiLocalize->ConvertANSIToUnicode(g_pViewPort->GetTeamName(teamIndex), name, sizeof(name));
+			localize()->ConvertANSIToUnicode(g_pViewPort->GetTeamName(teamIndex), name, sizeof(name));
 			teamName = name;
 		}
 
@@ -349,7 +349,7 @@ void CCSClientScoreBoardDialog::UpdateTeamInfo(void)
 		{
 			case TEAM_TERRORIST:
 			{
-				teamName = g_pVGuiLocalize->Find("#Cstrike_ScoreBoard_Ter");
+				teamName = localize()->Find("#Cstrike_ScoreBoard_Ter");
 
 				pTeamList = m_pPlayerListT;
 				pTeamLabel = (Label *)FindChildByName("T_Label");
@@ -363,7 +363,7 @@ void CCSClientScoreBoardDialog::UpdateTeamInfo(void)
 
 			case TEAM_CT:
 			{
-				teamName = g_pVGuiLocalize->Find("#Cstrike_ScoreBoard_CT");
+				teamName = localize()->Find("#Cstrike_ScoreBoard_CT");
 
 				pTeamList = m_pPlayerListCT;
 				pTeamLabel = (Label *)FindChildByName("CT_Label");
@@ -416,7 +416,7 @@ void CCSClientScoreBoardDialog::UpdateTeamInfo(void)
 		else
 		{
 #if 0
-			_swprintf(string1, L"%s (%d)", g_pVGuiLocalize->Find("#Cstrike_SB_Score"), g_pViewPort->GetTeamScore(teamIndex));
+			_swprintf(string1, L"%s (%d)", localize()->Find("#Cstrike_SB_Score"), g_pViewPort->GetTeamScore(teamIndex));
 			pTeamList->ModifyColumn(0, "frags", string1);
 #endif
 		}
@@ -495,13 +495,13 @@ void CCSClientScoreBoardDialog::UpdateSpectatorList(void)
 		wchar_t wzSpectatorCount[16];
 		wchar_t wzSpectatorList[1024];
 		_snwprintf(wzSpectatorCount, ARRAYSIZE(wzSpectatorCount), L"%i", nSpectators);
-		g_pVGuiLocalize->ConvertANSIToUnicode(szSpectatorList, wzSpectatorList, sizeof(wzSpectatorList));
-		g_pVGuiLocalize->ConstructString(wzSpectators, sizeof(wzSpectators), g_pVGuiLocalize->Find(pchFormat), 2, wzSpectatorCount, wzSpectatorList);
+		localize()->ConvertANSIToUnicode(szSpectatorList, wzSpectatorList, sizeof(wzSpectatorList));
+		localize()->ConstructString(wzSpectators, sizeof(wzSpectators), localize()->Find(pchFormat), 2, wzSpectatorCount, wzSpectatorList);
 
 		SetDialogVariable("spectators", wzSpectators);
 	}
 	else
-		SetDialogVariable("spectators", g_pVGuiLocalize->Find("#Cstrike_Scoreboard_NoSpectators"));
+		SetDialogVariable("spectators", localize()->Find("#Cstrike_Scoreboard_NoSpectators"));
 }
 
 bool CCSClientScoreBoardDialog::ShouldShowAsSpectator(int iPlayerIndex)

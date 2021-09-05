@@ -15,8 +15,6 @@
 
 #include <stdio.h>
 
-using namespace vgui;
-
 //#include "Taskbar.h"
 //extern CTaskbar *g_pTaskbar;
 
@@ -34,7 +32,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCreateMultiplayerGameDialog::CCreateMultiplayerGameDialog(vgui::Panel *parent) : PropertyDialog(parent, "CreateMultiplayerGameDialog")
+CCreateMultiplayerGameDialog::CCreateMultiplayerGameDialog(vgui2::Panel *parent) : PropertyDialog(parent, "CreateMultiplayerGameDialog")
 {
 	SetSize(348, 460);
 
@@ -62,7 +60,7 @@ CCreateMultiplayerGameDialog::CCreateMultiplayerGameDialog(vgui::Panel *parent) 
 	// load the bot config data
 	if (m_pBotSavedData)
 	{
-		if ( !m_pBotSavedData->LoadFromFile( g_pFullFileSystem, "CSBotConfig.vdf"/*, "CONFIG"*/ ) )
+		if ( !m_pBotSavedData->LoadFromFile( vgui2::filesystem(), "CSBotConfig.vdf"/*, "CONFIG"*/ ) )
 		{
 			m_pBotSavedData->SetString( "bot_difficulty", "0" );
 			m_pBotSavedData->SetString( "bot_join_after_player", "1" );
@@ -139,7 +137,7 @@ CCreateMultiplayerGameDialog::CCreateMultiplayerGameDialog(vgui::Panel *parent) 
 		botDiff = 0;
 	else if (botDiff > 3)
 		botDiff = 3;
-	vgui::RadioButton *button = static_cast<vgui::RadioButton *>( m_pServerPage->FindChildByName( buttonName[ botDiff ] ) );
+	vgui2::RadioButton *button = static_cast<vgui2::RadioButton *>( m_pServerPage->FindChildByName( buttonName[ botDiff ] ) );
 	if (button)
 		button->SetSelected( true );
 }
@@ -167,11 +165,11 @@ void CCreateMultiplayerGameDialog::SetTitle(const char *title, bool surfaceTitle
 		wchar_t *wTitle;
 		wchar_t w_szTitle[1024];
 
-		wTitle = vgui::localize()->Find(title);
+		wTitle = vgui2::localize()->Find(title);
 
 		if(!wTitle)
 		{
-			vgui::localize()->ConvertANSIToUnicode(title,w_szTitle,sizeof(w_szTitle));
+			vgui2::localize()->ConvertANSIToUnicode(title,w_szTitle,sizeof(w_szTitle));
 			wTitle = w_szTitle;
 		}
 
@@ -248,7 +246,7 @@ bool CCreateMultiplayerGameDialog::OnOK(bool applyOnly)
 		}
 
 		// save bot config to a file
-		m_pBotSavedData->SaveToFile( g_pFullFileSystem, "CSBotConfig.vdf"/*, "CONFIG"*/ );
+		m_pBotSavedData->SaveToFile( vgui2::filesystem(), "CSBotConfig.vdf"/*, "CONFIG"*/ );
 
 		// create command to load map, set password, etc
 		sprintf( szMapCommand, "disconnect\nsv_lan 1\nsetmaster enable\nmaxplayers %i\nsv_password \"%s\"\nhostname \"%s\"\ncd fadeout\nmap %s\n",

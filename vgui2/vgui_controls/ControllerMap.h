@@ -16,14 +16,14 @@
 #include <tier1/utlmap.h>
 #include <tier1/utlsymbol.h>
 
-class CControllerMap : public vgui::Panel
+class CControllerMap : public vgui2::Panel
 {
-	DECLARE_CLASS_SIMPLE( CControllerMap, vgui::Panel )
+	DECLARE_CLASS_SIMPLE( CControllerMap, vgui2::Panel )
 
-	virtual void OnKeyCodeTyped( vgui::KeyCode code );
+	virtual void OnKeyCodeTyped( vgui2::KeyCode code );
 
 public:
-	CControllerMap( vgui::Panel *parent, const char *name );
+	CControllerMap( vgui2::Panel *parent, const char *name );
 
 	virtual void ApplySettings( KeyValues *inResourceData );
 

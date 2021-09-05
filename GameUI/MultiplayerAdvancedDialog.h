@@ -9,12 +9,12 @@
 #include "ScriptObject.h"
 #include <vgui/KeyCode.h>
 
-class CMultiplayerAdvancedDialog : public vgui::Frame
+class CMultiplayerAdvancedDialog : public vgui2::Frame
 {
-	DECLARE_CLASS_SIMPLE(CMultiplayerAdvancedDialog, vgui::Frame);
+	DECLARE_CLASS_SIMPLE(CMultiplayerAdvancedDialog, vgui2::Frame);
 
 public:
-	CMultiplayerAdvancedDialog(vgui::Panel *parent);
+	CMultiplayerAdvancedDialog(vgui2::Panel *parent);
 	~CMultiplayerAdvancedDialog(void);
 
 public:
@@ -35,7 +35,7 @@ public:
 public:
 	virtual void OnCommand(const char *command);
 	virtual void OnClose(void);
-	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodeTyped(vgui2::KeyCode code);
 };
 
 #endif

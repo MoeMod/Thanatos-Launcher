@@ -7,18 +7,15 @@
 
 #include "CreateMultiplayerGameServerPage.h"
 
-using namespace vgui;
-
 #include <KeyValues.h>
 #include <vgui_controls/ComboBox.h>
 #include <vgui_controls/RadioButton.h>
+#include <vgui/ILocalize.h>
 #include "FileSystem.h"
 #include "EngineInterface.h"
 
 #include "ModInfo.h"
 //#include "Random.h"
-#include "Encode.h"
-#include "common.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -39,7 +36,7 @@ bool CaselessStringLessThan( const CUtlSymbol &lhs, const CUtlSymbol &rhs )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCreateMultiplayerGameServerPage::CCreateMultiplayerGameServerPage(vgui::Panel *parent, const char *name) : PropertyPage(parent, name), m_MapNames( 0, 0, CaselessStringLessThan )
+CCreateMultiplayerGameServerPage::CCreateMultiplayerGameServerPage(vgui2::Panel *parent, const char *name) : PropertyPage(parent, name), m_MapNames( 0, 0, CaselessStringLessThan )
 {
 	// we can use this if we decide we want to put "listen server" at the end of the game name
 //	static char szHostName[256];
@@ -47,11 +44,11 @@ CCreateMultiplayerGameServerPage::CCreateMultiplayerGameServerPage(vgui::Panel *
 //	szHostName[sizeof( szHostName ) - 1] = '\0';
 
 	// we can use this if we decide we want to put "listen server" at the end of the game name
-	m_pMapList = new ComboBox(this, "MapList", 12, false);
+	m_pMapList = new vgui2::ComboBox(this, "MapList", 12, false);
 
-	m_pBotQuotaCombo = new TextEntry( this, "BotQuotaCombo" );
+	m_pBotQuotaCombo = new vgui2::TextEntry( this, "BotQuotaCombo" );
 	m_pEnableTutorCheck = new CCvarToggleCheckButton( this, "CheckButtonTutor", "#CStrike_Tutor_Enabled", "tutor_enable" );
-	m_pEnableBotsCheck = new CheckButton( this, "EnableBotsCheck", "Enable bots" );
+	m_pEnableBotsCheck = new vgui2::CheckButton( this, "EnableBotsCheck", "Enable bots" );
 
 	LoadControlSettings("Resource/CreateMultiplayerGameServerPage.res");
 
@@ -155,7 +152,7 @@ void CCreateMultiplayerGameServerPage::LoadMaps( const char *pszPathID )
 	if ( pszMPFilter && pszMPFilter[0] == 0 )
 		pszMPFilter = NULL;
 
-	const char *pszFilename = g_pFullFileSystem->FindFirst("maps/*.bsp", &findHandle, pszPathID);
+	const char *pszFilename = vgui2::filesystem()->FindFirst("maps/*.bsp", &findHandle, pszPathID);
 	while (pszFilename)
 	{
 		// remove the text 'maps/' and '.bsp' from the file name to get the map name
@@ -201,9 +198,9 @@ void CCreateMultiplayerGameServerPage::LoadMaps( const char *pszPathID )
 
 		// get the next file
 	nextFile:
-		pszFilename = g_pFullFileSystem->FindNext(findHandle);
+		pszFilename = vgui2::filesystem()->FindNext(findHandle);
 	}
-	g_pFullFileSystem->FindClose(findHandle);
+	vgui2::filesystem()->FindClose(findHandle);
 }
 
 
@@ -243,17 +240,7 @@ void CCreateMultiplayerGameServerPage::LoadMapList()
 
 	for ( int i = m_MapNames.FirstInorder(); i != m_MapNames.InvalidIndex(); i = m_MapNames.NextInorder( i ) )
 	{
-		//m_pMapList->AddItem( m_MapNames[i].String(), new KeyValues( "data", "mapname", m_MapNames[i].String() ) );
-		const char *p_ = strchr(m_MapNames[i].String(), '_');
-		wchar_t *wstrResult = nullptr;
-		if (p_)
-			wstrResult = vgui::localize()->Find(va("#CSO_%s_kr", p_+1));
-		if (!wstrResult)
-			wstrResult = vgui::localize()->Find(va("#MapName_%s", m_MapNames[i].String()));
-		if (!wstrResult)
-			wstrResult = UTF8ToUnicode(m_MapNames[i].String());
-		
-		m_pMapList->AddItem(wstrResult, new KeyValues("data", "mapname", m_MapNames[i].String()));
+		m_pMapList->AddItem( m_MapNames[i].String(), new KeyValues( "data", "mapname", m_MapNames[i].String() ) );
 	}
 	m_MapNames.RemoveAll();
 

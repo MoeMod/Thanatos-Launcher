@@ -12,12 +12,12 @@ typedef struct IVoiceTweak_s IVoiceTweak;
 class CCvarSlider;
 class CCvarToggleCheckButton;
 
-class COptionsSubVoice : public vgui::PropertyPage
+class COptionsSubVoice : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE(COptionsSubVoice, vgui::PropertyPage);
+	DECLARE_CLASS_SIMPLE(COptionsSubVoice, vgui2::PropertyPage);
 
 public:
-	COptionsSubVoice(vgui::Panel *parent);
+	COptionsSubVoice(vgui2::Panel *parent);
 	~COptionsSubVoice(void);
 
 public:
@@ -45,14 +45,14 @@ private:
 
 private:
 	IVoiceTweak *m_pVoiceTweak;
-	vgui::CheckButton *m_pMicBoost;
+	vgui2::CheckButton *m_pMicBoost;
 
-	vgui::ImagePanel *m_pMicMeter;
-	vgui::ImagePanel *m_pMicMeter2;
-	vgui::Button *m_pTestMicrophoneButton;
-	vgui::Label *m_pMicrophoneSliderLabel;
-	vgui::Slider *m_pMicrophoneVolume;
-	vgui::Label *m_pReceiveSliderLabel;
+	vgui2::ImagePanel *m_pMicMeter;
+	vgui2::ImagePanel *m_pMicMeter2;
+	vgui2::Button *m_pTestMicrophoneButton;
+	vgui2::Label *m_pMicrophoneSliderLabel;
+	vgui2::Slider *m_pMicrophoneVolume;
+	vgui2::Label *m_pReceiveSliderLabel;
 	CCvarSlider *m_pReceiveVolume;
 	CCvarToggleCheckButton *m_pVoiceEnableCheckButton;
 

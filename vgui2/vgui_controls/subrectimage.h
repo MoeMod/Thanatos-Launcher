@@ -12,13 +12,13 @@
 #endif
 
 #include "Image.h"
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Check box image
 //-----------------------------------------------------------------------------
-class CSubRectImage : public vgui::Image
+class CSubRectImage : public vgui2::Image
 {
 public:
 	CSubRectImage( const char *filename, bool hardwareFiltered, int subx, int suby, int subw, int subh );
@@ -32,11 +32,11 @@ public:
 	const char *GetName();
 	void Paint();
 	void ForceUpload();
-	vgui::HTexture GetID();
+	vgui2::HTexture GetID();
 	bool IsValid();
 
 private:
-	vgui::HTexture _id;
+	vgui2::HTexture _id;
 	int			sub[ 4 ];
 	char		*_filename;
 	int			_pos[2];

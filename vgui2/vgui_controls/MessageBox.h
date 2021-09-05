@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 #include "Frame.h"
 
 // prevent windows macros from messing with the class
@@ -20,7 +20,7 @@
 #undef MessageBox
 #endif
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ private:
 	
 	KeyValues *m_OkCommand;
 	KeyValues *m_CancelCommand;
-	vgui::Frame *m_pFrameOver;
+	vgui2::Frame *m_pFrameOver;
 	bool m_bNoAutoClose : 1;
 	bool m_bShowMessageBoxOverCursor : 1;
 };

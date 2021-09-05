@@ -10,16 +10,17 @@
 
 #include <vgui/ISurface.h>
 #include <vgui/IScheme.h>
-#include <KeyValues.h>
 
-#include <vgui_controls/Image.h>
-#include <vgui_controls/CheckButton.h>
-#include <vgui_controls/TextImage.h>
+#include <tier1/KeyValues.h>
+
+#include "Image.h"
+#include "TextImage.h"
+#include "CheckButton.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Check box image
@@ -27,7 +28,7 @@ using namespace vgui;
 class CheckImage : public TextImage
 {
 public:
-	CheckImage(CheckButton *CheckButton) : TextImage("g")
+	CheckImage(CheckButton *CheckButton) : TextImage( "g" )
 	{
 		_CheckButton = CheckButton;
 
@@ -48,7 +49,7 @@ public:
 			DrawSetTextColor(_CheckButton->GetDisabledBgColor());
 		}
 		DrawPrintChar(0, 1, 'g');
-
+	
 		// draw border box
 		DrawSetTextColor(_borderColor1);
 		DrawPrintChar(0, 1, 'e');
@@ -58,9 +59,9 @@ public:
 		// draw selected check
 		if (_CheckButton->IsSelected())
 		{
-			if (!_CheckButton->IsEnabled())
+			if ( !_CheckButton->IsEnabled() )
 			{
-				DrawSetTextColor(_CheckButton->GetDisabledFgColor());
+				DrawSetTextColor( _CheckButton->GetDisabledFgColor() );
 			}
 			else
 			{
@@ -81,14 +82,14 @@ private:
 	CheckButton *_CheckButton;
 };
 
-DECLARE_BUILD_FACTORY_DEFAULT_TEXT(CheckButton, CheckButton);
+DECLARE_BUILD_FACTORY_DEFAULT_TEXT( CheckButton, CheckButton );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 CheckButton::CheckButton(Panel *parent, const char *panelName, const char *text) : ToggleButton(parent, panelName, text)
 {
-	SetContentAlignment(a_west);
+ 	SetContentAlignment(a_west);
 	m_bCheckButtonCheckable = true;
 
 	// create the image
@@ -97,7 +98,7 @@ CheckButton::CheckButton(Panel *parent, const char *panelName, const char *text)
 	SetTextImageIndex(1);
 	SetImageAtIndex(0, _checkBoxImage, CHECK_INSET);
 
-	_selectedFgColor = Color(196, 181, 80, 255);
+	_selectedFgColor = Color( 196, 181, 80, 255 );
 	_disabledFgColor = Color(130, 130, 130, 255);
 	_disabledBgColor = Color(62, 70, 55, 255);
 }
@@ -118,18 +119,18 @@ void CheckButton::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetDefaultColor(GetSchemeColor("CheckButton.TextColor", pScheme), GetBgColor());
-	_checkBoxImage->_bgColor = GetSchemeColor("CheckButton.BgColor", Color(62, 70, 55, 255), pScheme);
-	_checkBoxImage->_borderColor1 = GetSchemeColor("CheckButton.Border1", Color(20, 20, 20, 255), pScheme);
-	_checkBoxImage->_borderColor2 = GetSchemeColor("CheckButton.Border2", Color(90, 90, 90, 255), pScheme);
-	_checkBoxImage->_checkColor = GetSchemeColor("CheckButton.Check", Color(20, 20, 20, 255), pScheme);
-	_selectedFgColor = GetSchemeColor("CheckButton.SelectedTextColor", GetSchemeColor("ControlText", pScheme), pScheme);
+	SetDefaultColor( GetSchemeColor("CheckButton.TextColor", GetSchemeColor("FgColor", pScheme), pScheme), GetBgColor() );
+	_checkBoxImage->_bgColor = GetSchemeColor("CheckButton.BgColor", GetSchemeColor("CheckBgColor", Color(62, 70, 55, 255), pScheme), pScheme);
+	_checkBoxImage->_borderColor1 = GetSchemeColor("CheckButton.Border1", GetSchemeColor("CheckButtonBorder1", Color(20, 20, 20, 255), pScheme), pScheme);
+	_checkBoxImage->_borderColor2 = GetSchemeColor("CheckButton.Border2", GetSchemeColor("CheckButtonBorder2", Color(90, 90, 90, 255), pScheme), pScheme);
+	_checkBoxImage->_checkColor = GetSchemeColor("CheckButton.Check", GetSchemeColor("CheckButtonCheck", Color(20, 20, 20, 255), pScheme), pScheme);
+	_selectedFgColor = GetSchemeColor("CheckButton.SelectedTextColor", GetSchemeColor("BrightControlText", GetSchemeColor("ControlText", pScheme), pScheme), pScheme);
 	_disabledFgColor = GetSchemeColor("CheckButton.DisabledFgColor", Color(130, 130, 130, 255), pScheme);
 	_disabledBgColor = GetSchemeColor("CheckButton.DisabledBgColor", Color(62, 70, 55, 255), pScheme);
 
 	SetContentAlignment(Label::a_west);
 
-	_checkBoxImage->SetFont(pScheme->GetFont("Marlett", IsProportional()));
+	_checkBoxImage->SetFont( pScheme->GetFont("Marlett", IsProportional()) );
 	_checkBoxImage->ResizeImageToContent();
 	SetImageAtIndex(0, _checkBoxImage, CHECK_INSET);
 
@@ -148,14 +149,14 @@ IBorder *CheckButton::GetBorder(bool depressed, bool armed, bool selected, bool 
 //-----------------------------------------------------------------------------
 // Purpose: Check the button
 //-----------------------------------------------------------------------------
-void CheckButton::SetSelected(bool state)
+void CheckButton::SetSelected(bool state )
 {
 	if (m_bCheckButtonCheckable)
 	{
 		// send a message saying we've been checked
 		KeyValues *msg = new KeyValues("CheckButtonChecked", "state", (int)state);
 		PostActionSignal(msg);
-
+		
 		BaseClass::SetSelected(state);
 	}
 }

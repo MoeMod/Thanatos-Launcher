@@ -104,11 +104,11 @@ char *CHudTextMessage::LookupString(const char *msg, int *msg_dest)
 			if (result[0] == '#')
 			{
 				static char convert[1024];
-				const wchar_t *pBuf = g_pVGuiLocalize->Find(result);
+				const wchar_t *pBuf = vgui2::localize()->Find(result);
 
 				if (pBuf)
 				{
-					g_pVGuiLocalize->ConvertUnicodeToANSI(pBuf, convert, sizeof(convert));
+					vgui2::localize()->ConvertUnicodeToANSI(pBuf, convert, sizeof(convert));
 					return convert;
 				}
 			}

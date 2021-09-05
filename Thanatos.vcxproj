@@ -14,17 +14,18 @@
     <ProjectGuid>{0931F284-681C-41F1-AF30-97D1DCE2283C}</ProjectGuid>
     <RootNamespace>MetaHook</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -55,16 +56,16 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>Client;FuckWorld;Renderer;Library;util;.\;..\;HLSDK\common;HLSDK\cl_dll;HLSDK\engine;HLSDK\pm_shared;HLSDK\public;Interface;Interface\VGUI;SourceSDK;SourceSDK\public;SourceSDK\common;SourceSDK\tier1;vgui2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -86,11 +87,12 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4311;4312;4819;4996</DisableSpecificWarnings>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -245,7 +247,6 @@
     <ClCompile Include="GameUI\CvarToggleCheckButton.cpp" />
     <ClCompile Include="GameUI\GameConsole.cpp" />
     <ClCompile Include="GameUI\GameConsoleDialog.cpp" />
-    <ClCompile Include="GameUI\GameLoading.cpp" />
     <ClCompile Include="GameUI\GameUI_Interface.cpp" />
     <ClCompile Include="GameUI\KeyToggleCheckButton.cpp" />
     <ClCompile Include="GameUI\LabeledCommandComboBox.cpp" />
@@ -317,6 +318,7 @@
     <ClCompile Include="ServerBrowser\ServerListCompare.cpp" />
     <ClCompile Include="ServerBrowser\SpectateGames.cpp" />
     <ClCompile Include="SourceSDK\deadborder.cpp" />
+    <ClCompile Include="SourceSDK\deadinput.cpp" />
     <ClCompile Include="SourceSDK\deadipanel.cpp" />
     <ClCompile Include="SourceSDK\deadscheme.cpp" />
     <ClCompile Include="SourceSDK\deadsurface.cpp" />
@@ -360,10 +362,15 @@
     <ClCompile Include="util\sys.cpp" />
     <ClCompile Include="vgui2\Bitmap.cpp" />
     <ClCompile Include="vgui2\Border.cpp" />
-    <ClCompile Include="vgui2\Clip2D.cpp" />
-    <ClCompile Include="vgui2\Input.cpp" />
+    <ClCompile Include="vgui2\HtmlWindow.cpp" />
+    <ClCompile Include="vgui2\input.cpp" />
+    <ClCompile Include="vgui2\LocalizedStringTable.cpp" />
+    <ClCompile Include="vgui2\MemoryBitmap.cpp" />
     <ClCompile Include="vgui2\Scheme.cpp" />
-    <ClCompile Include="vgui2\vgui2.cpp" />
+    <ClCompile Include="vgui2\system_win32.cpp" />
+    <ClCompile Include="vgui2\UnicodeFileHelpers.cpp" />
+    <ClCompile Include="vgui2\vgui.cpp" />
+    <ClCompile Include="vgui2\VGuiKeyValues.cpp" />
     <ClCompile Include="vgui2\vgui_controls\AnalogBar.cpp" />
     <ClCompile Include="vgui2\vgui_controls\AnimatingImagePanel.cpp" />
     <ClCompile Include="vgui2\vgui_controls\AnimationController.cpp" />
@@ -432,6 +439,12 @@
     <ClCompile Include="vgui2\vgui_controls\vgui_controls.cpp" />
     <ClCompile Include="vgui2\vgui_controls\WizardPanel.cpp" />
     <ClCompile Include="vgui2\vgui_controls\WizardSubPanel.cpp" />
+    <ClCompile Include="vgui2\vgui_key_translation.cpp" />
+    <ClCompile Include="vgui2\vgui_surfacelib\FontAmalgam.cpp" />
+    <ClCompile Include="vgui2\vgui_surfacelib\FontManager.cpp" />
+    <ClCompile Include="vgui2\vgui_surfacelib\Win32Font.cpp" />
+    <ClCompile Include="vgui2\VPanel.cpp" />
+    <ClCompile Include="vgui2\VPanelWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BugReport\BugReport.h" />
@@ -551,7 +564,6 @@
     <ClInclude Include="GameUI\EngineInterface.h" />
     <ClInclude Include="GameUI\GameConsole.h" />
     <ClInclude Include="GameUI\GameConsoleDialog.h" />
-    <ClInclude Include="GameUI\GameLoading.h" />
     <ClInclude Include="GameUI\GameUI_Interface.h" />
     <ClInclude Include="GameUI\KeyToggleCheckButton.h" />
     <ClInclude Include="GameUI\LabeledCommandComboBox.h" />
@@ -578,6 +590,7 @@
     <ClInclude Include="Interface\ICommandLine.h" />
     <ClInclude Include="Interface\IEngine.h" />
     <ClInclude Include="Interface\IEngineSurface.h" />
+    <ClInclude Include="Interface\IEngineVGui.h" />
     <ClInclude Include="Interface\IFileSystem.h" />
     <ClInclude Include="Interface\IGameConsole.h" />
     <ClInclude Include="Interface\IGameList.h" />
@@ -599,20 +612,23 @@
     <ClInclude Include="Interface\VGUI\Dar.h" />
     <ClInclude Include="Interface\VGUI\IBorder.h" />
     <ClInclude Include="Interface\VGUI\IClientPanel.h" />
-    <ClInclude Include="Interface\VGUI\IEngineVGui.h" />
+    <ClInclude Include="Interface\VGUI\IClientVGUI.h" />
     <ClInclude Include="Interface\VGUI\IHTML.h" />
     <ClInclude Include="Interface\VGUI\IImage.h" />
     <ClInclude Include="Interface\VGUI\IInput.h" />
     <ClInclude Include="Interface\VGUI\IInputInternal.h" />
+    <ClInclude Include="Interface\VGUI\IKeyValues.h" />
     <ClInclude Include="Interface\VGUI\ILocalize.h" />
     <ClInclude Include="Interface\VGUI\IPanel.h" />
     <ClInclude Include="Interface\VGUI\IScheme.h" />
+    <ClInclude Include="Interface\VGUI\ISchemeManager.h" />
     <ClInclude Include="Interface\VGUI\ISurface.h" />
     <ClInclude Include="Interface\VGUI\ISystem.h" />
     <ClInclude Include="Interface\VGUI\IVGUI.h" />
     <ClInclude Include="Interface\VGUI\KeyCode.h" />
     <ClInclude Include="Interface\VGUI\MouseCode.h" />
-    <ClInclude Include="Interface\VGUI\VGUI.h" />
+    <ClInclude Include="Interface\VGUI\Vertex_t.h" />
+    <ClInclude Include="Interface\VGUI\VGUI2.h" />
     <ClInclude Include="Library\gl\gl.h" />
     <ClInclude Include="Library\gl\glext.h" />
     <ClInclude Include="Library\gl\glut.h" />
@@ -723,6 +739,7 @@
     <ClInclude Include="SourceSDK\tier1\utllinkedlist.h" />
     <ClInclude Include="SourceSDK\tier1\utlmap.h" />
     <ClInclude Include="SourceSDK\tier1\utlmemory.h" />
+    <ClInclude Include="SourceSDK\tier1\UtlPriorityQueue.h" />
     <ClInclude Include="SourceSDK\tier1\utlqueue.h" />
     <ClInclude Include="SourceSDK\tier1\utlrbtree.h" />
     <ClInclude Include="SourceSDK\tier1\utlstring.h" />
@@ -731,6 +748,7 @@
     <ClInclude Include="SourceSDK\tier1\utlvector.h" />
     <ClInclude Include="SourceSDK\vstdlib\IKeyValuesSystem.h" />
     <ClInclude Include="SourceSDK\vstdlib\random.h" />
+    <ClInclude Include="SourceSDK\vstdlib\strtools.h" />
     <ClInclude Include="SourceSDK\vstdlib\vstdlib.h" />
     <ClInclude Include="SourceSDK\winlite.h" />
     <ClInclude Include="util\common.h" />
@@ -743,11 +761,16 @@
     <ClInclude Include="util\Socket.h" />
     <ClInclude Include="util\sys.h" />
     <ClInclude Include="util\XorStr.h" />
-    <ClInclude Include="vgui2\bitmap.h" />
-    <ClInclude Include="vgui2\Clip2D.h" />
-    <ClInclude Include="vgui2\Input.h" />
-    <ClInclude Include="vgui2\vgui2.h" />
-    <ClInclude Include="vgui2\VGUI_Border.h" />
+    <ClInclude Include="vgui2\Bitmap.h" />
+    <ClInclude Include="vgui2\Border.h" />
+    <ClInclude Include="vgui2\HtmlWindow.h" />
+    <ClInclude Include="vgui2\input.h" />
+    <ClInclude Include="vgui2\LocalizedStringTable.h" />
+    <ClInclude Include="vgui2\Memorybitmap.h" />
+    <ClInclude Include="vgui2\system_win32.h" />
+    <ClInclude Include="vgui2\UnicodeFileHelpers.h" />
+    <ClInclude Include="vgui2\vgui.h" />
+    <ClInclude Include="vgui2\VGuiKeyValues.h" />
     <ClInclude Include="vgui2\vgui_controls\AnalogBar.h" />
     <ClInclude Include="vgui2\vgui_controls\AnimatingImagePanel.h" />
     <ClInclude Include="vgui2\vgui_controls\AnimationController.h" />
@@ -820,6 +843,12 @@
     <ClInclude Include="vgui2\vgui_controls\URLLabel.h" />
     <ClInclude Include="vgui2\vgui_controls\WizardPanel.h" />
     <ClInclude Include="vgui2\vgui_controls\WizardSubPanel.h" />
+    <ClInclude Include="vgui2\vgui_key_translation.h" />
+    <ClInclude Include="vgui2\vgui_surfacelib\FontAmalgam.h" />
+    <ClInclude Include="vgui2\vgui_surfacelib\FontManager.h" />
+    <ClInclude Include="vgui2\vgui_surfacelib\Win32Font.h" />
+    <ClInclude Include="vgui2\VPanel.h" />
+    <ClInclude Include="vgui2\VPanelWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BugReport\BugReport.rc" />

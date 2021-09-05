@@ -1,4 +1,4 @@
 #include <VGUI\IPanel.h>
 
-extern vgui::IPanel *g_pPanel;
+extern vgui2::IPanel *g_pPanel;
 void BaseUI_InstallHook(void);

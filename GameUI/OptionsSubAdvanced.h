@@ -14,12 +14,12 @@
 class CCvarSlider;
 class CCvarToggleCheckButton;
 
-class COptionsSubAdvanced : public vgui::PropertyPage
+class COptionsSubAdvanced : public vgui2::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE(COptionsSubAdvanced, vgui::PropertyPage);
+	DECLARE_CLASS_SIMPLE(COptionsSubAdvanced, vgui2::PropertyPage);
 
 public:
-	COptionsSubAdvanced(vgui::Panel *parent);
+	COptionsSubAdvanced(vgui2::Panel *parent);
 	~COptionsSubAdvanced(void);
 
 public:

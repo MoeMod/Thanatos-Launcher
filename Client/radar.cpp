@@ -462,14 +462,14 @@ void CHudRadar::DrawPlayerLocation(void)
 	int string_width, string_height;
 	int x, y;
 
-	locString = vgui::localize()->Find(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location);
+	locString = vgui2::localize()->Find(g_PlayerExtraInfo[gHUD.m_iPlayerNum].location);
 
 	if (!locString)
 		return;
 
-	static vgui::HScheme hScheme = vgui::scheme()->GetDefaultScheme();
-	static vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(hScheme);
-	static vgui::HFont hudFont = pScheme->GetFont("EngineFont", true);
+	static vgui2::HScheme hScheme = vgui2::scheme()->GetDefaultScheme();
+	static vgui2::IScheme *pScheme = vgui2::scheme()->GetIScheme(hScheme);
+	static vgui2::HFont hudFont = pScheme->GetFont("EngineFont", true);
 
 	center_y = 128;
 	center_x = 32;
@@ -480,14 +480,14 @@ void CHudRadar::DrawPlayerLocation(void)
 	if (ScreenWidth >= 640)
 		center_x = 64;
 
-	vgui::surface()->GetTextSize(hudFont, locString, string_width, string_height);
+	vgui2::surface()->GetTextSize(hudFont, locString, string_width, string_height);
 
 	x = max(0, center_x - (string_width / 2));
 	y = center_y + (string_height / 2);
 
-	vgui::surface()->DrawSetTextFont(hudFont);
-	vgui::surface()->DrawSetTextPos(x, y);
-	vgui::surface()->DrawSetTextColor(0, 204, 0, 255);
-	vgui::surface()->DrawPrintText(locString, wcslen(locString));
-	vgui::surface()->DrawFlushText();
+	vgui2::surface()->DrawSetTextFont(hudFont);
+	vgui2::surface()->DrawSetTextPos(x, y);
+	vgui2::surface()->DrawSetTextColor(0, 204, 0, 255);
+	vgui2::surface()->DrawPrintText(locString, wcslen(locString));
+	vgui2::surface()->DrawFlushText();
 }

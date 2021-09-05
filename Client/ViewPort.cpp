@@ -25,7 +25,7 @@
 Panel *g_lastPanel = NULL;
 Button *g_lastButton = NULL;
 
-using namespace vgui;
+using namespace vgui2;
 
 CViewport *g_pViewPort = NULL;
 

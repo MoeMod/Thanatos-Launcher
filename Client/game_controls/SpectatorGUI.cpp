@@ -7,6 +7,7 @@
 #include <vgui/IScheme.h>
 #include <vgui/ILocalize.h>
 #include <vgui/ISurface.h>
+#include <vgui/IInputInternal.h>
 #include <KeyValues.h>
 #include <vgui_controls/ImageList.h>
 #include <FileSystem.h>
@@ -31,7 +32,7 @@ CSpectatorMenu *g_pSpectatorMenu = NULL;
 
 static char *s_SpectatorModes[] = { "#Spec_Mode0", "#Spec_Mode1", "#Spec_Mode2", "#Spec_Mode3", "#Spec_Mode4", "#Spec_Mode5", "" };
 
-using namespace vgui;
+using namespace vgui2;
 
 class CSpecButton : public Button
 {
@@ -39,7 +40,7 @@ public:
 	CSpecButton(Panel *parent, const char *panelName): Button(parent, panelName, "") {}
 
 private:
-	void ApplySchemeSettings(vgui::IScheme *pScheme)
+	void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		Button::ApplySchemeSettings(pScheme);
 		SetFont(pScheme->GetFont("Marlett", IsProportional()));
@@ -130,8 +131,8 @@ void CSpectatorMenu::PerformLayout(void)
 
 void CSpectatorMenu::OnTextChanged(KeyValues *data)
 {
-	Panel *panel = reinterpret_cast<vgui::Panel *>(data->GetPtr("panel"));
-	vgui::ComboBox *box = dynamic_cast<vgui::ComboBox *>(panel);
+	Panel *panel = reinterpret_cast<vgui2::Panel *>(data->GetPtr("panel"));
+	vgui2::ComboBox *box = dynamic_cast<vgui2::ComboBox *>(panel);
 
 	if (box == m_pConfigSettings)
 	{
@@ -184,7 +185,7 @@ void CSpectatorMenu::OnKeyCodePressed(KeyCode code)
 		BaseClass::OnKeyCodePressed(code);
 }
 
-void CSpectatorMenu::OnKeyCodeReleased(vgui::KeyCode code)
+void CSpectatorMenu::OnKeyCodeReleased(vgui2::KeyCode code)
 {
 	if (code == m_iDuckKey)
 	{
@@ -261,26 +262,26 @@ void CSpectatorMenu::Update(void)
 			int bufsize = strlen(oldName) * 2 + 1;
 			char *newName = (char *)_alloca(bufsize);
 			gViewPortInterface->MakeSafeName(oldName, newName, bufsize);
-			g_pVGuiLocalize->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
+			localize()->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
 
 			const char *teamname = g_pViewPort->GetTeamName(g_PlayerExtraInfo[iPlayerIndex].teamnumber);
 
 			if (teamname)
 			{
 				Q_snprintf(localizeTeamName, sizeof(localizeTeamName), "#%s", teamname);
-				team = g_pVGuiLocalize->Find(localizeTeamName);
+				team = localize()->Find(localizeTeamName);
 
 				if (!team)
 				{
-					g_pVGuiLocalize->ConvertANSIToUnicode(teamname, teamText, sizeof(teamText));
+					localize()->ConvertANSIToUnicode(teamname, teamText, sizeof(teamText));
 					team = teamText;
 				}
 
-				g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem_Team"), 2, playerName, team);
+				localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem_Team"), 2, playerName, team);
 			}
 			else
 			{
-				g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem"), 1, playerName);
+				localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem"), 1, playerName);
 			}
 
 			Q_snprintf(szPlayerIndex, sizeof(szPlayerIndex), "%d", iPlayerIndex);
@@ -311,26 +312,26 @@ void CSpectatorMenu::Update(void)
 		int bufsize = strlen(oldName) * 2 + 1;
 		char *newName = (char *)_alloca(bufsize);
 		gViewPortInterface->MakeSafeName(oldName, newName, bufsize);
-		g_pVGuiLocalize->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
+		localize()->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
 
 		const char *teamname = g_pViewPort->GetTeamName(g_PlayerExtraInfo[iPlayerIndex].teamnumber);
 
 		if (teamname)
 		{
 			Q_snprintf(localizeTeamName, sizeof(localizeTeamName), "#%s", teamname);
-			team = g_pVGuiLocalize->Find(localizeTeamName);
+			team = localize()->Find(localizeTeamName);
 
 			if (!team)
 			{
-				g_pVGuiLocalize->ConvertANSIToUnicode(teamname, teamText, sizeof(teamText));
+				localize()->ConvertANSIToUnicode(teamname, teamText, sizeof(teamText));
 				team = teamText;
 			}
 
-			g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem_Team"), 2, playerName, team);
+			localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem_Team"), 2, playerName, team);
 		}
 		else
 		{
-			g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem"), 1, playerName);
+			localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem"), 1, playerName);
 		}
 
 		Q_snprintf(szPlayerIndex, sizeof(szPlayerIndex), "%d", iPlayerIndex);
@@ -565,18 +566,18 @@ void CSpectatorGUI::Update(void)
 		int bufsize = strlen(oldName) * 2 + 1;
 		char *newName = (char *)_alloca(bufsize);
 		gViewPortInterface->MakeSafeName(oldName, newName, bufsize);
-		g_pVGuiLocalize->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
+		localize()->ConvertANSIToUnicode(newName, playerName, sizeof(playerName));
 
 		int iHealth = g_PlayerExtraInfo[playernum].health;
 
 		if (iHealth > 0)
 		{
 			_snwprintf(health, sizeof(health), L"%i", iHealth);
-			g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem_Team"), 2, playerName, health);
+			localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem_Team"), 2, playerName, health);
 		}
 		else
 		{
-			g_pVGuiLocalize->ConstructString(playerText, sizeof(playerText), g_pVGuiLocalize->Find("#Spec_PlayerItem"), 1, playerName);
+			localize()->ConstructString(playerText, sizeof(playerText), localize()->Find("#Spec_PlayerItem"), 1, playerName);
 		}
 
 		m_pPlayerLabel->SetText(playerText);
@@ -592,10 +593,10 @@ void CSpectatorGUI::Update(void)
 	if (engine->IsHLTV())
 	{
 		Q_snprintf(tempstr, sizeof(tempstr), "Spectators : %d", HLTVCamera()->GetNumSpectators());
-		g_pVGuiLocalize->ConvertANSIToUnicode(tempstr,szEtxraInfo, sizeof(szEtxraInfo));
+		localize()->ConvertANSIToUnicode(tempstr,szEtxraInfo, sizeof(szEtxraInfo));
 
 		Q_strncpy(tempstr, HLTVCamera()->GetTitleText(), sizeof(tempstr));
-		g_pVGuiLocalize->ConvertANSIToUnicode(tempstr,szTitleLabel, sizeof(szTitleLabel));
+		localize()->ConvertANSIToUnicode(tempstr,szTitleLabel, sizeof(szTitleLabel));
 	}
 	else
 #endif
@@ -603,9 +604,9 @@ void CSpectatorGUI::Update(void)
 		Q_FileBase(gEngfuncs.pfnGetLevelName(), tempstr, sizeof(tempstr));
 
 		wchar_t wMapName[64];
-		g_pVGuiLocalize->ConvertANSIToUnicode(tempstr, wMapName, sizeof(wMapName));
-		g_pVGuiLocalize->ConstructString(szEtxraInfo, sizeof(szEtxraInfo), g_pVGuiLocalize->Find("#Spec_Map"), 1, wMapName);
-		g_pVGuiLocalize->ConvertANSIToUnicode("", szTitleLabel, sizeof(szTitleLabel));
+		localize()->ConvertANSIToUnicode(tempstr, wMapName, sizeof(wMapName));
+		localize()->ConstructString(szEtxraInfo, sizeof(szEtxraInfo), localize()->Find("#Spec_Map"), 1, wMapName);
+		localize()->ConvertANSIToUnicode("", szTitleLabel, sizeof(szTitleLabel));
 	}
 
 	SetLabelText("extrainfo", szEtxraInfo);

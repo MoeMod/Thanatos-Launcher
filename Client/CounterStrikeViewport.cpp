@@ -54,7 +54,7 @@ const char *(__fastcall *g_pfnGetServerName)(void *pthis, int);
 void (__fastcall *g_pfnInputPlayerSpecial)(void *pthis, int);
 void (__fastcall *g_pfnOnTick)(void *pthis, int);
 int (__fastcall *g_pfnGetViewPortScheme)(void *pthis, int);
-vgui::VPANEL (__fastcall *g_pfnGetViewPortPanel)(void *pthis, int);
+vgui2::VPANEL (__fastcall *g_pfnGetViewPortPanel)(void *pthis, int);
 int (__fastcall *g_pfnGetAllowSpectators)(void *pthis, int);
 void (__fastcall *g_pfnOnLevelChange)(void *pthis, int);
 void (__fastcall *g_pfnHideBackGround)(void *pthis, int);
@@ -68,7 +68,7 @@ void (__fastcall *g_pfnMakeSafeName)(void *pthis, int, const char *oldName, char
 void (__fastcall *g_pfnInitialize)(void *pthis, int, CreateInterfaceFn *factories, int count);
 void (__fastcall *g_pfnStart)(void *pthis, int);
 void (__fastcall *g_pfnShutdown)(void *pthis, int);
-void (__fastcall *g_pfnSetParent)(void *pthis, int, vgui::VPANEL parent);
+void (__fastcall *g_pfnSetParent)(void *pthis, int, vgui2::VPANEL parent);
 bool (__fastcall *g_pfnUseVGUI1)(void *pthis, int);
 void (__fastcall *g_pfnActivateClientUI)(void *pthis, int);
 void (__fastcall *g_pfnHideClientUI)(void *pthis, int);
@@ -154,7 +154,7 @@ public:
 	virtual void InputPlayerSpecial(void);
 	virtual void OnTick(void);
 	virtual int GetViewPortScheme(void);
-	virtual vgui::VPANEL GetViewPortPanel(void);
+	virtual vgui2::VPANEL GetViewPortPanel(void);
 	virtual int GetAllowSpectators(void);
 	virtual void OnLevelChange(void);
 	virtual void HideBackGround(void);
@@ -399,7 +399,7 @@ int CCounterStrikeViewport::GetViewPortScheme(void)
 	return g_pViewPort->GetScheme();
 }
 
-vgui::VPANEL CCounterStrikeViewport::GetViewPortPanel(void)
+vgui2::VPANEL CCounterStrikeViewport::GetViewPortPanel(void)
 {
 	return g_pViewPort->GetVPanel();
 }

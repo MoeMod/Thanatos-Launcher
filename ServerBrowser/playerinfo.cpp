@@ -1,5 +1,6 @@
 #include "playerinfo.h"
-#include "IServerPlayersResponse.h"
+#include <ServerBrowser/IServerRefreshResponse.h>
+#include <ServerBrowser/IServerPlayersResponse.h>
 #include "PlayerInfoMsgHandler.h"
 #include "Socket.h"
 #include "proto_oob.h"

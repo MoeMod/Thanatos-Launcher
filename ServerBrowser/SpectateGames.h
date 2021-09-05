@@ -10,7 +10,7 @@
 class CSpectateGames : public CInternetGames
 {
 public:
-	CSpectateGames(vgui::Panel *parent);
+	CSpectateGames(vgui2::Panel *parent);
 
 protected:
 	virtual void RequestServers(int Start, const char *filterString);

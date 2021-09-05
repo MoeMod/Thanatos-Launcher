@@ -10,17 +10,17 @@
 #include <vgui/KeyCode.h>
 #include <filesystem.h>
 
-extern vgui::Panel *g_lastPanel;
-extern vgui::Button *g_lastButton;
+extern vgui2::Panel *g_lastPanel;
+extern vgui2::Button *g_lastButton;
 
 template <class T>
 
-class MouseOverButton : public vgui::Button
+class MouseOverButton : public vgui2::Button
 {
-	DECLARE_CLASS_SIMPLE(MouseOverButton, vgui::Button);
+	DECLARE_CLASS_SIMPLE(MouseOverButton, vgui2::Button);
 
 public:
-	MouseOverButton(vgui::Panel *parent, const char *panelName, T *templatePanel) : Button(parent, panelName, "MouseOverButton")
+	MouseOverButton(vgui2::Panel *parent, const char *panelName, T *templatePanel) : Button(parent, panelName, "MouseOverButton")
 	{
 		m_pPanel = new T(parent, NULL);
 		m_pPanel ->SetVisible(false);
@@ -131,7 +131,7 @@ public:
 		}
 	}
 
-	virtual void OnKeyCodeReleased(vgui::KeyCode code)
+	virtual void OnKeyCodeReleased(vgui2::KeyCode code)
 	{
 		BaseClass::OnKeyCodeReleased(code);
 
@@ -148,6 +148,6 @@ protected:
 	bool m_bUpdateDefaultButtons;
 };
 
-#define MouseOverPanelButton MouseOverButton<vgui::EditablePanel>
+#define MouseOverPanelButton MouseOverButton<vgui2::EditablePanel>
 
 #endif

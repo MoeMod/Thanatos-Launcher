@@ -121,9 +121,9 @@ bool CHudZ4EDamageStar::Star::ShouldDraw(float flTime) const
 void CHudZ4EDamageStar::Star::Draw(float flTime) const
 {
 	Vector2D vecPosition = GetPos();
-	static auto star1 = vgui::scheme()->GetImage("resource/Hud/damagestar/NoBossStar", true);
-	static auto star2 = vgui::scheme()->GetImage("resource/Hud/damagestar/AIDamageEffect", true);
-	static auto star_ef = vgui::scheme()->GetImage("resource/Hud/damagestar/NoBossEffect", true);
+	static auto star1 = vgui2::scheme()->GetImage("resource/Hud/damagestar/NoBossStar", true);
+	static auto star2 = vgui2::scheme()->GetImage("resource/Hud/damagestar/AIDamageEffect", true);
+	static auto star_ef = vgui2::scheme()->GetImage("resource/Hud/damagestar/NoBossEffect", true);
 	gEngfuncs.pTriAPI->RenderMode(kRenderTransTexture);
 
 	auto &star = m_iType ? star2 : star1;

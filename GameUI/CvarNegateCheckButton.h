@@ -6,12 +6,12 @@
 
 #include <vgui_controls/CheckButton.h>
 
-class CCvarNegateCheckButton : public vgui::CheckButton
+class CCvarNegateCheckButton : public vgui2::CheckButton
 {
-	DECLARE_CLASS_SIMPLE(CCvarNegateCheckButton, vgui::CheckButton);
+	DECLARE_CLASS_SIMPLE(CCvarNegateCheckButton, vgui2::CheckButton);
 
 public:
-	CCvarNegateCheckButton(vgui::Panel *parent, const char *panelName, const char *text, char const *cvarname);
+	CCvarNegateCheckButton(vgui2::Panel *parent, const char *panelName, const char *text, char const *cvarname);
 	~CCvarNegateCheckButton(void);
 
 public:

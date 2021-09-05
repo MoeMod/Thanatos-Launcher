@@ -20,10 +20,10 @@ class CCreateMultiplayerGameBotPage;
 //-----------------------------------------------------------------------------
 // Purpose: dialog for launching a listenserver
 //-----------------------------------------------------------------------------
-class CCreateMultiplayerGameDialog : public vgui::PropertyDialog
+class CCreateMultiplayerGameDialog : public vgui2::PropertyDialog
 {
 public:
-	CCreateMultiplayerGameDialog(vgui::Panel *parent);
+	CCreateMultiplayerGameDialog(vgui2::Panel *parent);
 	~CCreateMultiplayerGameDialog();
 
 protected:
@@ -32,7 +32,7 @@ protected:
 	virtual void SetTitle(const char *title, bool surfaceTitle);
 
 private:
-	typedef vgui::PropertyDialog BaseClass;
+	typedef vgui2::PropertyDialog BaseClass;
 
 	CCreateMultiplayerGameServerPage *m_pServerPage;
 	CCreateMultiplayerGameGameplayPage *m_pGameplayPage;

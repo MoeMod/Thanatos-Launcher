@@ -5,7 +5,6 @@
 //=============================================================================
 
 #include "EngineInterface.h"
-#include "BaseUI.h"
 #include "OptionsSubKeyboard.h"
 #include "VControlsListPanel.h"
 
@@ -27,7 +26,6 @@
 #include "tier1/UtlBuffer.h"
 #include "igameuifuncs.h"
 #include <vstdlib/IKeyValuesSystem.h>
-#include "tier2/tier2.h"
 
 #include "keydefs.h"
 // memdbgon must be the last include file in a .cpp file!!!
@@ -36,223 +34,221 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-using namespace vgui;
-
 #define SCRIPTS_DIR "gfx/shell"
 
 //-----------------------------------------------------------------------------
 // Purpose: Converts a vgui key code into an engine key code
 //-----------------------------------------------------------------------------
-int ConvertVGUIToEngine( vgui::KeyCode code )
+int ConvertVGUIToEngine( vgui2::KeyCode code )
 {
 	switch ( code )
 	{
-	case vgui::KEY_0:
+	case vgui2::KEY_0:
 		return '0';
-	case vgui::KEY_1:
+	case vgui2::KEY_1:
 		return '1';
-	case vgui::KEY_2:
+	case vgui2::KEY_2:
 		return '2';
-	case vgui::KEY_3:
+	case vgui2::KEY_3:
 		return '3';
-	case vgui::KEY_4:
+	case vgui2::KEY_4:
 		return '4';
-	case vgui::KEY_5:
+	case vgui2::KEY_5:
 		return '5';
-	case vgui::KEY_6:
+	case vgui2::KEY_6:
 		return '6';
-	case vgui::KEY_7:
+	case vgui2::KEY_7:
 		return '7';
-	case vgui::KEY_8:
+	case vgui2::KEY_8:
 		return '8';
-	case vgui::KEY_9:
+	case vgui2::KEY_9:
 		return '9';
-	case vgui::KEY_A:
+	case vgui2::KEY_A:
 		return 'a';
-	case vgui::KEY_B:
+	case vgui2::KEY_B:
 		return 'b';
-	case vgui::KEY_C:
+	case vgui2::KEY_C:
 		return 'c';
-	case vgui::KEY_D:
+	case vgui2::KEY_D:
 		return 'd';
-	case vgui::KEY_E:
+	case vgui2::KEY_E:
 		return 'e';
-	case vgui::KEY_F:
+	case vgui2::KEY_F:
 		return 'f';
-	case vgui::KEY_G:
+	case vgui2::KEY_G:
 		return 'g';
-	case vgui::KEY_H:
+	case vgui2::KEY_H:
 		return 'h';
-	case vgui::KEY_I:
+	case vgui2::KEY_I:
 		return 'i';
-	case vgui::KEY_J:
+	case vgui2::KEY_J:
 		return 'j';
-	case vgui::KEY_K:
+	case vgui2::KEY_K:
 		return 'k';
-	case vgui::KEY_L:
+	case vgui2::KEY_L:
 		return 'l';
-	case vgui::KEY_M:
+	case vgui2::KEY_M:
 		return 'm';
-	case vgui::KEY_N:
+	case vgui2::KEY_N:
 		return 'n';
-	case vgui::KEY_O:
+	case vgui2::KEY_O:
 		return 'o';
-	case vgui::KEY_P:
+	case vgui2::KEY_P:
 		return 'p';
-	case vgui::KEY_Q:
+	case vgui2::KEY_Q:
 		return 'q';
-	case vgui::KEY_R:
+	case vgui2::KEY_R:
 		return 'r';
-	case vgui::KEY_S:
+	case vgui2::KEY_S:
 		return 's';
-	case vgui::KEY_T:
+	case vgui2::KEY_T:
 		return 't';
-	case vgui::KEY_U:
+	case vgui2::KEY_U:
 		return 'u';
-	case vgui::KEY_V:
+	case vgui2::KEY_V:
 		return 'v';
-	case vgui::KEY_W:
+	case vgui2::KEY_W:
 		return 'w';
-	case vgui::KEY_X:
+	case vgui2::KEY_X:
 		return 'x';
-	case vgui::KEY_Y:
+	case vgui2::KEY_Y:
 		return 'y';
-	case vgui::KEY_Z:
+	case vgui2::KEY_Z:
 		return 'z';
-	case vgui::KEY_PAD_0:
+	case vgui2::KEY_PAD_0:
 		return K_KP_INS;
-	case vgui::KEY_PAD_1:
+	case vgui2::KEY_PAD_1:
 		return K_KP_END;
-	case vgui::KEY_PAD_2:
+	case vgui2::KEY_PAD_2:
 		return K_KP_DOWNARROW;
-	case vgui::KEY_PAD_3:
+	case vgui2::KEY_PAD_3:
 		return K_KP_PGDN;
-	case vgui::KEY_PAD_4:
+	case vgui2::KEY_PAD_4:
 		return K_KP_LEFTARROW;
-	case vgui::KEY_PAD_5:
+	case vgui2::KEY_PAD_5:
 		return K_KP_5;
-	case vgui::KEY_PAD_6:
+	case vgui2::KEY_PAD_6:
 		return K_KP_RIGHTARROW;
-	case vgui::KEY_PAD_7:
+	case vgui2::KEY_PAD_7:
 		return K_KP_HOME;
-	case vgui::KEY_PAD_8:
+	case vgui2::KEY_PAD_8:
 		return K_KP_UPARROW;
-	case vgui::KEY_PAD_9:
+	case vgui2::KEY_PAD_9:
 		return K_KP_PGUP;
-	case vgui::KEY_PAD_DIVIDE:
+	case vgui2::KEY_PAD_DIVIDE:
 		return K_KP_SLASH;
-	case vgui::KEY_PAD_MINUS:
+	case vgui2::KEY_PAD_MINUS:
 		return K_KP_MINUS;
-	case vgui::KEY_PAD_PLUS:
+	case vgui2::KEY_PAD_PLUS:
 		return K_KP_PLUS;
-	case vgui::KEY_PAD_ENTER:
+	case vgui2::KEY_PAD_ENTER:
 		return K_KP_ENTER;
-	case vgui::KEY_PAD_DECIMAL:
+	case vgui2::KEY_PAD_DECIMAL:
 		return K_KP_DEL;
-	case vgui::KEY_PAD_MULTIPLY:
+	case vgui2::KEY_PAD_MULTIPLY:
 		return '*';
-	case vgui::KEY_LBRACKET:
+	case vgui2::KEY_LBRACKET:
 		return '[';
-	case vgui::KEY_RBRACKET:
+	case vgui2::KEY_RBRACKET:
 		return ']';
-	case vgui::KEY_SEMICOLON:
+	case vgui2::KEY_SEMICOLON:
 		return ';';
-	case vgui::KEY_APOSTROPHE:
+	case vgui2::KEY_APOSTROPHE:
 		return '\'';
-	case vgui::KEY_BACKQUOTE:
+	case vgui2::KEY_BACKQUOTE:
 		return '`';
-	case vgui::KEY_COMMA:
+	case vgui2::KEY_COMMA:
 		return ',';
-	case vgui::KEY_PERIOD:
+	case vgui2::KEY_PERIOD:
 		return '.';
-	case vgui::KEY_SLASH:
+	case vgui2::KEY_SLASH:
 		return '/';
-	case vgui::KEY_BACKSLASH:
+	case vgui2::KEY_BACKSLASH:
 		return '\\';
-	case vgui::KEY_MINUS:
+	case vgui2::KEY_MINUS:
 		return '-';
-	case vgui::KEY_EQUAL:
+	case vgui2::KEY_EQUAL:
 		return '=';
-	case vgui::KEY_ENTER:
+	case vgui2::KEY_ENTER:
 		return K_ENTER;
-	case vgui::KEY_SPACE:
+	case vgui2::KEY_SPACE:
 		return K_SPACE;
-	case vgui::KEY_BACKSPACE:
+	case vgui2::KEY_BACKSPACE:
 		return K_BACKSPACE;
-	case vgui::KEY_TAB:
+	case vgui2::KEY_TAB:
 		return K_TAB;
-	case vgui::KEY_CAPSLOCK:
+	case vgui2::KEY_CAPSLOCK:
 		return K_CAPSLOCK;
-	case vgui::KEY_ESCAPE:
+	case vgui2::KEY_ESCAPE:
 		return K_ESCAPE;
-	case vgui::KEY_INSERT:
+	case vgui2::KEY_INSERT:
 		return K_INS;
-	case vgui::KEY_DELETE:
+	case vgui2::KEY_DELETE:
 		return K_DEL;
-	case vgui::KEY_HOME:
+	case vgui2::KEY_HOME:
 		return K_HOME;
-	case vgui::KEY_END:
+	case vgui2::KEY_END:
 		return K_END;
-	case vgui::KEY_PAGEUP:
+	case vgui2::KEY_PAGEUP:
 		return K_PGUP;
-	case vgui::KEY_PAGEDOWN:
+	case vgui2::KEY_PAGEDOWN:
 		return K_PGDN;
-	case vgui::KEY_BREAK:
+	case vgui2::KEY_BREAK:
 		return K_PAUSE; 
-	case vgui::KEY_LSHIFT:
+	case vgui2::KEY_LSHIFT:
 		return K_SHIFT;
-	case vgui::KEY_RSHIFT:
+	case vgui2::KEY_RSHIFT:
 		return K_SHIFT;
-	case vgui::KEY_LALT:
+	case vgui2::KEY_LALT:
 		return K_ALT;
-	case vgui::KEY_RALT:
+	case vgui2::KEY_RALT:
 		return K_ALT;
-	case vgui::KEY_LCONTROL:
+	case vgui2::KEY_LCONTROL:
 		return K_CTRL;
-	case vgui::KEY_RCONTROL:
+	case vgui2::KEY_RCONTROL:
 		return K_CTRL;
-	case vgui::KEY_UP:
+	case vgui2::KEY_UP:
 		return K_UPARROW;
-	case vgui::KEY_LEFT:
+	case vgui2::KEY_LEFT:
 		return K_LEFTARROW;
-	case vgui::KEY_DOWN:
+	case vgui2::KEY_DOWN:
 		return K_DOWNARROW;
-	case vgui::KEY_RIGHT:
+	case vgui2::KEY_RIGHT:
 		return K_RIGHTARROW;
-	case vgui::KEY_F1:
+	case vgui2::KEY_F1:
 		return K_F1;
-	case vgui::KEY_F2:
+	case vgui2::KEY_F2:
 		return K_F2;
-	case vgui::KEY_F3:
+	case vgui2::KEY_F3:
 		return K_F3;
-	case vgui::KEY_F4:
+	case vgui2::KEY_F4:
 		return K_F4;
-	case vgui::KEY_F5:
+	case vgui2::KEY_F5:
 		return K_F5;
-	case vgui::KEY_F6:
+	case vgui2::KEY_F6:
 		return K_F6;
-	case vgui::KEY_F7:
+	case vgui2::KEY_F7:
 		return K_F7;
-	case vgui::KEY_F8:
+	case vgui2::KEY_F8:
 		return K_F8;
-	case vgui::KEY_F9:
+	case vgui2::KEY_F9:
 		return K_F9;
-	case vgui::KEY_F10:
+	case vgui2::KEY_F10:
 		return K_F10;
-	case vgui::KEY_F11:
+	case vgui2::KEY_F11:
 		return K_F11;
-	case vgui::KEY_F12:
+	case vgui2::KEY_F12:
 		return K_F12;
 
 	// Not defined by HL engine
-	case vgui::KEY_NUMLOCK:
-	case vgui::KEY_LWIN:
-	case vgui::KEY_RWIN:
-	case vgui::KEY_APP:
-	case vgui::KEY_SCROLLLOCK:
-	case vgui::KEY_CAPSLOCKTOGGLE:
-	case vgui::KEY_NUMLOCKTOGGLE:
-	case vgui::KEY_SCROLLLOCKTOGGLE:
+	case vgui2::KEY_NUMLOCK:
+	case vgui2::KEY_LWIN:
+	case vgui2::KEY_RWIN:
+	case vgui2::KEY_APP:
+	case vgui2::KEY_SCROLLLOCK:
+	case vgui2::KEY_CAPSLOCKTOGGLE:
+	case vgui2::KEY_NUMLOCKTOGGLE:
+	case vgui2::KEY_SCROLLLOCKTOGGLE:
 		return 0;
 	}
 
@@ -292,7 +288,7 @@ static const char *GetButtonName( int buttons )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-COptionsSubKeyboard::COptionsSubKeyboard(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubKeyboard::COptionsSubKeyboard(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 	memset( m_Bindings, 0, sizeof( m_Bindings ));
 
@@ -303,8 +299,8 @@ COptionsSubKeyboard::COptionsSubKeyboard(vgui::Panel *parent) : PropertyPage(par
 	// Parse default descriptions
 	ParseActionDescriptions();
 
-	m_pSetBindingButton = new Button(this, "ChangeKeyButton", "");
-	m_pClearBindingButton = new Button(this, "ClearKeyButton", "");
+	m_pSetBindingButton = new vgui2::Button(this, "ChangeKeyButton", "");
+	m_pClearBindingButton = new vgui2::Button(this, "ClearKeyButton", "");
 
 	LoadControlSettings("Resource/OptionsSubKeyboard.res");
 
@@ -359,7 +355,7 @@ void COptionsSubKeyboard::OnCommand( const char *command )
 	if ( !stricmp( command, "Defaults" )  )
 	{
 		// open a box asking if we want to restore defaults
-		QueryBox *box = new QueryBox("#GameUI_KeyboardSettings", "#GameUI_KeyboardSettingsText");
+		vgui2::QueryBox *box = new vgui2::QueryBox("#GameUI_KeyboardSettings", "#GameUI_KeyboardSettingsText");
 		box->AddActionSignalTarget(this);
 		box->SetOKCommand(new KeyValues("Command", "command", "DefaultsOK"));
 		box->DoModal();
@@ -372,11 +368,11 @@ void COptionsSubKeyboard::OnCommand( const char *command )
 	}
 	else if ( !m_pKeyBindList->IsCapturing() && !stricmp( command, "ChangeKey" ) )
 	{
-		m_pKeyBindList->StartCaptureMode(dc_none);
+		m_pKeyBindList->StartCaptureMode(vgui2::dc_none);
 	}
 	else if ( !m_pKeyBindList->IsCapturing() && !stricmp( command, "ClearKey" ) )
 	{
-		OnKeyCodePressed(KEY_DELETE);
+		OnKeyCodePressed(vgui2::KeyCode::KEY_DELETE);
         m_pKeyBindList->RequestFocus();
 	}
 	else
@@ -435,14 +431,14 @@ void COptionsSubKeyboard::ParseActionDescriptions( void )
 	// Load the kb_act.lst
 	sprintf( szFileName, "%s/kb_act.lst", SCRIPTS_DIR );
 
-	FileHandle_t fh = g_pFullFileSystem->Open(szFileName, "rb");
+	FileHandle_t fh = vgui2::filesystem()->Open(szFileName, "rb");
 	if (fh == FILESYSTEM_INVALID_HANDLE)
 		return;
 
-	int size = g_pFullFileSystem->Size(fh);
+	int size = vgui2::filesystem()->Size(fh);
 	CUtlBuffer buf(0, size + 1, CUtlBuffer::TEXT_BUFFER);
-	g_pFullFileSystem->Read(buf.Base(), size, fh);
-	g_pFullFileSystem->Close(fh);
+	vgui2::filesystem()->Read(buf.Base(), size, fh);
+	vgui2::filesystem()->Close(fh);
 	
 	data = (char *)buf.Base();
 	data[size] = 0;
@@ -473,9 +469,9 @@ void COptionsSubKeyboard::ParseActionDescriptions( void )
 			{
 				// add header item
 				m_pKeyBindList->AddSection(++sectionIndex, szDescription);
-				m_pKeyBindList->AddColumnToSection(sectionIndex, "Action", szDescription, SectionedListPanel::COLUMN_BRIGHT, 226);
-				m_pKeyBindList->AddColumnToSection(sectionIndex, "Key", "#GameUI_KeyButton", SectionedListPanel::COLUMN_BRIGHT, 128);
-				m_pKeyBindList->AddColumnToSection(sectionIndex, "AltKey", "#GameUI_Alternate", SectionedListPanel::COLUMN_BRIGHT, 128);
+				m_pKeyBindList->AddColumnToSection(sectionIndex, "Action", szDescription, vgui2::SectionedListPanel::COLUMN_BRIGHT, 226);
+				m_pKeyBindList->AddColumnToSection(sectionIndex, "Key", "#GameUI_KeyButton", vgui2::SectionedListPanel::COLUMN_BRIGHT, 128);
+				m_pKeyBindList->AddColumnToSection(sectionIndex, "AltKey", "#GameUI_Alternate", vgui2::SectionedListPanel::COLUMN_BRIGHT, 128);
 			}
 			else
 			{
@@ -793,14 +789,14 @@ void COptionsSubKeyboard::FillInDefaultBindings( void )
 	// Read in the defaults list.
 	sprintf( szFileName, "%s/kb_def.lst", SCRIPTS_DIR );
 
-	FileHandle_t fh = g_pFullFileSystem->Open( szFileName, "rb" );
+	FileHandle_t fh = vgui2::filesystem()->Open( szFileName, "rb" );
 	if (fh == FILESYSTEM_INVALID_HANDLE)
 		return;
 
-	int size = g_pFullFileSystem->Size(fh);
+	int size = vgui2::filesystem()->Size(fh);
 	CUtlBuffer buf(0, size, CUtlBuffer::TEXT_BUFFER);
-	g_pFullFileSystem->Read( buf.Base(), size, fh );
-	g_pFullFileSystem->Close(fh);
+	vgui2::filesystem()->Read( buf.Base(), size, fh );
+	vgui2::filesystem()->Close(fh);
 
 	// Clear out all current bindings
 	ClearBindItems();
@@ -896,7 +892,7 @@ void COptionsSubKeyboard::Finish(int key, int button)
 	int r = m_pKeyBindList->GetItemOfInterest();
 
 	// Retrieve clicked row and column
-	m_pKeyBindList->EndCaptureMode(dc_arrow);
+	m_pKeyBindList->EndCaptureMode(vgui2::dc_arrow);
 
 	// Find item for this row
 	KeyValues *item = m_pKeyBindList->GetItemData(r);
@@ -927,7 +923,7 @@ void COptionsSubKeyboard::Finish(int key, int button)
 //-----------------------------------------------------------------------------
 // Purpose: key input handler
 //-----------------------------------------------------------------------------
-void COptionsSubKeyboard::OnKeyCodeTyped(vgui::KeyCode code)
+void COptionsSubKeyboard::OnKeyCodeTyped(vgui2::KeyCode code)
 {
 	if ( m_pKeyBindList->IsCapturing() )
 	{
@@ -950,26 +946,26 @@ void COptionsSubKeyboard::OnKeyTyped(wchar_t unichar)
 //-----------------------------------------------------------------------------
 // Purpose: mouse input handler
 //-----------------------------------------------------------------------------
-void COptionsSubKeyboard::OnMousePressed(vgui::MouseCode code)
+void COptionsSubKeyboard::OnMousePressed(vgui2::MouseCode code)
 {
 	if ( m_pKeyBindList->IsCapturing() )
 	{
 		switch ( code )
 		{
 		default:
-		case vgui::MOUSE_LEFT:
+		case vgui2::MOUSE_LEFT:
 			Finish( 0, 0x01 );
 			break;
-		case vgui::MOUSE_RIGHT:
+		case vgui2::MOUSE_RIGHT:
 			Finish( 0, 0x02 );
 			break;
-		case vgui::MOUSE_MIDDLE:
+		case vgui2::MOUSE_MIDDLE:
 			Finish( 0, 0x04 );
 			break;
-		case vgui::MOUSE_4:
+		case vgui2::MOUSE_4:
 			Finish( 0, 0x08 );
 			break;
-		case vgui::MOUSE_5:
+		case vgui2::MOUSE_5:
 			Finish( 0, 0x10 );
 			break;
 		}
@@ -982,26 +978,26 @@ void COptionsSubKeyboard::OnMousePressed(vgui::MouseCode code)
 //-----------------------------------------------------------------------------
 // Purpose: sets up mouse capture mode
 //-----------------------------------------------------------------------------
-void COptionsSubKeyboard::OnMouseDoublePressed(vgui::MouseCode code)
+void COptionsSubKeyboard::OnMouseDoublePressed(vgui2::MouseCode code)
 {
 	if ( m_pKeyBindList->IsCapturing() )
 	{
 		switch ( code )
 		{
 		default:
-		case vgui::MOUSE_LEFT:
+		case vgui2::MOUSE_LEFT:
 			Finish( 0, 0x01 );
 			break;
-		case vgui::MOUSE_RIGHT:
+		case vgui2::MOUSE_RIGHT:
 			Finish( 0, 0x02 );
 			break;
-		case vgui::MOUSE_MIDDLE:
+		case vgui2::MOUSE_MIDDLE:
 			Finish( 0, 0x04 );
 			break;
-		case vgui::MOUSE_4:
+		case vgui2::MOUSE_4:
 			Finish( 0, 0x08 );
 			break;
-		case vgui::MOUSE_5:
+		case vgui2::MOUSE_5:
 			Finish( 0, 0x10 );
 			break;
 		}
@@ -1035,7 +1031,7 @@ void COptionsSubKeyboard::OnMouseWheeled(int delta)
 //-----------------------------------------------------------------------------
 // Purpose: Check for enter key and go into keybinding mode if it was pressed
 //-----------------------------------------------------------------------------
-void COptionsSubKeyboard::OnKeyCodePressed(vgui::KeyCode code)
+void COptionsSubKeyboard::OnKeyCodePressed(vgui2::KeyCode code)
 {
 	// Enter key pressed and not already trapping next key/button press
 	if (!m_pKeyBindList->IsCapturing())
@@ -1049,14 +1045,14 @@ void COptionsSubKeyboard::OnKeyCodePressed(vgui::KeyCode code)
 		if (visible)
 		{
 			/*
-			if (vgui::KEY_ENTER == code)
+			if (vgui2::KEY_ENTER == code)
 			{
 				// start editing
 				PostMessage(this, new KeyValues("Command", "command", "ChangeKey"));
 				// message handled, don't pass on
 				return;
 			}
-			else */if (vgui::KEY_DELETE == code)
+			else */if (vgui2::KEY_DELETE == code)
 			{
 				// find the current binding and remove it
 				KeyValues *kv = m_pKeyBindList->GetItemData(r);

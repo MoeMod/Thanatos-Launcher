@@ -7,6 +7,7 @@
 
 #include <vgui/KeyCode.h>
 #include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <vgui/MouseCode.h>
 #include <vgui/ISurface.h>
 
@@ -16,7 +17,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 CUtlVector< ToolWindow * > ToolWindow::s_ToolWindows;
 

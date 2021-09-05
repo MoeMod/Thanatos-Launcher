@@ -3,9 +3,7 @@
 #include <KeyValues.h>
 #include <vgui/ILocalize.h>
 
-using namespace vgui;
-
-CLabeledCommandComboBox::CLabeledCommandComboBox(vgui::Panel *parent, const char *panelName) : vgui::ComboBox(parent, panelName, 6, false)
+CLabeledCommandComboBox::CLabeledCommandComboBox(vgui2::Panel *parent, const char *panelName) : vgui2::ComboBox(parent, panelName, 6, false)
 {
 	AddActionSignalTarget(this);
 	m_iCurrentSelection = -1;
@@ -33,10 +31,10 @@ void CLabeledCommandComboBox::AddItem(char const *text, char const *engineComman
 
 	if (text[0] == '#')
 	{
-		wchar_t *localized = g_pVGuiLocalize->Find(text);
+		wchar_t *localized = vgui2::localize()->Find(text);
 
 		if (localized)
-			g_pVGuiLocalize->ConvertUnicodeToANSI(localized, item->name, sizeof(item->name));
+			vgui2::localize()->ConvertUnicodeToANSI(localized, item->name, sizeof(item->name));
 	}
 
 	Q_strncpy(item->command, engineCommand, sizeof(item->command));

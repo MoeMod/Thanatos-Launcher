@@ -14,8 +14,10 @@
 
 #include "Panel.h"
 #include <tier1/utlvector.h>
+#include <vgui/MouseCode.h>
+#include <vgui/KeyCode.h>
 
-namespace vgui
+namespace vgui2
 {
 
 class ClickPanel;

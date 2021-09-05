@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -7,21 +7,22 @@
 
 #define PROTECTED_THINGS_DISABLE
 
-#include <vgui/IPanel.h>
-#include <vgui/IInput.h>
-#include <vgui/ISurface.h>
-#include <KeyValues.h>
-#include <vgui/IVGui.h>
+#include <tier1/KeyValues.h>
 
-#include <vgui_controls/Controls.h>
-#include <vgui_controls/MenuButton.h>
-#include <vgui_controls/Menu.h>
-#include <vgui_controls/TextImage.h>
+#include <vgui/IPanel.h>
+#include <vgui/IInputInternal.h>
+#include <vgui/ISurface.h>
+#include <vgui/IVGUI.h>
+
+#include "Controls.h"
+#include "MenuButton.h"
+#include "Menu.h"
+#include "TextImage.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 DECLARE_BUILD_FACTORY_DEFAULT_TEXT( MenuButton, MenuButton );
 
@@ -305,7 +306,20 @@ bool MenuButton::IsDropMenuButtonStyle() const
 
 void MenuButton::Paint(void)
 {
-	BaseClass::Paint();
+	//BaseClass::Paint();
+	if (ShouldPaint())
+	{
+		Label::Paint();
+
+		if (HasFocus() && IsEnabled() && IsDrawingFocusBox())
+		{
+			int x0, y0, x1, y1;
+			int wide, tall;
+			GetSize(wide, tall);
+			x0 = 3, y0 = 3, x1 = wide - 4, y1 = tall - 2;
+			DrawFocusBorder(x0, y0, x1, y1);
+		}
+	}
 
 	if ( !IsDropMenuButtonStyle() )
 		return;

@@ -20,9 +20,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
-vgui::Panel *URLLabel_Factory()
+vgui2::Panel *URLLabel_Factory()
 {
 	return new URLLabel(NULL, NULL, "URLLabel", NULL);
 }
@@ -107,11 +107,11 @@ void URLLabel::ApplySettings(KeyValues *inResourceData)
 		if (pszURL[0] == '#')
 		{
 			// it's a localized url, look it up
-			const wchar_t *ws = g_pVGuiLocalize->Find(pszURL + 1);
+			const wchar_t *ws = localize()->Find(pszURL + 1);
 			if (ws)
 			{
 				char localizedUrl[512];
-				g_pVGuiLocalize->ConvertUnicodeToANSI(ws, localizedUrl, sizeof(localizedUrl));
+				localize()->ConvertUnicodeToANSI(ws, localizedUrl, sizeof(localizedUrl));
 				SetURL(localizedUrl);
 			}
 		}

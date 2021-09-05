@@ -15,7 +15,7 @@
 
 class DirectoryTreeView;
 
-namespace vgui
+namespace vgui2
 {
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class DirectorySelectDialog : public Frame
 	DECLARE_CLASS_SIMPLE( DirectorySelectDialog, Frame );
 
 public:
-	DirectorySelectDialog(vgui::Panel *parent, const char *title);
+	DirectorySelectDialog(vgui2::Panel *parent, const char *title);
 
 	// sets where it should start searching
 	void SetStartDirectory(const char *path);
@@ -69,11 +69,11 @@ private:
 	char m_szCurrentDir[512];
 	char m_szDefaultCreateDirName[64];
 	char m_szCurrentDrive[16];
-	vgui::TreeView *m_pDirTree;
-	vgui::ComboBox *m_pDriveCombo;
-	vgui::Button *m_pCancelButton;
-	vgui::Button *m_pSelectButton;
-	vgui::Button *m_pCreateButton;
+	vgui2::TreeView *m_pDirTree;
+	vgui2::ComboBox *m_pDriveCombo;
+	vgui2::Button *m_pCancelButton;
+	vgui2::Button *m_pSelectButton;
+	vgui2::Button *m_pCreateButton;
 
 	friend class DirectoryTreeView;
 };

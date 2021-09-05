@@ -6,10 +6,10 @@
 
 #include <vgui_controls/Panel.h>
 
-class CBitmapImagePanel : public vgui::Panel
+class CBitmapImagePanel : public vgui2::Panel
 {
 public:
-	CBitmapImagePanel(vgui::Panel *parent, char const *panelName, char const *filename = NULL);
+	CBitmapImagePanel(vgui2::Panel *parent, char const *panelName, char const *filename = NULL);
 
 public:
 	virtual void PaintBackground(void);
@@ -23,7 +23,7 @@ private:
 	void forceUpload(void);
 
 private:
-	typedef vgui::Panel BaseClass;
+	typedef vgui2::Panel BaseClass;
 
 private:
 	bool m_bUploaded;

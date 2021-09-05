@@ -5,6 +5,8 @@
 #include <vgui/IScheme.h>
 #include <vgui/ILocalize.h>
 #include <vgui/ISurface.h>
+#include <vgui/IInput.h>
+#include <vgui/IInputInternal.h>
 #include <KeyValues.h>
 #include <vgui_controls/ImageList.h>
 #include <FileSystem.h>
@@ -18,7 +20,7 @@
 
 #include "CounterStrikeViewport.h"
 
-using namespace vgui;
+using namespace vgui2;
 
 bool AvatarIndexLessFunc(const int &lhs, const int &rhs)
 {
@@ -131,7 +133,7 @@ void CClientScoreBoardDialog::ApplySchemeSettings(IScheme *pScheme)
 	PostApplySchemeSettings(pScheme);
 }
 
-void CClientScoreBoardDialog::PostApplySchemeSettings(vgui::IScheme *pScheme)
+void CClientScoreBoardDialog::PostApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	for (int i = 0; i < m_pImageList->GetImageCount(); i++)
 	{
@@ -284,17 +286,17 @@ void CClientScoreBoardDialog::AddSection(int teamType, int teamNumber)
 {
 	if (teamType == TYPE_TEAM)
 	{
-		wchar_t *teamName = g_pVGuiLocalize->Find(g_pViewPort->GetTeamName(teamNumber));
+		wchar_t *teamName = localize()->Find(g_pViewPort->GetTeamName(teamNumber));
 		wchar_t name[64];
 		wchar_t string1[1024];
 
 		if (!teamName)
 		{
-			g_pVGuiLocalize->ConvertANSIToUnicode(g_pViewPort->GetTeamName(teamNumber), name, sizeof(name));
+			localize()->ConvertANSIToUnicode(g_pViewPort->GetTeamName(teamNumber), name, sizeof(name));
 			teamName = name;
 		}
 
-		g_pVGuiLocalize->ConstructString(string1, sizeof(string1), g_pVGuiLocalize->Find("#Player"), 2, teamName);
+		localize()->ConstructString(string1, sizeof(string1), localize()->Find("#Player"), 2, teamName);
 
 		m_pPlayerList->AddSection(m_iSectionId, "", StaticPlayerSortFunc);
 
@@ -318,7 +320,7 @@ void CClientScoreBoardDialog::AddSection(int teamType, int teamNumber)
 	}
 }
 
-bool CClientScoreBoardDialog::StaticPlayerSortFunc(vgui::SectionedListPanel *list, int itemID1, int itemID2)
+bool CClientScoreBoardDialog::StaticPlayerSortFunc(vgui2::SectionedListPanel *list, int itemID1, int itemID2)
 {
 	KeyValues *it1 = list->GetItemData(itemID1);
 	KeyValues *it2 = list->GetItemData(itemID2);

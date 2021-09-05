@@ -17,8 +17,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-using namespace vgui;
-
 static const int MAX_CVAR_TEXT = 64;
 
 CCvarTextEntry::CCvarTextEntry(Panel *parent, const char *panelName, char const *cvarname)
@@ -43,7 +41,7 @@ CCvarTextEntry::~CCvarTextEntry()
 	}
 }
 
-void CCvarTextEntry::ApplySchemeSettings(IScheme *pScheme)
+void CCvarTextEntry::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 	if (GetMaximumCharCount() < 0 || GetMaximumCharCount() > MAX_CVAR_TEXT)
@@ -79,7 +77,7 @@ void CCvarTextEntry::ApplyChanges(bool immediate)
 
 void CCvarTextEntry::Reset()
 {
-	char *value = engine->pfnGetCvarString(m_pszCvarName);
+	auto value = engine->pfnGetCvarString(m_pszCvarName);
 	if (value && value[0])
 	{
 		SetText(value);
@@ -110,7 +108,7 @@ void CCvarTextEntry::OnTextChanged()
 //-----------------------------------------------------------------------------
 // Purpose: Message mapping 
 //-----------------------------------------------------------------------------
-vgui::MessageMapItem_t CCvarTextEntry::m_MessageMap[] =
+vgui2::MessageMapItem_t CCvarTextEntry::m_MessageMap[] =
 {
 	MAP_MESSAGE(CCvarTextEntry, "TextChanged", OnTextChanged),	// custom message
 };

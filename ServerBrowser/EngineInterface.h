@@ -21,7 +21,7 @@ typedef float vec3_t[3];
 
 extern cl_enginefunc_t *engine;
 
-namespace vgui
+namespace vgui2
 {
 	class ISurface;
 };

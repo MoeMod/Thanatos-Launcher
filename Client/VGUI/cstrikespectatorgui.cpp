@@ -42,7 +42,7 @@ CCSSpectatorGUI::CCSSpectatorGUI(void) : CSpectatorGUI()
 	InvalidateLayout();
 }
 
-void CCSSpectatorGUI::ApplySchemeSettings(vgui::IScheme *pScheme)
+void CCSSpectatorGUI::ApplySchemeSettings(vgui2::IScheme *pScheme)
 {
 	char text[4096];
 	int temp;

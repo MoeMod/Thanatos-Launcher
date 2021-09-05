@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ?1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -6,19 +6,20 @@
 //=============================================================================//
 
 #include <vgui/IScheme.h>
-#include <vgui/IVGui.h>
-#include "vgui/ISurface.h"
-#include <KeyValues.h>
+#include <vgui/IVGUI.h>
+#include <vgui/ISurface.h>
 
-#include <vgui_controls/Controls.h>
-#include <vgui_controls/Menu.h>
-#include <vgui_controls/MenuItem.h>
-#include <vgui_controls/TextImage.h>
+#include <tier1/KeyValues.h>
+
+#include "Controls.h"
+#include "Menu.h"
+#include "MenuItem.h"
+#include "TextImage.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 //-----------------------------------------------------------------------------
 // Purpose: Check box image
@@ -379,11 +380,14 @@ void MenuItem::ApplySchemeSettings(IScheme *pScheme)
 	Button::ApplySchemeSettings(pScheme);
 
 	// get color settings
-	SetDefaultColor(GetSchemeColor("Menu.TextColor", GetFgColor(), pScheme), GetSchemeColor("Menu.BgColor", GetBgColor(), pScheme));
-	SetArmedColor(GetSchemeColor("Menu.ArmedTextColor", GetFgColor(), pScheme), GetSchemeColor("Menu.ArmedBgColor", GetBgColor(), pScheme));
-	SetDepressedColor(GetSchemeColor("Menu.ArmedTextColor", GetFgColor(), pScheme), GetSchemeColor("Menu.ArmedBgColor", GetBgColor(), pScheme));
+	//SetDefaultColor(GetSchemeColor("Menu/FgColor", GetFgColor(), pScheme), GetSchemeColor("Menu/BgColor", GetBgColor(), pScheme));
+	//SetArmedColor(GetSchemeColor("Menu/ArmedFgColor", GetFgColor(), pScheme), GetSchemeColor("Menu/ArmedBgColor", GetBgColor(), pScheme));
+	//SetDepressedColor(GetSchemeColor("Menu/ArmedFgColor", GetFgColor(), pScheme), GetSchemeColor("Menu/ArmedBgColor", GetBgColor(), pScheme));
+	SetDefaultColor(Color(107, 107, 107, 255), Color(0, 0, 0, 0));
+	SetArmedColor(Color(200, 200, 200, 200), Color(155, 155, 155, 255));
+	SetDepressedColor(Color(200, 200, 200, 200), Color(155, 155, 155, 255));
 
-	SetTextInset(atoi(pScheme->GetResourceString("Menu.TextInset")), 0);
+	SetTextInset(atoi(pScheme->GetResourceString("Menu/TextInset")), 0);
 	
 	// reload images since applyschemesettings in label wipes them out.
 	if ( m_pCascadeArrow )
@@ -601,7 +605,22 @@ void MenuItem::SetCurrentKeyBinding( char const *keyName )
 
 void MenuItem::Paint()
 {
-	BaseClass::Paint();
+	//BaseClass::Paint();
+
+	if (ShouldPaint())
+	{
+		Label::Paint();
+
+		if (HasFocus() && IsEnabled() && IsDrawingFocusBox())
+		{
+			int x0, y0, x1, y1;
+			int wide, tall;
+			GetSize(wide, tall);
+			x0 = 3, y0 = 3, x1 = wide - 4, y1 = tall - 2;
+			DrawFocusBorder(x0, y0, x1, y1);
+		}
+	}
+
 	if ( !m_pCurrentKeyBinding )
 		return;
 

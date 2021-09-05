@@ -7,17 +7,22 @@
 
 #include <vgui_controls/TextImage.h>
 #include <vgui_controls/ImagePanel.h>
+#include <vgui_controls/EditablePanel.h>
+
+#include <game_controls/mouseoverpanelbutton.h>
+
+#include <tier1/KeyValues.h>
 #include "shared_util.h"
 
-extern vgui::Panel *g_lastPanel;
-extern vgui::Button *g_lastButton;
+extern vgui2::Panel *g_lastPanel;
+extern vgui2::Button *g_lastButton;
 
-class NewMouseOverPanel : public vgui::EditablePanel
+class NewMouseOverPanel : public vgui2::EditablePanel
 {
-	typedef vgui::EditablePanel BaseClass;
+	typedef vgui2::EditablePanel BaseClass;
 
 public:
-	NewMouseOverPanel(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
+	NewMouseOverPanel(vgui2::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 	{
 	}
 
@@ -51,7 +56,7 @@ public:
 		BaseClass::ApplySettings(resourceData);
 	}
 
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		BaseClass::ApplySchemeSettings(pScheme);
 	}
@@ -67,7 +72,7 @@ class NewMouseOverPanelButton : public MouseOverPanelButton
 	typedef MouseOverPanelButton BaseClass;
 
 public:
-	NewMouseOverPanelButton(vgui::Panel *parent, const char *panelName, vgui::EditablePanel *templatePanel) : MouseOverPanelButton(parent, panelName, templatePanel)
+	NewMouseOverPanelButton(vgui2::Panel *parent, const char *panelName, vgui2::EditablePanel *templatePanel) : MouseOverPanelButton(parent, panelName, templatePanel)
 	{
 		if (m_pPanel)
 			delete m_pPanel;
@@ -109,7 +114,7 @@ public:
 		const char *classPage = GetClassPage(GetName());
 		KeyValues *resourceData = new KeyValues("classes");
 
-		if (resourceData->LoadFromFile(g_pFullFileSystem, classPage, "GAME"))
+		if (resourceData->LoadFromFile(vgui2::filesystem(), classPage, "GAME"))
 		{
 			const char *require = resourceData->GetString("require", "");
 
@@ -144,30 +149,30 @@ public:
 	{
 		BaseClass::ApplySettings(resourceData);
 
-		m_pKeyboard = vgui::scheme()->GetImage(resourceData->GetString("image_keyboard", ""), true);
-		m_pBlankSlot = vgui::scheme()->GetImage(resourceData->GetString("image_blankslot", ""), true);
-		m_pSelect = vgui::scheme()->GetImage(resourceData->GetString("image_select", ""), true);
+		m_pKeyboard = vgui2::scheme()->GetImage(resourceData->GetString("image_keyboard", ""), true);
+		m_pBlankSlot = vgui2::scheme()->GetImage(resourceData->GetString("image_blankslot", ""), true);
+		m_pSelect = vgui2::scheme()->GetImage(resourceData->GetString("image_select", ""), true);
 	}
 
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	virtual void ApplySchemeSettings(vgui2::IScheme *pScheme)
 	{
 		BaseClass::ApplySchemeSettings(pScheme);
 
 		if (!m_pKeyboard)
-			m_pKeyboard = vgui::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.Keyboard"), true);
+			m_pKeyboard = vgui2::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.Keyboard"), true);
 
 		if (!m_pBlankSlot)
-			m_pBlankSlot = vgui::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.BlankSlot"), true);
+			m_pBlankSlot = vgui2::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.BlankSlot"), true);
 
 		if (!m_pSelect)
-			m_pSelect = vgui::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.Select"), true);
+			m_pSelect = vgui2::scheme()->GetImage(pScheme->GetResourceString("MouseOverPanelButton.Select"), true);
 
 		if (m_iKeyOffset == -1)
 		{
 			m_iKeyOffset = atoi(pScheme->GetResourceString("MouseOverPanelButton.KeyboardOffset"));
 
 			if (IsProportional())
-				m_iKeyOffset = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
+				m_iKeyOffset = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeyOffset);
 		}
 
 		if (m_iKeySize == -1)
@@ -175,7 +180,7 @@ public:
 			m_iKeySize = atoi(pScheme->GetResourceString("MouseOverPanelButton.KeyboardSize"));
 
 			if (IsProportional())
-				m_iKeySize = vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
+				m_iKeySize = vgui2::scheme()->GetProportionalScaledValueEx(GetScheme(), m_iKeySize);
 		}
 
 		if (m_pFullText)
@@ -259,20 +264,20 @@ public:
 					int keyX = m_iKeyOffset;
 					int keyY = (tall - keyTall) / 2;
 
-					vgui::HFont font = GetFont();
+					vgui2::HFont font = GetFont();
 
 					int charWide, charTall;
-					charTall = vgui::surface()->GetFontTall(font);
+					charTall = vgui2::surface()->GetFontTall(font);
 
 					int a, b, c;
-					vgui::surface()->GetCharABCwide(font, key, a, b, c);
+					vgui2::surface()->GetCharABCwide(font, key, a, b, c);
 					charWide = a + b + c;
 
-					vgui::surface()->DrawSetTextColor(GetFgColor());
-					vgui::surface()->DrawSetTextFont(font);
-					vgui::surface()->DrawSetTextPos(keyX + (keyWide - charWide) / 2, keyY + (keyTall - charTall) / 2);
-					vgui::surface()->DrawUnicodeChar(key);
-					vgui::surface()->DrawFlushText();
+					vgui2::surface()->DrawSetTextColor(GetFgColor());
+					vgui2::surface()->DrawSetTextFont(font);
+					vgui2::surface()->DrawSetTextPos(keyX + (keyWide - charWide) / 2, keyY + (keyTall - charTall) / 2);
+					vgui2::surface()->DrawUnicodeChar(key);
+					vgui2::surface()->DrawFlushText();
 				}
 			}
 		}
@@ -285,7 +290,7 @@ public:
 
 	void GetText(char *textOut, int bufferLen)
 	{
-		g_pVGuiLocalize->ConvertUnicodeToANSI(m_pFullText, textOut, bufferLen);
+		vgui2::localize()->ConvertUnicodeToANSI(m_pFullText, textOut, bufferLen);
 	}
 
 	void GetText(wchar_t *textOut, int bufLenInBytes)
@@ -309,12 +314,12 @@ public:
 
 		if (text[0] == '#')
 		{
-			wtext = g_pVGuiLocalize->Find(text);
+			wtext = vgui2::localize()->Find(text);
 		}
 		else
 		{
 			wchar_t unicodeVar[256];
-			g_pVGuiLocalize->ConvertANSIToUnicode(text, unicodeVar, sizeof(unicodeVar));
+			vgui2::localize()->ConvertANSIToUnicode(text, unicodeVar, sizeof(unicodeVar));
 			wtext = unicodeVar;
 		}
 
@@ -378,9 +383,9 @@ public:
 	}
 
 protected:
-	vgui::IImage *m_pKeyboard;
-	vgui::IImage *m_pBlankSlot;
-	vgui::IImage *m_pSelect;
+	vgui2::IImage *m_pKeyboard;
+	vgui2::IImage *m_pBlankSlot;
+	vgui2::IImage *m_pSelect;
 
 	wchar_t *m_pFullText;
 	wchar_t *m_pText;

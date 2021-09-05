@@ -15,13 +15,13 @@
 #include <tier1/utllinkedlist.h>
 #include <tier1/utlvector.h>
 
-#include <vgui/VGUI.h>
+#include <vgui/VGUI2.h>
 
 #include "Panel.h"
 
 class KeyValues;
 
-namespace vgui
+namespace vgui2
 {
 
 class ExpandButton;

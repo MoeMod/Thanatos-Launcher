@@ -2,10 +2,16 @@
 #define GAMEUI_INTERFACE_H
 #pragma once
 
-#include "IGameUI.h"
+#include "GameUI/IGameUI.h"
 
 class CGameUI : public IGameUI
 {
+private:
+	enum
+	{
+		MAX_NUM_FACTORIES = 5
+	};
+
 public:
 	CGameUI(void);
 	~CGameUI(void);
@@ -50,9 +56,12 @@ public:
 private:
 	bool m_bLoadlingLevel;
 	char m_szPreviousStatusText[128];
+
+	int m_iNumFactories;
+	CreateInterfaceFn m_FactoryList[MAX_NUM_FACTORIES];
 };
 
 extern CGameUI &GameUI(void);
-extern vgui::Panel *StaticPanel(void);
+extern vgui2::Panel *StaticPanel(void);
 
 #endif

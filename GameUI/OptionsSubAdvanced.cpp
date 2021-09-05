@@ -1,4 +1,3 @@
-#include <metahook.h>
 
 #include "OptionsSubAdvanced.h"
 #include "CvarSlider.h"
@@ -13,11 +12,6 @@
 #include "tier1/KeyValues.h"
 #include "tier1/UtlVector.h"
 
-#include "plugins.h"
-#include "cmd.h"
-
-using namespace vgui;
-
 CUtlVector<char *> g_vLanguageList;
 
 char *g_LanguageList[] =
@@ -28,10 +22,10 @@ char *g_LanguageList[] =
 	"macedonian"
 };
 
-COptionsSubAdvanced::COptionsSubAdvanced(vgui::Panel *parent) : PropertyPage(parent, NULL)
+COptionsSubAdvanced::COptionsSubAdvanced(vgui2::Panel *parent) : PropertyPage(parent, NULL)
 {
 
-	//g_pVGuiLocalize->AddFile("Resource/language_%language%.txt");
+	//vgui2::localize()->AddFile("Resource/language_%language%.txt");
 
 	LoadControlSettings("Resource\\OptionsSubAdvanced.res");
 }

@@ -13,22 +13,22 @@
 
 #include <vgui_controls/TextEntry.h>
 
-class CCvarTextEntry : public vgui::TextEntry
+class CCvarTextEntry : public vgui2::TextEntry
 {
 public:
-	CCvarTextEntry(vgui::Panel *parent, const char *panelName, char const *cvarname);
+	CCvarTextEntry(vgui2::Panel *parent, const char *panelName, char const *cvarname);
 	~CCvarTextEntry();
 
 	void			OnTextChanged();
 	void			ApplyChanges(bool immediate = false);
-	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void	ApplySchemeSettings(vgui2::IScheme *pScheme);
 	void            Reset();
 	bool            HasBeenModified();
 
 	DECLARE_PANELMAP();
 
 private:
-	typedef vgui::TextEntry BaseClass;
+	typedef vgui2::TextEntry BaseClass;
 
 	char			*m_pszCvarName;
 	char			m_pszStartValue[64];

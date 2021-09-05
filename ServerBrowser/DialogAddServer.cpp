@@ -16,13 +16,13 @@
 #include <vgui_controls/ListPanel.h>
 #include <vgui_controls/TextEntry.h>
 
-using namespace vgui;
+using namespace vgui2;
 
 CAddServerGameList::CAddServerGameList(Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 {
 }
 
-void CAddServerGameList::OnKeyCodeTyped(vgui::KeyCode code)
+void CAddServerGameList::OnKeyCodeTyped(vgui2::KeyCode code)
 {
 	if (!IsInEditMode())
 	{
@@ -42,7 +42,7 @@ void CAddServerGameList::OnKeyCodeTyped(vgui::KeyCode code)
 	BaseClass::OnKeyCodeTyped(code);
 }
 
-CDialogAddServer::CDialogAddServer(vgui::Panel *parent) : Frame(parent, "DialogAddServer"), m_Servers(this)
+CDialogAddServer::CDialogAddServer(vgui2::Panel *parent) : Frame(parent, "DialogAddServer"), m_Servers(this)
 {
 	SetDeleteSelfOnClose(true);
 
@@ -75,12 +75,12 @@ CDialogAddServer::CDialogAddServer(vgui::Panel *parent) : Frame(parent, "DialogA
 
 	m_pDiscoveredGames->SetSortColumn(6);
 
-	m_pTextEntry = new vgui::TextEntry(this, "ServerNameText");
+	m_pTextEntry = new vgui2::TextEntry(this, "ServerNameText");
 	m_pTextEntry->AddActionSignalTarget(this);
 
-	m_pTestServersButton = new vgui::Button(this, "TestServersButton", "");
-	m_pAddServerButton = new vgui::Button(this, "OKButton", "");
-	m_pAddSelectedServerButton = new vgui::Button(this, "SelectedOKButton", "", this, "addselected");
+	m_pTestServersButton = new vgui2::Button(this, "TestServersButton", "");
+	m_pAddServerButton = new vgui2::Button(this, "OKButton", "");
+	m_pAddSelectedServerButton = new vgui2::Button(this, "SelectedOKButton", "", this, "addselected");
 	m_pTabPanel->AddPage(m_pDiscoveredGames, "#ServerBrowser_Servers");
 
 	LoadControlSettings("thanatos/Servers/DialogAddServer.res");
@@ -227,13 +227,13 @@ void CDialogAddServer::TestServers(void)
 
 	if (address[0] == 0)
 	{
-		Q_wcsncpy(wstr, g_pVGuiLocalize->Find("#ServerBrowser_ServersRespondingLocal"), sizeof(wstr));
+		Q_wcsncpy(wstr, localize()->Find("#ServerBrowser_ServersRespondingLocal"), sizeof(wstr));
 	}
 	else
 	{
 		wchar_t waddress[512];
 		Q_UTF8ToUnicode(address, waddress, sizeof(waddress));
-		g_pVGuiLocalize->ConstructString(wstr, sizeof(wstr), g_pVGuiLocalize->Find("#ServerBrowser_ServersResponding"), 1, waddress);
+		localize()->ConstructString(wstr, sizeof(wstr), localize()->Find("#ServerBrowser_ServersResponding"), 1, waddress);
 	}
 
 	char str[512];
@@ -343,7 +343,7 @@ void CDialogAddServer::ApplySchemeSettings(IScheme *pScheme)
 	int botColumnImage = imageList->AddImage(scheme()->GetImage("servers/icon_bots_column", false));
 	int secureColumnImage = imageList->AddImage(scheme()->GetImage("servers/icon_robotron_column", false));
 
-	vgui::HFont hFont = pScheme->GetFont("ListSmall", IsProportional());
+	vgui2::HFont hFont = pScheme->GetFont("ListSmall", IsProportional());
 
 	if (!hFont)
 		hFont = pScheme->GetFont("DefaultSmall", IsProportional());
