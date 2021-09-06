@@ -56,13 +56,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>Client;FuckWorld;Renderer;Library;util;.\;..\;HLSDK\common;HLSDK\cl_dll;HLSDK\engine;HLSDK\pm_shared;HLSDK\public;Interface;Interface\VGUI;SourceSDK;SourceSDK\public;SourceSDK\common;SourceSDK\tier1;vgui2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Client;FuckWorld;Renderer;Library;util;MetaHook;.\;..\;HLSDK\common;HLSDK\cl_dll;HLSDK\engine;HLSDK\pm_shared;HLSDK\public;Interface;Interface\VGUI;SourceSDK;SourceSDK\public;SourceSDK\common;SourceSDK\tier1;vgui2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
@@ -82,12 +81,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>Client;FuckWorld;Renderer;Library;util;.\;..\;HLSDK\common;HLSDK\cl_dll;HLSDK\engine;HLSDK\pm_shared;HLSDK\public;Interface;Interface\VGUI;SourceSDK;SourceSDK\public;SourceSDK\common;SourceSDK\tier1;vgui2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Client;FuckWorld;Renderer;Library;util;MetaHook;.\;..\;HLSDK\common;HLSDK\cl_dll;HLSDK\engine;HLSDK\pm_shared;HLSDK\public;Interface;Interface\VGUI;SourceSDK;SourceSDK\public;SourceSDK\common;SourceSDK\tier1;vgui2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4311;4312;4819;4996</DisableSpecificWarnings>
       <BufferSecurityCheck>false</BufferSecurityCheck>
