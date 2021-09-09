@@ -7,8 +7,9 @@ extern IFileSystem *g_pFileSystem;
 
 #ifndef _USRDLL
 #pragma data_seg(".data")
-__declspec(dllexport) BYTE g_pBlobBuffer[0x2000000];
-#endif
+BYTE g_pBlobBuffer[0x2000000];
+extern "C" __declspec(dllexport) void* get_blob_buffer() { return g_pBlobBuffer; }
+#endif 
 
 BlobHeader_t g_BlobHeader;
 

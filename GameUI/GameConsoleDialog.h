@@ -133,7 +133,7 @@ private:
 			}
 		}
 		
-		CompletionItem& CompletionItem::operator =( const CompletionItem& src )
+		CompletionItem& operator =( const CompletionItem& src )
 		{
 			if ( this == &src )
 				return *this;

@@ -132,6 +132,9 @@ HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 			return g_hClientModule;
 		}
 	}
+
+	if (!lpLibFileName || !lpLibFileName[0])
+		return NULL;
 	
 	return g_pfnLoadLibraryA(lpLibFileName);
 }
