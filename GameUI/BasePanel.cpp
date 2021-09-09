@@ -221,9 +221,9 @@ public:
 			}
 		}
 #else
-		if (code >= KEY_F1 && code <= KEY_F12)
+		if (code >= vgui2::KeyCode::KEY_F1 && code <= vgui2::KeyCode::KEY_F12)
 		{
-			const char *binding = gameuifuncs->Key_BindingForKey(K_F1 + (code - KEY_F1));
+			const char *binding = gameuifuncs->Key_BindingForKey(K_F1 + (code - vgui2::KeyCode::KEY_F1));
 
 			if (binding && binding[0])
 			{
