@@ -48,6 +48,7 @@ public:
 public:
 	bool IsServerBrowserValid(void);
 	void ActivateServerBrowser(void);
+	bool FindPlatformDirectory(char* platformDir, int bufferSize);
 
 public:
 	bool IsInLevel(void);
@@ -56,6 +57,7 @@ public:
 private:
 	bool m_bLoadlingLevel;
 	char m_szPreviousStatusText[128];
+	char m_szPlatformDir[MAX_PATH];
 
 	int m_iNumFactories;
 	CreateInterfaceFn m_FactoryList[MAX_NUM_FACTORIES];

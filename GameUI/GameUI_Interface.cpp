@@ -131,6 +131,31 @@ void CGameUI::Start(struct cl_enginefuncs_s *engineFuncs, int interfaceVersion, 
 	engine = &gEngfuncs;
 
 	ModInfo().LoadCurrentGameInfo();
+
+	if (FindPlatformDirectory(m_szPlatformDir, ARRAYSIZE(m_szPlatformDir)))
+	{
+		char szConfigDir[512];
+
+		strcpy(szConfigDir, m_szPlatformDir);
+
+		auto uiLength = strlen(szConfigDir);
+
+		szConfigDir[uiLength++] = CORRECT_PATH_SEPARATOR;
+
+		strcpy(&szConfigDir[uiLength], "config");
+		szConfigDir[uiLength + strlen("config")] = '\0';
+
+		vgui2::filesystem()->AddSearchPath(szConfigDir, "CONFIG");
+
+		_mkdir(szConfigDir);
+
+		vgui2::ivgui()->DPrintf("Platform config directory: %s\n", szConfigDir);
+
+		vgui2::system()->SetUserConfigFile("InGameDialogConfig.vdf", "CONFIG");
+
+		vgui2::localize()->AddFile(vgui2::filesystem(), "resource/platform_%language%.txt");
+		vgui2::localize()->AddFile(vgui2::filesystem(), "resource/vgui_%language%.txt");
+	}
 	
 	if (serverbrowser)
 	{
@@ -392,4 +417,10 @@ bool CGameUI::IsInLevel(void)
 bool CGameUI::IsInMultiplayer(void)
 {
 	return (IsInLevel() && engine->GetMaxClients() > 1);
+}
+
+bool CGameUI::FindPlatformDirectory(char* platformDir, int bufferSize)
+{
+	strncpy(platformDir, "platform", bufferSize);
+	return true;
 }

@@ -115,9 +115,7 @@ CServerBrowserDialog::CServerBrowserDialog(vgui2::Panel *parent) : Frame(parent,
 	m_pTabPanel->AddPage(m_pSpectateGames, "#ServerBrowser_SpectateTab");
 
 	if (!Q_stricmp(gameList, "spectate"))
-	m_pTabPanel->SetActivePage(m_pSpectateGames);
-	m_pTabPanel->SetActivePage(m_pInternetGames);
-	
+		m_pTabPanel->SetActivePage(m_pSpectateGames);
 }
 
 CServerBrowserDialog::~CServerBrowserDialog(void)
@@ -157,7 +155,7 @@ void CServerBrowserDialog::LoadUserData(void)
 
 	m_pSavedData = new KeyValues("ServerBrowser");
 
-	if (!m_pSavedData->LoadFromFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf"))
+	if (!m_pSavedData->LoadFromFile(vgui2::filesystem(), "config/ServerBrowser.vdf"))
 	{
 	}
 
@@ -192,7 +190,7 @@ void CServerBrowserDialog::LoadUserData(void)
 void CServerBrowserDialog::SaveUserData(void)
 {
 	m_pSavedData->Clear();
-	m_pSavedData->LoadFromFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf");
+	m_pSavedData->LoadFromFile(vgui2::filesystem(), "config/ServerBrowser.vdf");
 
 	if (m_pGameList == m_pSpectateGames)
 		m_pSavedData->SetString("GameList", "spectate");
@@ -213,7 +211,7 @@ void CServerBrowserDialog::SaveUserData(void)
 
 	m_pSavedData->RemoveSubKey(m_pSavedData->FindKey("Filters"));
 	m_pSavedData->AddSubKey(m_pFilterData->MakeCopy());
-	m_pSavedData->SaveToFile(vgui2::filesystem(), "cfg/ServerBrowser.vdf");
+	m_pSavedData->SaveToFile(vgui2::filesystem(), "config/ServerBrowser.vdf");
 }
 
 void CServerBrowserDialog::RefreshCurrentPage(void)

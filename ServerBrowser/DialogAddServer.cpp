@@ -83,7 +83,7 @@ CDialogAddServer::CDialogAddServer(vgui2::Panel *parent) : Frame(parent, "Dialog
 	m_pAddSelectedServerButton = new vgui2::Button(this, "SelectedOKButton", "", this, "addselected");
 	m_pTabPanel->AddPage(m_pDiscoveredGames, "#ServerBrowser_Servers");
 
-	LoadControlSettings("thanatos/Servers/DialogAddServer.res");
+	LoadControlSettings("Servers/DialogAddServer.res");
 
 	m_pAddServerButton->SetEnabled(false);
 	m_pTestServersButton->SetEnabled(false);
