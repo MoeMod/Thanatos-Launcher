@@ -1,0 +1,710 @@
+"Filters"
+{
+	"FilterList"
+	{
+		"InternetGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"location"		"5"
+			"lastquery"		"1154951821"
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+		"SpectateGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"location"		"0"
+			"lastquery"		"1146892812"
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+		"FavoriteGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"1"
+			{
+				"name"		"1# [CHN] CLAN Steam1.6 [NO CDKEY]"
+				"gamedir"		"cstrike"
+				"Players"		"0"
+				"maxplayers"		"22"
+				"map"		"de_inferno"
+				"address"		"210.82.102.216:27016"
+			}
+			"2"
+			{
+				"name"		"2# [CHN] CLAN Steam1.6 [NO CDKEY]"
+				"gamedir"		"cstrike"
+				"Players"		"0"
+				"maxplayers"		"22"
+				"map"		"de_inferno"
+				"address"		"210.82.102.216:27066"
+			}
+			"3"
+			{
+				"name"		"3# [CHN] CLAN Steam1.6 [NO CDKEY]"
+				"gamedir"		"cstrike"
+				"Players"		"0"
+				"maxplayers"		"22"
+				"map"		"de_inferno"
+				"address"		"210.82.102.216:27086"
+			}
+			"4"
+			{
+				"name"		"test NYCS 1.5 server"
+				"gamedir"		"cstrike"
+				"Players"		"10"
+				"maxplayers"		"12"
+				"map"		"de_dust2"
+				"address"		"61.163.231.68:27016"
+			}
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+		"LanGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+		"FriendsGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+		"gamelist"		"favorites"
+		"HistoryGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+			"secure"		"0"
+			"source"		"0"
+			"gldsrc"		"0"
+			"appid"		"0"
+		}
+	}
+	"gamelist"		"favorites"
+	"Favorites"
+	{
+		"1"
+		{
+			"name"		"柑橘 生化追击测试服"
+			"gamedir"		"cstrike"
+			"Players"		"0"
+			"maxplayers"		"32"
+			"map"		"ze_jurassicpark_v2"
+			"address"		"103.239.244.93:6666"
+		}
+		"2"
+		{
+			"name"		"【CN】 柑橘CitruS--昼夜求生 (当前天数:1)"
+			"gamedir"		"cstrike"
+			"Players"		"0"
+			"maxplayers"		"20"
+			"map"		"dns_italy"
+			"address"		"103.239.244.93:7777"
+		}
+		"3"
+		{
+			"name"		"【CN】 柑橘CitruS--生化Z|随机技能|僵尸进化|激�"
+			"gamedir"		"cstrike"
+			"Players"		"12"
+			"maxplayers"		"32"
+			"map"		"de_inferno"
+			"address"		"103.239.244.93:8888"
+		}
+		"4"
+		{
+			"name"		"柑橘 生化Z测试服"
+			"gamedir"		"cstrike"
+			"Players"		"19"
+			"maxplayers"		"32"
+			"map"		"de_airstrip"
+			"address"		"103.239.244.93:9999"
+		}
+	}
+	"History"
+	{
+		"1"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"210.82.102.216:27086"
+			"lastplayed"		"1077450323"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"2"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.203:27015"
+			"lastplayed"		"1081130709"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"3"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.209:27015"
+			"lastplayed"		"1081130714"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"4"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.22:27015"
+			"lastplayed"		"1081134584"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"5"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.30:27015"
+			"lastplayed"		"1081134798"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"6"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.27:27015"
+			"lastplayed"		"1081136330"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"7"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.152.154.24:27016"
+			"lastplayed"		"1081167893"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"8"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"203.179.89.117:27020"
+			"lastplayed"		"1081689922"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"9"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"62.103.162.226:27039"
+			"lastplayed"		"1082291451"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"10"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"219.238.23.5:27015"
+			"lastplayed"		"1086348613"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"11"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"219.234.32.252:27016"
+			"lastplayed"		"1082534344"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"12"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.77.178.3:27015"
+			"lastplayed"		"1082534375"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"13"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"202.85.177.36:27016"
+			"lastplayed"		"1082534383"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"14"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.132.73.248:27015"
+			"lastplayed"		"1082556741"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"15"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.132.73.248:27018"
+			"lastplayed"		"1082554940"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"16"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.154.9.71:27017"
+			"lastplayed"		"1082534459"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"17"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.45:27015"
+			"lastplayed"		"1082534764"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"18"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.1.46:27015"
+			"lastplayed"		"1082534766"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"19"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.132.73.245:27017"
+			"lastplayed"		"1082555858"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"20"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"202.102.29.72:27016"
+			"lastplayed"		"1082646725"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"21"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"221.233.49.68:27016"
+			"lastplayed"		"1082556728"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"22"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.94.93.59:27016"
+			"lastplayed"		"1083834934"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"23"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.78.212.233:27015"
+			"lastplayed"		"1082607630"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"24"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.132.73.249:27017"
+			"lastplayed"		"1082646732"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"25"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.89.175.253:27016"
+			"lastplayed"		"1082646937"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"26"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"202.98.155.100:27015"
+			"lastplayed"		"1084668200"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"27"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"203.212.5.87:27017"
+			"lastplayed"		"1087615005"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"28"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"211.93.62.43:27015"
+			"lastplayed"		"1083841616"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"29"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"221.194.28.230:27017"
+			"lastplayed"		"1083841624"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"30"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"216.52.202.16:27145"
+			"lastplayed"		"1083846505"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"31"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"221.192.228.6:60006"
+			"lastplayed"		"1083846974"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"32"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"211.101.236.33:27017"
+			"lastplayed"		"1087615000"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"33"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.134.26.146:27021"
+			"lastplayed"		"1083847126"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"34"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.6.246.128:27015"
+			"lastplayed"		"1083847183"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"35"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"210.76.0.11:27017"
+			"lastplayed"		"1083847467"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"36"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.76.64.99:27025"
+			"lastplayed"		"1084112220"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"37"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"210.77.220.4:28088"
+			"lastplayed"		"1084112228"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"38"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.7.69.37:27015"
+			"lastplayed"		"1084162263"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"39"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"222.52.32.43:65533"
+			"lastplayed"		"1086348960"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"40"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"211.158.126.62:27016"
+			"lastplayed"		"1086348627"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"41"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.21.64.46:27028"
+			"lastplayed"		"1086348719"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"42"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.185.29.13:27016"
+			"lastplayed"		"1086348953"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"43"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"192.168.0.25:27015"
+			"lastplayed"		"1086349879"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"44"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"211.101.236.33:27016"
+			"lastplayed"		"1087614975"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"45"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"219.128.2.185:27018"
+			"lastplayed"		"1118478757"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"46"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.249.227.193:27015"
+			"lastplayed"		"1118478795"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"47"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.65.235.46:27016"
+			"lastplayed"		"1118478800"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"48"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.70.58.185:27016"
+			"lastplayed"		"1118479497"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"49"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.90.163.46:27015"
+			"lastplayed"		"1118479706"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"50"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.75.146.135:27015"
+			"lastplayed"		"1118479725"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"51"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.89.82.203:27019"
+			"lastplayed"		"1118489280"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"52"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.89.161.27:27016"
+			"lastplayed"		"1118489372"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"53"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.89.161.41:27016"
+			"lastplayed"		"1118489375"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"54"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"218.89.2.158:27015"
+			"lastplayed"		"1118489406"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"55"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.188.201.12:27021"
+			"lastplayed"		"1118508867"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"56"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"61.153.40.187:27015"
+			"lastplayed"		"1118512170"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"57"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"219.157.66.46:27016"
+			"lastplayed"		"1128522337"
+			"secure"		"0"
+			"type"		"0"
+		}
+		"58"
+		{
+			"Players"		"0"
+			"maxplayers"		"0"
+			"address"		"101.101.10.154:27015"
+			"lastplayed"		"1146892904"
+			"secure"		"0"
+			"type"		"0"
+		}
+	}
+	"Filters"
+	{
+		"FavoriteGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+		}
+		"LanGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+		}
+		"HistoryGames"
+		{
+			"ping"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+		}
+		"InternetGames"
+		{
+			"ping"		"0"
+			"location"		"0"
+			"NoFull"		"0"
+			"NoEmpty"		"0"
+			"NoPassword"		"0"
+		}
+	}
+}
