@@ -1011,9 +1011,6 @@
     <ClInclude Include="Interface\ICareerUI.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Interface\IClientVGUI.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Interface\ICommandLine.h">
       <Filter>Interface</Filter>
     </ClInclude>

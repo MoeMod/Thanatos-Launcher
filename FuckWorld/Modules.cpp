@@ -68,7 +68,6 @@ FARPROC WINAPI Hook_GetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 		*/
 		return result;
 	}
-
 	if (g_hVGUI2Module == hModule)
 	{
 		if (!strcmp(lpProcName, CREATEINTERFACE_PROCNAME))
@@ -77,19 +76,16 @@ FARPROC WINAPI Hook_GetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 			return (FARPROC)Hook_VGUI2_CreateInterfaceFn;
 		}
 	}
-	
 	return g_pfnGetProcAddress(hModule, lpProcName);
 }
 
 HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 {
-	/*
 	if (!g_bIsUseSteam)
 	{
 		if (strstr(lpLibFileName, "steamclient.dll"))
 			return g_hThisModule;
 	}
-	*/
 	if (strstr(lpLibFileName, "cl_dlls\\GameUI.dll"))
 	{
 		return g_hThisModule;
@@ -100,7 +96,8 @@ HMODULE WINAPI Hook_LoadLibraryA(LPCSTR lpLibFileName)
 	}
 	if (strstr(lpLibFileName, "vgui2.dll"))
 	{
-		return g_hThisModule;
+		//return g_hThisModule;
+		return g_hVGUI2Module = g_pfnLoadLibraryA(lpLibFileName);
 	}
 	if (g_dwEngineBuildnum >= 5953)
 	{
